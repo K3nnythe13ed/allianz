@@ -10,6 +10,18 @@ services:
       - ./elasticsearch/data:/usr/share/elasticsearch/data
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+  nginx:
+    build:
+      context: nginx/
+      #args:
+      #  - http_proxy=
+      #  - HTTP_PROXY=
+      #  - https_proxy=
+      #  - HTTPS_PROXY=
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/data:/var/www/data
   logstash:
     build:
       context: logstash/
@@ -19,6 +31,7 @@ services:
       - "5044:5044"
     links:
       - elasticsearch
+      - nginx
   filebeat:
     build:
       context: filebeat/
