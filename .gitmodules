@@ -1,0 +1,6 @@
+[submodule "logstash/logstash-filter-base64"]
+	path = logstash/logstash-filter-base64
+	url = https://github.com/awesome-inc/logstash-filter-base64.git
+[submodule "logstash/logstash-output-httpraw"]
+	path = logstash/logstash-output-httpraw
+	url = https://github.com/awesome-inc/logstash-output-httpraw.git
