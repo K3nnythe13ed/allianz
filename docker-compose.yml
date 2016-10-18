@@ -25,6 +25,12 @@ services:
   logstash:
     build:
       context: logstash/
+      #args:
+      #  - http_proxy=
+      #  - HTTP_PROXY=
+      #  - https_proxy=
+      #  - HTTPS_PROXY=
+
     volumes:
       - ./logstash/config:/etc/logstash/conf.d
     ports:
