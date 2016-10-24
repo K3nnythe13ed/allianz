@@ -21,7 +21,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/data:/var/www/data
+      - ./nginx/data:/var/www/html
   logstash:
     build:
       context: logstash/
