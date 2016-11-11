@@ -1,2 +1,4 @@
 initial_import/
+!initial_import/.kibana
+!initial_import/_template
 !initial_import/.placeholder
