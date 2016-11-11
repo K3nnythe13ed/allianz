@@ -1,0 +1,86 @@
+{
+  "template": "ais-*",
+  "settings": {
+    "index.refresh_interval": "5s"
+  },
+  "mappings": {
+    "vessel": {
+      "properties": {
+        "A": {
+          "type": "long"
+        },
+        "B": {
+          "type": "long"
+        },
+        "C": {
+          "type": "long"
+        },
+        "CALLSIGN": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "COG": {
+          "type": "float"
+        },
+        "D": {
+          "type": "long"
+        },
+        "DEST": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "DRAUGHT": {
+          "type": "float"
+        },
+        "ETA": {
+          "type": "date",
+          "format": "MM-dd HH:mm"
+        },
+        "HEADING": {
+          "type": "long"
+        },
+        "IMO": {
+          "type": "long"
+        },
+        "LOCATION": {
+          "type": "geo_point"
+        },
+        "MMSI": {
+          "type": "long"
+        },
+        "NAME": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "NAVSTAT": {
+          "type": "long"
+        },
+        "SOG": {
+          "type": "float"
+        },
+        "TIME": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+        },
+        "TYPE": {
+          "type": "long"
+        }
+      }
+    }
+  }
+}
