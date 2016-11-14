@@ -1,0 +1,13 @@
+{
+ "description": "",
+ "hits": 0,
+ "kibanaSavedObjectMeta": {
+  "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+ },
+ "optionsJSON": "{\"darkTheme\":false}",
+ "panelsJSON": "[{\"col\":1,\"id\":\"ais-tilemap\",\"panelIndex\":1,\"row\":1,\"size_x\":7,\"size_y\":4,\"type\":\"visualization\"},{\"col\":8,\"id\":\"ais-metric\",\"panelIndex\":2,\"row\":1,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"columns\":[\"MMSI\",\"IMO\",\"NAME\",\"COG\",\"SOG\",\"CALLSIGN\",\"DEST\",\"DRAUGHT\"],\"id\":\"Exposed-Vessels\",\"panelIndex\":4,\"row\":5,\"size_x\":7,\"size_y\":2,\"sort\":[\"@timestamp\",\"desc\"],\"type\":\"search\"}]",
+ "timeRestore": false,
+ "title": "RiskMap",
+ "uiStateJSON": "{\"P-1\":{\"mapCenter\":[51.89937609970991,4.4384765625]}}",
+ "version": 1
+}

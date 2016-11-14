@@ -47,19 +47,20 @@
         },
         "ETA": {
           "type": "date",
-          "format": "MM-dd HH:mm"
+          "format": "MM-dd HH:mm",
+          "ignore_malformed": true
         },
         "HEADING": {
           "type": "long"
         },
         "IMO": {
-          "type": "long"
+          "type": "keyword"
         },
         "LOCATION": {
           "type": "geo_point"
         },
         "MMSI": {
-          "type": "long"
+          "type": "keyword"
         },
         "NAME": {
           "type": "text",

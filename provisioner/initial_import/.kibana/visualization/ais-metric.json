@@ -1,0 +1,10 @@
+{
+ "description": "",
+ "kibanaSavedObjectMeta": {
+  "searchSourceJSON": "{\"index\":\"ais-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+ },
+ "title": "ais-metric",
+ "uiStateJSON": "{}",
+ "version": 1,
+ "visState": "{\"title\":\"ais-metric\",\"type\":\"metric\",\"params\":{\"handleNoResults\":true,\"fontSize\":60},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}"
+}
