@@ -6,6 +6,9 @@
   "mappings": {
     "vessel": {
       "properties": {
+        "@timestamp": { 
+          "type": "date" 
+          },
         "A": {
           "type": "long"
         },
@@ -72,10 +75,6 @@
         },
         "SOG": {
           "type": "float"
-        },
-        "TIME": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
         },
         "TYPE": {
           "type": "long"
