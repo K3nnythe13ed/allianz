@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
     v.cpus = 2
-    v.name = "docker-elk"
+    v.name = "riskmap"
   end
   
   if !Vagrant.has_plugin?("vagrant-docker-compose")
@@ -66,6 +66,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision :docker_compose, 
     yml: "/vagrant/docker-compose.yml", 
     #rebuild: true, 
-    project_name: "docker-elk",
+    project_name: "riskmap",
     run: "always"  
 end
