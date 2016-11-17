@@ -62,6 +62,23 @@ Vagrant.configure(2) do |config|
   # https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html  
   config.vm.provision :shell, inline: "echo 'vm.max_map_count=262144' >> /etc/sysctl.d/90-es.conf && sysctl -p /etc/sysctl.d/90-es.conf"
 
+  if ARGV[0] =~ /up|reload|provision/
+    if ENV.has_key?("ais_user")
+      print "==> Forwarding 'ais_user' environment variable...\n"
+      config.ssh.forward_env = ['ais_user']
+      config.vm.provision "forward_ais-user", type: "shell" do |s|
+        s.inline = "echo 'export ais_user=#{ENV['ais_user']}' >> /etc/environment"
+      end
+    else
+      print "  WARN: environment variable 'ais_user' not set.\n"
+      print "  You won't be able to import AIS data from 'aishub.net'.\n"
+      print "  See 'http://www.aishub.net/xml-description-20.php' \n"
+      print "  Do you want to continue [Y/n]? "
+      input = STDIN.gets.strip
+      if input == "n" then exit! end
+    end
+   end    
+
   config.vm.provision :docker
   config.vm.provision :docker_compose, 
     yml: "/vagrant/docker-compose.yml", 
