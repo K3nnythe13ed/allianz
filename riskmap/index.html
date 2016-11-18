@@ -1,0 +1,123 @@
+<html>
+
+<head>
+	<title>Weather and Risk-Map</title>
+	
+	<link href="bower_components/vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
+	<script src="bower_components/vis/dist/vis.min.js"></script>
+
+	<script src="bower_components/leaflet/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	
+
+	<script src="bower_components/leaflet-playback/dist/LeafletPlayback.js"></script>
+	
+	<script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
+	<link href="bower_components/leaflet-draw/dist/leaflet.draw.css" rel="stylesheet" type="text/css" />
+	<script src="bower_components/elasticsearch/elasticsearch.js"></script>
+
+	<link rel="stylesheet" href="styles/main.css" />
+</head>
+
+<body>
+
+
+	<div id="map"></div>
+
+
+	<div id="timeline"></div>
+
+	<!--Map script -->
+	<script>
+		map = L.map('map').setView([50.7343800, 7.0954900], 7);
+		
+		 </script>
+
+	<!--Required scripts -->
+
+	<script>
+		var client = elasticsearch.Client({
+			host: 'localhost:9200'
+		});
+	</script>
+	
+
+	<!--Data scripts -->
+	<script src="data/locations.js"></script>
+	<script src="data/ais-demo.js"></script>
+	<script src="data/es-data.js"></script>
+	<!--Executable scripts -->
+	<script src="scripts/TableCreator/createTable.js"></script>
+	<script src="scripts/elasticsearch.js"></script>
+	<script src="scripts/leaflet-playback-marker.js"></script>
+	<script src="scripts/show-location.js"></script>
+	<script src="scripts/draw.js"></script>
+	<script src="scripts/layer-style.js"></script>
+	<!--ID Kibana aligning all objects taken from elasticsearch -->
+	<div id="kibana">
+
+		<!-- Amount of Vessels counted in Area -->
+		<table id="vesselcount">
+		</table>
+		<!-- List of all Vessels in Area -->
+		<div class="searchtable">
+			<table id="vesselsearch" border="1">
+			</table>
+		</div>
+	</div>
+	<!-- option menu for leaflet Map -->
+	<div id="basemaps-wrapper" class="leaflet-bar">
+		<table>
+			<tr>
+				<td>
+					<label>Map Layer</label>
+				</td>
+				<td>
+
+					<select name="basemaps" id="basemaps" onChange="changeLayer(this.value)">
+						<option value="1">Main</option>
+						<option value="2">Rain</option>
+						<option value="3">Clouds</option>
+						<option value="4">Precipitation</option>
+						<option value="5">Pressure</option>
+						<option value="6">Snow</option>
+						<option value="7">Temperature</option>
+						<option value="8">Windspeed</option>
+
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+
+					<label>Fade Out Vessels</label>
+				</td>
+				<td>
+					<input type='checkbox' onclick="handleFadeout(this)">
+				</td>
+			</tr>
+			<tr>
+				<td>
+
+					<label>Show Locations</label>
+				</td>
+				<td>
+					<input type='checkbox' onclick="handleLocationLayer(this)" id="CheckWarehouse">
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td><input type="button" value="slower" onclick="changeSlower()"></td>
+				<td><input type="button" value="Play/Pause" onclick="changePlay()"></td>
+				<td><input type="button" value="faster" onclick="changeFaster()"></td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+
+</html>
