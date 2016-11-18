@@ -55,3 +55,20 @@ services:
        - "5601:5601"
     links:
        - elasticsearch
+  aishub:
+    build:
+      context: aishub/
+      args:
+        http_proxy: ${http_proxy}
+        no_proxy: ${no_proxy}
+    volumes:
+       - "./aishub/data:/data"
+    volumes_from:
+       - filebeat
+    environment:
+      http_proxy: ${http_proxy}
+      no_proxy: ${no_proxy}
+      ais_user: ${ais_user}
+      ais_window: ${ais_window}
+      #ais_interval: ${ais_interval}
+      ais_json: "/log/aishub"
