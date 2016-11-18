@@ -12,7 +12,7 @@ function createVesselIndex(callback, callbackforlater) {
     client.search({
         index: 'ais-*',
         type: 'vessel',
-        size: 10000,
+        size: maxVessels,
         body: {
             "_source": ["MMSI"],
             "query": {
@@ -20,18 +20,6 @@ function createVesselIndex(callback, callbackforlater) {
                     "must": [
                         {
                             "terms": { "TYPE": ["70", "71", "72", "73", "74", "75", "76", "77", "78", "89", "80", "81", "82", "83", "84", "85", "86", "88", "88", "89", "90"] }
-                        },
-                        {
-                            "query_string": {
-                                "query": "*",
-                                "analyze_wildcard": true
-                            }
-                        },
-                        {
-                            "query_string": {
-                                "analyze_wildcard": true,
-                                "query": "*"
-                            }
                         },
                         {
                             "range": {
@@ -42,8 +30,7 @@ function createVesselIndex(callback, callbackforlater) {
                                 }
                             }
                         }
-                    ],
-                    "must_not": []
+                    ]
                 }
             }
         }
@@ -51,7 +38,7 @@ function createVesselIndex(callback, callbackforlater) {
     }, function (err, resp, _respcode) {
         MMSICollection.push(String(resp.hits.hits[0]._source.MMSI))
         console.log(resp.hits.total)
-        for (var i = 1; i <= 9000; i++) {
+        for (var i = 1; i <= resp.hits.hits.length; i++) {
             var test = 1;
             
             for (var j = 0; j <= MMSICollection.length; j++) {
@@ -78,25 +65,13 @@ function getAllDataOfMMSI(callback, playback) {
         client.search({
             index: 'ais-*',
             type: 'vessel',
-            size: 10000,
+            size: maxVessels,
             body: {
                 "query": {
                     "bool": {
                         "must": [
                             {
                                 "term": { "MMSI": String(MMSICollection[i]) }
-                            },
-                            {
-                                "query_string": {
-                                    "query": "*",
-                                    "analyze_wildcard": true
-                                }
-                            },
-                            {
-                                "query_string": {
-                                    "analyze_wildcard": true,
-                                    "query": "*"
-                                }
                             },
                             {
                                 "range": {
@@ -108,7 +83,6 @@ function getAllDataOfMMSI(callback, playback) {
                                 }
                             }
                         ],
-                        "must_not": []
                     }
                 }
             }
@@ -129,7 +103,7 @@ function createVesselforCollectionTimeBased(resp) {
     var coordData;
     var shipcoordCollection = [];
     var timeDataCollection =[];
-    for (var i = 1; i < resp.hits.total; i++) {
+    for (var i = 1; i < resp.hits.hits.length; i++) {
         coordData = [resp.hits.hits[i]._source.LOCATION.lon, resp.hits.hits[i]._source.LOCATION.lat]
         shipcoordCollection.push(coordData)
         timeDataCollection.push(Date.parse(resp.hits.hits[i]._source["@timestamp"]));
@@ -159,9 +133,9 @@ function createVesselforCollectionTimeBased(resp) {
         }
 
     };
-        console.log(ship)
-        shipCollection.push(ship);
-        
+
+    console.log(ship)
+    shipCollection.push(ship);
 }
 
 
@@ -188,7 +162,8 @@ function createVesselforCollectionTimeBased(resp) {
 
 
 function createVesselforCollection(resp) {
-    for (var i = 0; i < resp.hits.total; i++) {
+    // TODO: use "map()", cf.: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+    for (var i = 0; i < resp.hits.hits.length; i++) {
         var ship = {
             "type": "Feature",
             "geometry": {
@@ -204,7 +179,7 @@ function createVesselforCollection(resp) {
             "properties": {
                 "MMSI": resp.hits.hits[i]._source.MMSI,
                 "time": [
-                    Date.parse(resp.hits.hits[i]._source["@timestamp"]),
+                    Date.parse(resp.hits.hits[i]._source.["@timestamp"]),
                 ],
                 "IMO": resp.hits.hits[i]._source.IMO,
                 "NAME": resp.hits.hits[i]._source.NAME,
@@ -226,28 +201,15 @@ function searchAllforView(callback, playback) {
     var priorDate = new Date().setDate(today.getDate() - 30)
 
     client.search({
-        index: 'ais-2016.11.09',
+        index: 'ais-*',
         type: 'vessel',
-        size: 10000,
+        size: maxVessels,
         body: {
-
             "query": {
                 "bool": {
                     "must": [
                         {
                             "terms": { "TYPE": ["70", "71", "72", "73", "74", "75", "76", "77", "78", "89", "80", "81", "82", "83", "84", "85", "86", "88", "88", "89", "90"] }
-                        },
-                        {
-                            "query_string": {
-                                "query": "*",
-                                "analyze_wildcard": true
-                            }
-                        },
-                        {
-                            "query_string": {
-                                "analyze_wildcard": true,
-                                "query": "*"
-                            }
                         },
                         {
                             "range": {
@@ -259,13 +221,10 @@ function searchAllforView(callback, playback) {
                             }
                         }
                     ],
-                    "must_not": []
                 }
             }
         }
-
     }, function (err, response, _respcode) {
-
         callback(response)
         playback();
     });

@@ -28,6 +28,7 @@ elasticsearch.url: "http://elasticsearch:9200"
 
 # The default application to load.
 # kibana.defaultAppId: "discover"
+kibana.defaultAppId: "dashboard/RiskMap"
 
 # If your Elasticsearch is protected with basic authentication, these settings provide
 # the username and password that the Kibana server uses to perform maintenance on the Kibana
@@ -90,4 +91,6 @@ elasticsearch.url: "http://elasticsearch:9200"
 # Set the interval in milliseconds to sample system and process performance
 # metrics. Minimum is 100ms. Defaults to 10000.
 # ops.interval: 10000
+
+# Customize tilemap url
 # tilemap.url: "http://{s}.maps.owm.io/current/RAIN_STYLE/{z}/{x}/{y}?appid=b1b15e88fa797225412429c1c50c122a1"

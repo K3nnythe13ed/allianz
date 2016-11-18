@@ -44,9 +44,9 @@ function countVessels(callback, callback2, latlong) {
     }
 
     client.search({
-        index: 'ais-2016.11.09',
+        index: 'ais-*',
         type: 'vessel',
-        size: 10000,
+        size: maxVessels,
         body: {
 
             "query": {
@@ -54,18 +54,6 @@ function countVessels(callback, callback2, latlong) {
                     "must": [
                         {
                             "terms": { "TYPE": ["70", "71", "72", "73", "74", "75", "76", "77", "78", "89", "80", "81", "82", "83", "84", "85", "86", "88", "88", "89", "90"] }
-                        },
-                        {
-                            "query_string": {
-                                "query": "*",
-                                "analyze_wildcard": true
-                            }
-                        },
-                        {
-                            "query_string": {
-                                "analyze_wildcard": true,
-                                "query": "*"
-                            }
                         },
                         {
                             "range": {
@@ -92,7 +80,6 @@ function countVessels(callback, callback2, latlong) {
 
                         },
                     ],
-                    "must_not": []
                 }
             }
         }
