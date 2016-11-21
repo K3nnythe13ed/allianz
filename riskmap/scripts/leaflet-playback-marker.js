@@ -60,6 +60,7 @@ function createPlayback() {
         dateControl: true,
         orientIcons: true,
         popups: true,
+        maxInterpolationTime: 2 * 60 * 1000,
 
         // layer and marker options
         layer: {

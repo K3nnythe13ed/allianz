@@ -1,12 +1,12 @@
 $(function () {
     searchAllforView(pushVesselFromEStoHash)
     //createVesselIndex(getAllDataOfMMSI)
+   
 })
 
-var vesselCollection = {}
-var shipCollection = [];
 
-
+ var vesselCollection = {}
+    var shipCollection = [];
 
 
 
@@ -18,24 +18,15 @@ function searchAllforView(callback) {
     client.search({
         index: 'ais-*',
         type: 'vessel',
-        size: 100,
+        size: 10000,
         body: {
-
+        "sort" : { "@timestamp" : {"order" : "asc"}},
             "query": {
                 "bool": {
                     "must": [
-                       
-                        {
-                            "query_string": {
-                                "query": "*",
-                                "analyze_wildcard": true
-                            }
-                        },
-                        {
-                            "query_string": {
-                                "analyze_wildcard": true,
-                                "query": "*"
-                            }
+                        
+                            {
+                            "terms": { "TYPE": ["70"] }
                         },
                         {
                             "range": {
@@ -44,33 +35,29 @@ function searchAllforView(callback) {
                                     "lte": todayToEpoch,
                                     "format": "epoch_millis"
                                 },
-                                "TYPE":{
-                                    "gte": 70,
-                                    "lte": 79
-                                }
-                        
                             }
                         }
-                    ],
-                    "must_not": []
-                }
-            }
+                        
+                    ]
+        }
+    }
         }
 
     }, function (err, resp, _respcode) {
 
-        callback(resp, createVesselforCollectionTimeBased)
-        
-    });
+    callback(resp, createVesselforCollectionTimeBased)
+
+});
 
 }
 function pushVesselFromEStoHash(resp, callback) {
-   
+    
     // resp.forEach(function (resp) {
-    for (var i = 0; i <= resp.hits.hits.length-1; i++) {
+    for (var i = 0; i <= resp.hits.hits.length - 1; i++) {
+
         if (Object.keys(vesselCollection).length <= maxVessels && !(resp.hits.hits[i]._source.MMSI in vesselCollection)) {
             timeData = Date.parse(resp.hits.hits[i]._source["@timestamp"])
-            
+
             vesselCollection[resp.hits.hits[i]._source.MMSI] = {
                 coord: [[
                     resp.hits.hits[i]._source.LOCATION.lon,
@@ -81,7 +68,7 @@ function pushVesselFromEStoHash(resp, callback) {
                     timeData
                 ],
                 MMSI: resp.hits.hits[i]._source.MMSI
-                
+
             };
         }
         else {
@@ -120,7 +107,7 @@ function createVesselforCollectionTimeBased(playback) {
             "properties": {
                 "MMSI": vesselCollection[index].MMSI,
                 "time": vesselCollection[index].time
-                
+
                 // "IMO": resp.hits.hits[1]._source.IMO,
                 // "NAME": resp.hits.hits[1]._source.NAME,
                 // "DEST": resp.hits.hits[1]._source.DEST,
@@ -130,6 +117,7 @@ function createVesselforCollectionTimeBased(playback) {
             }
 
         };
+        console.log(ship)
         shipCollection.push(ship);
 
     }
