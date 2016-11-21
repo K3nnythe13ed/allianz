@@ -3,7 +3,6 @@ function createPlayback() {
     var datavalue = shipCollection;
    // var datavalue = demoAis;
     var newdate = datavalue[0].properties.time[0]
-    console.log(shipCollection)
 
     var newendTime = datavalue[0].properties.time[datavalue[0].properties.time.length - 1]
 
@@ -61,7 +60,6 @@ function createPlayback() {
         dateControl: true,
         orientIcons: true,
         popups: true,
-        maxInterpolationTime: 2 * 60 * 1000,
 
         // layer and marker options
         layer: {
