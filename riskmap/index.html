@@ -9,13 +9,17 @@
 	<script src="bower_components/leaflet/dist/leaflet.js"></script>
 	<link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
 
+
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	
 
 	<script src="bower_components/leaflet-playback/dist/LeafletPlayback.js"></script>
 	
+
 	<script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
 	<link href="bower_components/leaflet-draw/dist/leaflet.draw.css" rel="stylesheet" type="text/css" />
+
+
 	<script src="bower_components/elasticsearch/elasticsearch.js"></script>
 
 	<link rel="stylesheet" href="styles/main.css" />
@@ -36,7 +40,7 @@
 		 </script>
 
 	<!--Required scripts -->
-
+	<script src="scripts/TableCreator/createTable.js"></script>
 	<script>
 		var client = elasticsearch.Client({
 			host: 'localhost:9200'
@@ -49,7 +53,7 @@
 	<script src="data/ais-demo.js"></script>
 	<script src="data/es-data.js"></script>
 	<!--Executable scripts -->
-	<script src="scripts/TableCreator/createTable.js"></script>
+	
 	<script src="scripts/elasticsearch.js"></script>
 	<script src="scripts/leaflet-playback-marker.js"></script>
 	<script src="scripts/show-location.js"></script>
