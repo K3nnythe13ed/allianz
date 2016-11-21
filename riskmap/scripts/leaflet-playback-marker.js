@@ -1,10 +1,9 @@
 //call function on start
 function createPlayback() {
-    var datavalue = shipCollection;
-   // var datavalue = demoAis;
-    var newdate = datavalue[0].properties.time[0]
+   // var shipCollection = demoAis;
+    var newdate = shipCollection[0].properties.time[0]
 
-    var newendTime = datavalue[0].properties.time[datavalue[0].properties.time.length - 1]
+    var newendTime = shipCollection[0].properties.time[shipCollection[0].properties.time.length - 1]
 
     var bigship = L.icon({
         iconUrl: '../images/marker.png',
@@ -13,13 +12,13 @@ function createPlayback() {
         popupAnchor: [0, -20] // point from which the popup should open relative to the iconAnchor
     });
 
-    for (i = 1; i < datavalue.length; i++) {
+    for (i = 1; i < shipCollection.length; i++) {
 
-        if (newdate > datavalue[i].properties.time[0]) {
-            newdate = datavalue[i].properties.time[0]
+        if (newdate > shipCollection[i].properties.time[0]) {
+            newdate = shipCollection[i].properties.time[0]
         }
-        if (newendTime < datavalue[i].properties.time[datavalue[i].properties.time.length - 1]) {
-            newendTime = datavalue[i].properties.time[datavalue[i].properties.time.length - 1]
+        if (newendTime < shipCollection[i].properties.time[shipCollection[i].properties.time.length - 1]) {
+            newendTime = shipCollection[i].properties.time[shipCollection[i].properties.time.length - 1]
         }
 
     }
@@ -100,7 +99,7 @@ function createPlayback() {
     // Initialize playback
     var playback = new L.Playback(map, null, onPlaybackTimeChange, playbackOptions);
     SaveMyPlayback(playback);
-    playback.setData(datavalue);
+    playback.setData(shipCollection);
     playback.setSpeed(1);
 
 

@@ -1,10 +1,10 @@
 //on start count all vessels
-$(function () {
+/*$(function () {
 
     var latlong = undefined
     countVessels(VesselTableCounter, getAllVessels, latlong)
 
-})
+})*/
 
 //get all Vessels in elasticsearch for later use
 var dt;
@@ -53,7 +53,7 @@ function countVessels(callback, callback2, latlong) {
                 "bool": {
                     "must": [
                         {
-                            "terms": { "TYPE": ["70", "71", "72", "73", "74", "75", "76", "77", "78", "89", "80", "81", "82", "83", "84", "85", "86", "88", "88", "89", "90"] }
+                            "terms": { "TYPE": ["70"] }
                         },
                         {
                             "range": {
