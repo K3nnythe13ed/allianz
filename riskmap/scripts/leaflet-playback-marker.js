@@ -1,11 +1,9 @@
 //call function on start
 function createPlayback() {
-    var datavalue = shipCollection;
-   // var datavalue = demoAis;
-    var newdate = datavalue[0].properties.time[0]
-    console.log(shipCollection)
+   // var shipCollection = demoAis;
+    var newdate = shipCollection[0].properties.time[0]
 
-    var newendTime = datavalue[0].properties.time[datavalue[0].properties.time.length - 1]
+    var newendTime = shipCollection[0].properties.time[shipCollection[0].properties.time.length - 1]
 
     var bigship = L.icon({
         iconUrl: '../images/marker.png',
@@ -14,13 +12,13 @@ function createPlayback() {
         popupAnchor: [0, -20] // point from which the popup should open relative to the iconAnchor
     });
 
-    for (i = 1; i < datavalue.length; i++) {
+    for (i = 1; i < shipCollection.length; i++) {
 
-        if (newdate > datavalue[i].properties.time[0]) {
-            newdate = datavalue[i].properties.time[0]
+        if (newdate > shipCollection[i].properties.time[0]) {
+            newdate = shipCollection[i].properties.time[0]
         }
-        if (newendTime < datavalue[i].properties.time[datavalue[i].properties.time.length - 1]) {
-            newendTime = datavalue[i].properties.time[datavalue[i].properties.time.length - 1]
+        if (newendTime < shipCollection[i].properties.time[shipCollection[i].properties.time.length - 1]) {
+            newendTime = shipCollection[i].properties.time[shipCollection[i].properties.time.length - 1]
         }
 
     }
@@ -44,15 +42,9 @@ function createPlayback() {
     // Setup timeline
     var timeline = new vis.Timeline(document.getElementById('timeline'), timelineData, timelineOptions);
 
-    // Set custom time marker (blue)
 
     timeline.setCustomTime(startTime);
-    // use curent Date to position the timeline marker
-
-    /* var currentTime = new Date().format('m-d-Y h:i:s');
-    timeline.setCustomTime(currentTime);
-    */
-
+    
 
     // Playback options
     var playbackOptions = {
@@ -61,6 +53,8 @@ function createPlayback() {
         dateControl: true,
         orientIcons: true,
         popups: true,
+        tracksLayer: false,
+        tickLen: 5000,
         maxInterpolationTime: 2 * 60 * 1000,
 
         // layer and marker options
@@ -101,8 +95,8 @@ function createPlayback() {
     // Initialize playback
     var playback = new L.Playback(map, null, onPlaybackTimeChange, playbackOptions);
     SaveMyPlayback(playback);
-    playback.setData(datavalue);
-    playback.setSpeed(1);
+    playback.setData(shipCollection);
+    
 
 
 
@@ -113,15 +107,18 @@ function createPlayback() {
     // A callback so timeline is set after changing playback time
     function onPlaybackTimeChange(ms) {
         timeline.setCustomTime(new Date(ms));
+        //countVesselsBasedOnHash(addAnotherVesseltoTable, latlong, playbackitem.getTime())
     };
 
     function onCustomTimeChange(properties) {
         if (!playback.isPlaying()) {
             playback.setCursor(properties.time.getTime());
+            //countVesselsBasedOnHash(addAnotherVesseltoTable, latlong, playbackitem.getTime())
         }
     }
 
 }
+
 var playbackitem;
 //change Speed of playback
 function changeSpeed(value) {
@@ -141,19 +138,19 @@ function handleFadeout(cb) {
 //change speed of playback by clicking the faster button
 function changeFaster() {
     var speed = playbackitem.getSpeed();
-    if (speed <= 1) {
-        playbackitem.setSpeed(speed + 1);
+    if (speed <= 10) {
+        playbackitem.setSpeed(speed + 15);
     }
     else {
-        if (speed <= 2) {
-            playbackitem.setSpeed(speed + 2);
+        if (speed <= 25) {
+            playbackitem.setSpeed(speed + 25);
         } else {
-            if (speed <= 4) {
-                playbackitem.setSpeed(speed + 6);
+            if (speed <= 50) {
+                playbackitem.setSpeed(speed + 50);
             }
             else {
-                if (speed <= 10) {
-                    playbackitem.setSpeed(speed + 90);
+                if (speed <= 100) {
+                    playbackitem.setSpeed(speed + 900);
                 }
             }
         }
@@ -162,19 +159,19 @@ function changeFaster() {
 //change speed of playback by clicking the slower button
 function changeSlower() {
     var speed = playbackitem.getSpeed();
-    if (speed >= 100) {
-        playbackitem.setSpeed(speed - 90);
+    if (speed >= 1000) {
+        playbackitem.setSpeed(speed - 900);
     }
     else {
-        if (speed >= 10) {
-            playbackitem.setSpeed(speed - 6);
+        if (speed >= 100) {
+            playbackitem.setSpeed(speed - 50);
         } else {
-            if (speed >= 4) {
-                playbackitem.setSpeed(speed - 2);
+            if (speed >= 50) {
+                playbackitem.setSpeed(speed - 25);
             }
             else {
-                if (speed >= 2) {
-                    playbackitem.setSpeed(speed - 1);
+                if (speed >= 25) {
+                    playbackitem.setSpeed(speed - 15);
                 }
             }
         }
@@ -182,6 +179,7 @@ function changeSlower() {
 }
 //change play/pause by clicking the play/pause-button
 function changePlay() {
+    console.log("test")
     if (playbackitem.isPlaying()) {
         playbackitem.stop();
 
@@ -189,5 +187,7 @@ function changePlay() {
     else {
 
         playbackitem.start();
+        playbackitem.setSpeed(10);
+        
     }
 }

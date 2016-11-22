@@ -18,20 +18,24 @@ var options = {
 
 var drawControl = new L.Control.Draw(options);
 map.addControl(drawControl);
-
+var latlong = undefined
 map.on(L.Draw.Event.DRAWSTART, function (e) {
 
     editableLayers.clearLayers();
-    var latlong = undefined
-    countVessels(replaceTableValue, getAllVessels, latlong)
+    latlong = undefined
+    
+    countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
 
 })
 var layer_leaflet_id;
 map.on(L.Draw.Event.CREATED, function (e) {
+    var currenttime = playbackitem.getTime();
     var type = e.layerType,
         layer = e.layer;
     //on create do elasticsearch function countVessels input(function replaceTableValue as callback, layer latlongs)
-    countVessels(replaceTableValue, getAllVessels, layer.getLatLngs())
+
+    latlong = layer.getLatLngs()
+    countVesselsBasedOnHash(addAnotherVesseltoTable, latlong, currenttime)
 
     editableLayers.addLayer(layer);
     layer_leaflet_id = layer._leaflet_id
@@ -40,14 +44,14 @@ map.on(L.Draw.Event.CREATED, function (e) {
 
 map.on(L.Draw.Event.DELETESTART, function (e) {
     editableLayers.clearLayers();
-    var latlong = undefined
-    countVessels(replaceTableValue, getAllVessels, latlong)
+    latlong = undefined
+    countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
 });
 
 map.on(L.Draw.Event.EDITED, function (e) {
 
     latlong = e.layers._layers[layer_leaflet_id]._latlngs;
-    countVessels(replaceTableValue, getAllVessels, latlong)
+    countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
 
 
 });
