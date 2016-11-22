@@ -57,7 +57,10 @@ function scrollAllforView(callback) {
                 scroll: '30s'
             }, getMoreUntilDone);
         } else {
-            createVesselforCollectionTimeBased(createPlayback, countVesselsBasedOnHash);
+            var latlong = undefined
+            createPlayback()
+            countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
+           // createVesselforCollectionTimeBased(createPlayback, countVesselsBasedOnHash);
             
         }
     });
@@ -67,70 +70,46 @@ function scrollAllforView(callback) {
 
 
 function pushASingleVesselFromEStoHash(hit) {
-    if (Object.keys(vesselCollection).length <= maxVessels && !(hit._source.MMSI in vesselCollection)) {
-        timeData = Date.parse(hit._source["@timestamp"])
-
-        vesselCollection[hit._source.MMSI] = {
-            
-            coord: [[
-                hit._source.LOCATION.lon,
-                hit._source.LOCATION.lat
-            ]],
-            time:
-            [
-                timeData
-            ],
-            MMSI: hit._source.MMSI
-
-        };
-    }
-    else {
-        if (hit._source.MMSI in vesselCollection) {
-            timeData = Date.parse(hit._source["@timestamp"]);
-
-            vesselCollection[hit._source.MMSI].coord.push(
-                [
-                    hit._source.LOCATION.lon,
-                    hit._source.LOCATION.lat
-                ]
-
-            );
-
-            vesselCollection[hit._source.MMSI].time.push(
-                timeData
-            );
-
+    var update;
+    for(var i = 0; i<shipCollection.length; i++)
+    {
+        if(shipCollection[i].properties.MMSI == hit._source.MMSI){
+            update = i;
         }
+       
     }
-}
-
-function createVesselforCollectionTimeBased(playback, callbacklist) {
-
-    for (var index in vesselCollection) {
-
+    if(update != undefined)
+    {
+        shipCollection[update].geometry.coordinates.push(
+            [
+                 hit._source.LOCATION.lon,
+                 hit._source.LOCATION.lat
+            ]
+        )
+        shipCollection[update].properties.time.push(Date.parse(hit._source["@timestamp"]))
+    }
+    else{
+        
         var ship = {
             "type": "Feature",
             "geometry": {
                 "type": "LineString",
-                "coordinates": vesselCollection[index].coord
+                    "coordinates": [
+                        [
+                    hit._source.LOCATION.lon,
+                    hit._source.LOCATION.lat
+                    ]
+                    ]
             },
             "properties": {
-                "MMSI": vesselCollection[index].MMSI,
-                "time": vesselCollection[index].time
-
-                // "IMO": resp.hits.hits[1]._source.IMO,
-                // "NAME": resp.hits.hits[1]._source.NAME,
-                // "DEST": resp.hits.hits[1]._source.DEST,
-                // "DRAUGHT": resp.hits.hits[1]._source.DRAUGHT,
-                //  "SOG": resp.hits.hits[1]._source.SOG,
-                //  "ETA": resp.hits.hits[1]._source.ETA
-            }
-
-        };
-        shipCollection.push(ship);
-
+                "MMSI":  hit._source.MMSI,
+                "time":  [
+                    Date.parse(hit._source["@timestamp"])
+                    ]
+        }
     }
-    playback()
-     var latlong = undefined
-    callbacklist(addAnotherVesseltoTable, latlong)
-}   
+    
+    shipCollection.push(ship)
+    }
+
+}
