@@ -92,6 +92,9 @@
         },
         "TYPE": {
           "type": "long"
+        },
+        "exposure": {
+          "type": "long"
         }
       }
     },
@@ -115,6 +118,9 @@
         },
         "geometry": {
           "type": "geo_shape"
+        },
+        "exposure": {
+          "type": "long"
         }
       }
     }

@@ -6,5 +6,5 @@
  "title": "ais-metric",
  "uiStateJSON": "{}",
  "version": 1,
- "visState": "{\"title\":\"ais-metric\",\"type\":\"metric\",\"params\":{\"handleNoResults\":true,\"fontSize\":60},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}"
+ "visState": "{\"title\":\"ais-metric\",\"type\":\"metric\",\"params\":{\"handleNoResults\":true,\"fontSize\":\"32\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"exposure\",\"customLabel\":\"Total Insured Value (TIV)\"}}],\"listeners\":{}}"
 }

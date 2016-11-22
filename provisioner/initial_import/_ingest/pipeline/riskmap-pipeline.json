@@ -1,19 +1,12 @@
 {
-  "description": "A pipeline to set exposures",
+  "description": "A pipeline to set exposures, i.e. maximum insured asset value",
   "processors": [
     {
-      "set": {
-        "field": "exposure",
-        "value": "{{properties.Exp_TIV}}",
-        "on_failure": [
-          {
-            "set": {
-              "field": "exposure",
-              "value": "50000",
-              "override": false
-            }
-          }
-        ]
+      "script": {
+        "inline": "ctx.exposure = (ctx._type == 'warehouse') ? ctx.properties.Exp_TIV : params.default_exposure",
+        "params": {
+          "default_exposure": 500000
+        }
       }
     }
   ]
