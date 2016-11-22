@@ -22,10 +22,6 @@ function scrollAllforView(callback) {
             "query": {
                 "bool": {
                     "must": [
-
-                        {
-                            "terms": { "TYPE": ["70"] }
-                        },
                         {
                             "range": {
                                 "@timestamp": {
@@ -34,6 +30,14 @@ function scrollAllforView(callback) {
                                     "format": "epoch_millis"
                                 }
                             }
+                        },
+                        {
+                          "range":{
+                            "TYPE": {
+                                    "gte": 70,
+                                    "lte": 70
+                                }
+                          }
                         }
 
                     ]

@@ -1,10 +1,4 @@
-//on start count all vessels
-/*$(function () {
 
-    var latlong = undefined
-    countVessels(VesselTableCounter, getAllVessels, latlong)
-
-})*/
 
 //get all Vessels in elasticsearch for later use
 var dt;
@@ -68,17 +62,13 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
     client.search({
         index: 'ais-*',
         type: 'vessel',
-        size: '1000',
+        size: '10000',
         scroll: '30s',
         body: {
             "sort": { "@timestamp": { "order": "asc" } },
             "query": {
                 "bool": {
                     "must": [
-
-                        {
-                            "terms": { "TYPE": ["70"] }
-                        },
                         {
                             "range": {
                                 "@timestamp": {
@@ -87,6 +77,14 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
                                     "format": "epoch_millis"
                                 }
                             }
+                        },
+                        {
+                          "range":{
+                            "TYPE": {
+                                    "gte": 70,
+                                    "lte": 70
+                                }
+                          }
                         },
                         {
                             "geo_bounding_box": {
@@ -141,111 +139,6 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
         }
     });
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//elasticsearch counting all vessels in latlong area. If not set latlong = max lat, max lon
-
-function countVessels(callback, callback2, latlong) {
-
-    var topleftlat = 89.00;
-    var topleftlon = -180.00;
-    var bottomrightlat = -90.00;
-    var bottomrightlon = 180.00;
-    if (typeof latlong != "undefined") {
-
-        topleftlat = latlong[1].lat;
-        topleftlon = latlong[1].lng;
-        bottomrightlat = latlong[3].lat;
-        bottomrightlon = latlong[3].lng;
-    }
-
-    client.search({
-        index: 'ais-*',
-        type: 'vessel',
-        size: 1000,
-        body: {
-
-            "query": {
-                "bool": {
-                    "must": [
-                        {
-                            "terms": { "TYPE": ["70"] }
-                        },
-                        {
-                            "range": {
-                                "@timestamp": {
-                                    "gte": 1477954800000,
-                                    "lte": 1480546799999,
-                                    "format": "epoch_millis"
-                                }
-                            }
-                        },
-                        {
-                            "geo_bounding_box": {
-                                "LOCATION": {
-                                    "top_left": {
-                                        "lat": topleftlat,
-                                        "lon": topleftlon
-                                    },
-                                    "bottom_right": {
-                                        "lat": bottomrightlat,
-                                        "lon": bottomrightlon
-                                    }
-                                }
-                            }
-
-                        },
-                    ],
-                }
-            }
-        }
-
-    }, function (err, response, _respcode) {
-        //do callback function after finishing countVessels 
-        if (err != undefined) {
-            alert("Elasticsearch hasn't been started or is not ready yet")
-        }
-        callback(response.hits.total)
-        callback2(response)
-    });
 }
 
 //create table content for html index 
