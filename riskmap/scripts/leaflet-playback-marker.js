@@ -118,9 +118,7 @@ function createPlayback() {
     }
 
 }
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+
 var playbackitem;
 //change Speed of playback
 function changeSpeed(value) {

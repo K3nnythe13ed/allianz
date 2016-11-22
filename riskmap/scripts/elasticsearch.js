@@ -125,7 +125,7 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
             }
         });
 
-        if (20000 > allMMSI.length) {
+        if (response.hits.total > allMMSI.length) {
             // ask elasticsearch for the next set of hits from this search
             client.scroll({
                 scrollId: response._scroll_id,

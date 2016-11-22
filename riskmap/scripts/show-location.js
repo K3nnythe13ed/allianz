@@ -7,7 +7,7 @@ $(function addMarkerLayer() {
 var checkLayerIsActive = false;
 var markerLayer = L.layerGroup();
 function CreateMapLayerMarker() {
-    //foreach location in demoLocations cakk onEachFeature
+    //foreach location in demoLocations call onEachFeature
     var datalocations = L.geoJson(demoLocations, {
         onEachFeature: onEachFeature
     })
@@ -41,8 +41,8 @@ function CreateMapLayerMarker() {
             iconAnchor: [9, 18], 
             popupAnchor: [0, -50] 
         });
-        var lat = feature.geometry.coordinates[0];
-        var lon = feature.geometry.coordinates[1];
+        var lat = feature.geometry.coordinates[1];
+        var lon = feature.geometry.coordinates[0];
         var popupContent;
         var mark;
         //use icon depending on Exp_TIV

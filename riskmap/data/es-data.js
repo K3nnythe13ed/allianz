@@ -1,6 +1,7 @@
 $(function () {
     scrollAllforView(pushASingleVesselFromEStoHash)
     VesselTableCounter();
+    console.log(shipCollection)
 })
 
 var shipCollection = [];
@@ -62,24 +63,28 @@ function scrollAllforView(callback) {
             var latlong = undefined
             createPlayback()
             countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
-           // createVesselforCollectionTimeBased(createPlayback, countVesselsBasedOnHash);
+           
             
         }
     });
 }
 
 
-
-
-function pushASingleVesselFromEStoHash(hit) {
-    var update;
-    for(var i = 0; i<shipCollection.length; i++)
+function searchShipCollectionForMMSI(mmsi)
+{
+     var update;
+for(var i = 0; i<shipCollection.length; i++)
     {
-        if(shipCollection[i].properties.MMSI == hit._source.MMSI){
+        if(shipCollection[i].properties.MMSI == mmsi){
             update = i;
         }
        
     }
+    return update
+}
+function pushASingleVesselFromEStoHash(hit) {
+    var update = searchShipCollectionForMMSI(hit._source.MMSI);
+    
     if(update != undefined)
     {
         shipCollection[update].geometry.coordinates.push(
