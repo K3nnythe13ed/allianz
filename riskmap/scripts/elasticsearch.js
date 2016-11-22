@@ -41,12 +41,17 @@ function addAnotherVesseltoTable(hit) {
     data1.push(pushdata);
 }
 var allMMSI = {}
-function countVesselsBasedOnHash(callback, latlong) {
+function countVesselsBasedOnHash(callback, latlong, currentdate) {
     allMMSI = {}
-
+    
     var today = new Date();
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
+    if(typeof(currentdate != "undefinded"))
+    {
+        todayToEpoch = currentdate +3600000
+        priorData = todayToEpoch - 300000
+    }
 
     var topleftlat = 89.00;
     var topleftlon = -180.00;
@@ -111,11 +116,14 @@ function countVesselsBasedOnHash(callback, latlong) {
         data1 = [];
         // collect the title from each response
         response.hits.hits.forEach(function (hit) {
-            if (hit._source.MMSI in vesselCollection && !(hit._source.MMSI in allMMSI)) {
+            for(var i = 0; i<shipCollection.length; i++)
+            {
+            if (hit._source.MMSI == shipCollection[i].properties.MMSI && !(hit._source.MMSI in allMMSI)) {
                 callback(hit)
                 allMMSI[hit._source.MMSI] = {
                     MMSI: hit._source.MMSI
                 }
+            }
             }
         });
 

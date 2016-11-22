@@ -3,8 +3,6 @@ $(function () {
     VesselTableCounter();
 })
 
-
-var vesselCollection = {}
 var shipCollection = [];
 
 
@@ -50,7 +48,7 @@ function scrollAllforView(callback) {
             allTitles.push(hit._id)
         });
 
-        if (30000 > allTitles.length) {
+        if (response.hits.total > allTitles.length) {
             // ask elasticsearch for the next set of hits from this search
             client.scroll({
                 scrollId: response._scroll_id,

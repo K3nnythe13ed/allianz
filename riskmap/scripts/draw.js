@@ -29,11 +29,13 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
 })
 var layer_leaflet_id;
 map.on(L.Draw.Event.CREATED, function (e) {
+    var currenttime = playbackitem.getTime();
+    console.log(currenttime)
     var type = e.layerType,
         layer = e.layer;
     //on create do elasticsearch function countVessels input(function replaceTableValue as callback, layer latlongs)
     //countVessels(replaceTableValue, getAllVessels, layer.getLatLngs())
-    countVesselsBasedOnHash(addAnotherVesseltoTable, layer.getLatLngs())
+    countVesselsBasedOnHash(addAnotherVesseltoTable, layer.getLatLngs(), currenttime)
 
     editableLayers.addLayer(layer);
     layer_leaflet_id = layer._leaflet_id

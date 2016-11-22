@@ -53,6 +53,9 @@ function createPlayback() {
         dateControl: true,
         orientIcons: true,
         popups: true,
+        tracksLayer: false,
+        tickLen: 4000,
+        fadeMarkersWhenStale: true,
         maxInterpolationTime: 2 * 60 * 1000,
 
         // layer and marker options
@@ -105,6 +108,7 @@ function createPlayback() {
     // A callback so timeline is set after changing playback time
     function onPlaybackTimeChange(ms) {
         timeline.setCustomTime(new Date(ms));
+        
     };
 
     function onCustomTimeChange(properties) {
