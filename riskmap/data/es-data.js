@@ -33,14 +33,13 @@ function scrollAllforView(callback) {
                             }
                         },
                         {
-                          "range":{
-                            "TYPE": {
+                            "range": {
+                                "TYPE": {
                                     "gte": 70,
-                                    "lte": 70
+                                    "lt": 90
                                 }
-                          }
+                            }
                         }
-
                     ]
                 }
             }
