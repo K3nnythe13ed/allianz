@@ -42,15 +42,9 @@ function createPlayback() {
     // Setup timeline
     var timeline = new vis.Timeline(document.getElementById('timeline'), timelineData, timelineOptions);
 
-    // Set custom time marker (blue)
 
     timeline.setCustomTime(startTime);
-    // use curent Date to position the timeline marker
-
-    /* var currentTime = new Date().format('m-d-Y h:i:s');
-    timeline.setCustomTime(currentTime);
-    */
-
+    
 
     // Playback options
     var playbackOptions = {

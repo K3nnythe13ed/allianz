@@ -1,6 +1,6 @@
 $(function () {
     scrollAllforView(pushASingleVesselFromEStoHash)
-
+    VesselTableCounter();
 })
 
 
@@ -57,7 +57,8 @@ function scrollAllforView(callback) {
                 scroll: '30s'
             }, getMoreUntilDone);
         } else {
-            createVesselforCollectionTimeBased(createPlayback, countVessels);
+            createVesselforCollectionTimeBased(createPlayback, countVesselsBasedOnHash);
+            
         }
     });
 }
@@ -131,5 +132,5 @@ function createVesselforCollectionTimeBased(playback, callbacklist) {
     }
     playback()
      var latlong = undefined
-    callbacklist(VesselTableCounter, getAllVessels, latlong)
+    callbacklist(addAnotherVesseltoTable, latlong)
 }   
