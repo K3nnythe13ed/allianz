@@ -10,7 +10,7 @@ function createVesselIndex(callback, callbackforlater) {
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
     client.search({
-        index: 'ais-*',
+        index: 'logstash-*',
         type: 'vessel',
         size: maxVessels,
         body: {
@@ -201,7 +201,7 @@ function searchAllforView(callback, playback) {
     var priorDate = new Date().setDate(today.getDate() - 30)
 
     client.search({
-        index: 'ais-*',
+        index: 'logstash-*',
         type: 'vessel',
         size: maxVessels,
         body: {

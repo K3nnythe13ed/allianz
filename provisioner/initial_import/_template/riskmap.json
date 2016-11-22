@@ -1,14 +1,27 @@
 {
-  "template": "ais-*",
+  "template": "logstash-*",
   "settings": {
     "index.refresh_interval": "5s"
   },
   "mappings": {
     "vessel": {
+      "_source": {
+        "enabled": true,
+        "excludes": [
+          "offset",
+          "input_type",
+          "source",
+          "type",
+          "tags",
+          "@version",
+          "beat.*",
+          "host"
+        ]
+      },
       "properties": {
-        "@timestamp": { 
-          "type": "date" 
-          },
+        "@timestamp": {
+          "type": "date"
+        },
         "A": {
           "type": "long"
         },
@@ -79,6 +92,29 @@
         },
         "TYPE": {
           "type": "long"
+        }
+      }
+    },
+    "warehouse": {
+      "_source": {
+        "enabled": true,
+        "excludes": [
+          "offset",
+          "input_type",
+          "source",
+          "type",
+          "tags",
+          "@version",
+          "beat.*",
+          "host"
+        ]
+      },
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "geometry": {
+          "type": "geo_shape"
         }
       }
     }

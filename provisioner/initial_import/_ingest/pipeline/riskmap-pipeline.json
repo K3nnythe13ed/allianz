@@ -1,0 +1,20 @@
+{
+  "description": "A pipeline to set exposures",
+  "processors": [
+    {
+      "set": {
+        "field": "exposure",
+        "value": "{{properties.Exp_TIV}}",
+        "on_failure": [
+          {
+            "set": {
+              "field": "exposure",
+              "value": "50000",
+              "override": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -44,7 +44,7 @@ function countVessels(callback, callback2, latlong) {
     }
 
     client.search({
-        index: 'ais-*',
+        index: 'logstash-*',
         type: 'vessel',
         size: maxVessels,
         body: {

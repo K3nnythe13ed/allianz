@@ -1,7 +1,7 @@
 {
  "description": "",
  "kibanaSavedObjectMeta": {
-  "searchSourceJSON": "{\"index\":\"ais-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+  "searchSourceJSON": "{\"index\":\"logstash-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
  },
  "title": "ais-metric",
  "uiStateJSON": "{}",
