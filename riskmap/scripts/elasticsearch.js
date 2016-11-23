@@ -192,7 +192,7 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
     }
 
     client.search({
-        index: 'logstash-*',
+        index: 'ais-*',
         type: 'vessel',
         size: '10000',
         scroll: '30s',

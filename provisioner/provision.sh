@@ -2,8 +2,6 @@
 
 set -e
 
-trap "exit" SIGHUP SIGINT SIGTERM
-
 echo "-> Waiting for ElasticSearch to come up"
 while true; do
 	nc -q 1 elasticsearch 9200 2>/dev/null && break
