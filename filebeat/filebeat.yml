@@ -16,15 +16,11 @@ filebeat.prospectors:
 # Below are the prospector specific configurations.
 
 - input_type: log
-  paths:
-    - /log/aishub_*.json
-  document_type: vessel
-  registry_file: /log/.registry
 
-- input_type: log
+  # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /log/warehouse_*.json
-  document_type: warehouse
+    - /log/*.json
+    #- c:\programdata\elasticsearch\logs\*
   registry_file: /log/.registry
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are

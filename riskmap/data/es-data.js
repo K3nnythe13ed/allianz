@@ -14,7 +14,7 @@ function scrollAllforView(callback) {
     var priorDate = new Date().setDate(today.getDate() - 30)
     // first we do a search, and specify a scroll timeout
     client.search({
-        index: 'logstash-*',
+        index: 'ais-*',
         type: 'vessel',
         size: '1000',
         scroll: '30s',
@@ -33,13 +33,14 @@ function scrollAllforView(callback) {
                             }
                         },
                         {
-                            "range": {
-                                "TYPE": {
+                          "range":{
+                            "TYPE": {
                                     "gte": 70,
-                                    "lt": 90
+                                    "lte": 70
                                 }
-                            }
+                          }
                         }
+
                     ]
                 }
             }
