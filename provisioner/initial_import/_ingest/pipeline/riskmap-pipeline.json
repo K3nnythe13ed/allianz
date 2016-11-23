@@ -3,6 +3,7 @@
   "processors": [
     {
       "script": {
+        "lang": "painless",
         "inline": "ctx.exposure = (ctx._type == 'warehouse') ? ctx.properties.Exp_TIV : params.default_exposure",
         "params": {
           "default_exposure": 500000
