@@ -34,9 +34,141 @@ function addAnotherVesseltoTable(hit) {
     }
     data1.push(pushdata);
 }
+
+
+var lasttimefound = []
+
+
+var allMMSI = {}
+function countVesselsBasedOnHash(callback, latlong) {
+    
+    var today = new Date();
+    var todayToEpoch = today.getTime();
+    var priorDate = new Date().setDate(today.getDate() - 30)
+
+    var topleftlat = 89.00;
+    var topleftlon = -180.00;
+    var bottomrightlat = -90.00;
+    var bottomrightlon = 180.00;
+    if (typeof latlong != "undefined") {
+
+        topleftlat = latlong[1].lat;
+        topleftlon = latlong[1].lng;
+        bottomrightlat = latlong[3].lat;
+        bottomrightlon = latlong[3].lng;
+    }
+
+    client.search({
+        index: 'ais-*',
+        type: 'vessel',
+        size: '10000',
+        scroll: '30s',
+        body: {
+            "sort": { "@timestamp": { "order": "asc" } },
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": priorDate,
+                                    "lte": todayToEpoch,
+                                    "format": "epoch_millis"
+                                }
+                            }
+                        },
+                        {
+                          "range":{
+                            "TYPE": {
+                                    "gte": 70,
+                                    "lte": 70
+                                }
+                          }
+                        },
+                        {
+                            "geo_bounding_box": {
+                                "LOCATION": {
+                                    "top_left": {
+                                        "lat": topleftlat,
+                                        "lon": topleftlon
+                                    },
+                                    "bottom_right": {
+                                        "lat": bottomrightlat,
+                                        "lon": bottomrightlon
+                                    }
+                                }
+                            }
+
+                        }
+
+                    ]
+                }
+            }
+        }
+
+    }, function getMoreUntilDone(error, response) {
+        
+        response.hits.hits.forEach(function (hit) {
+            pushorupdate(hit)
+            
+        });
+
+        if (response.hits.total > allMMSI.length) {
+            // ask elasticsearch for the next set of hits from this search
+            client.scroll({
+                scrollId: response._scroll_id,
+                scroll: '30s'
+            }, getMoreUntilDone);
+        } else {
+
+            replaceTableValue(Object.keys(allMMSI).length)
+
+            dt.load(data1);
+        }
+    });
+
+}
+function pushorupdate(hit)
+{
+    listedtime = Date.parse(hit._source["@timestamp"])
+    for(var i = 0; i<lasttimefound;i++)
+    {
+        
+        if(listedtime <= playbackitem.getDate()){
+        if(hit._source.MMSI == lasttimefound[i].mmsi)
+        {
+            lasttimefound[i].time = 
+        }
+        else{
+            var newtimefound 
+            = {
+                "MMSI":  hit._source.MMSI,
+                "time":  Date.parse(hit._source["@timestamp"])
+            }
+        }
+        }
+    }
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var allMMSI = {}
 function countVesselsBasedOnHash(callback, latlong, currentdate) {
-    allMMSI = {}
     
     var today = new Date();
     var todayToEpoch = today.getTime();
@@ -44,7 +176,7 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
     if(typeof(currentdate != "undefinded"))
     {
         todayToEpoch = currentdate +3600000
-        priorData = todayToEpoch - 300000
+        priorDate = todayToEpoch - 100000
     }
 
     var topleftlat = 89.00;
