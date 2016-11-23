@@ -1,7 +1,7 @@
 {
  "description": "",
  "kibanaSavedObjectMeta": {
-  "searchSourceJSON": "{\"index\":\"ais-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+  "searchSourceJSON": "{\"index\":\"logstash-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
  },
  "title": "ais-tilemap",
  "uiStateJSON": "{\"mapZoom\":10,\"mapCenter\":[51.87182775638583,4.393157958984375]}",
