@@ -1,12 +1,9 @@
-$(function addMarkerLayer() {
-    CreateMapLayerMarker();
-    //call CreateMapLayerMarker on start
-})
 
 
 var checkLayerIsActive = false;
 var markerLayer = L.layerGroup();
 function CreateMapLayerMarker() {
+
     //foreach location in demoLocations call onEachFeature
     var datalocations = L.geoJson(demoLocations, {
         onEachFeature: onEachFeature
