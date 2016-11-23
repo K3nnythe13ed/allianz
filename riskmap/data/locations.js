@@ -136,7 +136,7 @@ function createLocationCollection(CreateMapLayerMarker)
 
 
 client.search({
-  index: 'riskmap-*',
+  index: 'logstash-*',
   type: 'warehouse',
   size: '1000',
   body: {
