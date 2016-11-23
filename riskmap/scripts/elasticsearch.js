@@ -2,11 +2,11 @@
 
 //get all Vessels in elasticsearch for later use
 var dt;
-$(document).ready(function (e) {
-    
+$(document).ready(function(e) {
+
     dt = dynamicTable.config('vesselsearch',
-        ['field4', 'field1', 'field6', 'field5', 'field2', 'field3'],
-        ['Nr.', 'MMSI', 'IMO', 'Name', 'LAT', 'LON'], //set to null for field names instead of custom header names
+        ['field1', 'field5', 'field4', 'field2', 'field3'],
+        ['MMSI', 'IMO', 'Name', 'LAT', 'LON'], //set to null for field names instead of custom header names
         'There are no items to list...');
 })
 function getAllVessels(resp) {
@@ -31,7 +31,7 @@ var data1 = []
 function addAnotherVesseltoTable(hit) {
 
     var pushdata = {
-        field1: hit._source.MMSI, field2: hit._source.LOCATION.lat, field3: hit._source.LOCATION.lon, field4: Object.keys(allMMSI).length + 1, field5: hit._source.NAME, field6: hit._source.IMO
+        field1: hit._source.MMSI, field2: hit._source.LOCATION.lat, field3: hit._source.LOCATION.lon, field4: hit._source.NAME, field5: hit._source.IMO
     }
     data1.push(pushdata);
 }
@@ -41,22 +41,16 @@ var lasttimefound = []
 
 
 var allMMSI = {}
-function countVesselsBasedOnHash(callback, latlong) {
+function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
 
     var currentPlaybackTime = playbackitem.getTime()
-    var priorDate = currentPlaybackTime - 24*60*60*1000
+    var priorDate = currentPlaybackTime - (5 * 60 * 1000)
+    console.log(currentPlaybackTime)
 
-    var topleftlat = 89.00;
-    var topleftlon = -180.00;
-    var bottomrightlat = -90.00;
-    var bottomrightlon = 180.00;
-    if (typeof latlong != "undefined") {
-
-        topleftlat = latlong[1].lat;
-        topleftlon = latlong[1].lng;
-        bottomrightlat = latlong[3].lat;
-        bottomrightlon = latlong[3].lng;
-    }
+    topleftlat = latlong[1].lat;
+    topleftlon = latlong[1].lng;
+    bottomrightlat = latlong[3].lat;
+    bottomrightlon = latlong[3].lng;
 
     client.search({
         index: 'logstash-*',
@@ -69,19 +63,14 @@ function countVesselsBasedOnHash(callback, latlong) {
                 "bool": {
                     "must": [
                         {
-                            "filters": {
-                                "terms": {
-                                    "field": "MMSI"
-                                }
-                                },
                             "range": {
-                                    "@timestamp": {
-                                        "gte": priorDate,
-                                        "lte": currentPlaybackTime,
-                                        "format": "epoch_millis"
-                                    }
+                                "@timestamp": {
+                                    "gte": priorDate,
+                                    "lte": currentPlaybackTime,
+                                    "format": "epoch_millis"
                                 }
-                            },
+                            }
+                        },
                         {
                             "range": {
                                 "TYPE": {
@@ -104,22 +93,52 @@ function countVesselsBasedOnHash(callback, latlong) {
                                 }
                             }
 
-                        }
+                        },
+
+
 
                     ]
+                }
+            },
+            "aggs": {
+                "dedup": {
+                    "terms": {
+                        "field": "MMSI"
+                    },
+                    "aggs": {
+                        "dedup_docs": {
+                            "top_hits": {
+                                "size": 1
+                            }
+                        }
+                    }
                 }
             }
         }
 
     }, function getMoreUntilDone(error, response) {
         var index = []
-        response.hits.hits.forEach(function (hit) {
-            index.push(hit._source.MMSI);
-
+        var counter = 0;
+        console.log(response)
+        response.hits.hits.forEach(function(hit) {
+             index.push(hit._source.MMSI);
+        })
+        response.aggregations.dedup.buckets.forEach(function(hit) {
+            
+            mmsihit = hit.dedup_docs.hits.hits[0]
+            counter += 1
+            for (var i = 0; i < index.lengths; i++) {
+                console.log(index.length)
+                if (mmsihit._source.MMSI == shipCollection[i].properties.MMSI) {
+                    addAnotherVesseltoTable(mmsihit)
+                }
+            }
 
         });
 
         if (response.hits.total > index.length) {
+            console.log(response.hits.total)
+            console.log(index.length)
             // ask elasticsearch for the next set of hits from this search
             client.scroll({
                 scrollId: response._scroll_id,
@@ -127,7 +146,7 @@ function countVesselsBasedOnHash(callback, latlong) {
             }, getMoreUntilDone);
         } else {
 
-            replaceTableValue(Object.keys(allMMSI).length)
+            replaceTableValue(counter)
 
             dt.load(data1);
         }
@@ -228,7 +247,7 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
         }
         data1 = [];
         // collect the title from each response
-        response.hits.hits.forEach(function (hit) {
+        response.hits.hits.forEach(function(hit) {
             for (var i = 0; i < shipCollection.length; i++) {
                 if (hit._source.MMSI == shipCollection[i].properties.MMSI && !(hit._source.MMSI in allMMSI)) {
                     callback(hit)

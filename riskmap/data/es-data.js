@@ -1,7 +1,6 @@
 $(function () {
     scrollAllforView(pushASingleVesselFromEStoHash)
     VesselTableCounter();
-    console.log(shipCollection)
 })
 
 var shipCollection = [];
@@ -36,7 +35,7 @@ function scrollAllforView(callback) {
                           "range":{
                             "TYPE": {
                                     "gte": 70,
-                                    "lt": 90
+                                    "lt": 71
                                 }
                           }
                         }
