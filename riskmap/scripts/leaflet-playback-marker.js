@@ -179,7 +179,7 @@ function changeSlower() {
 }
 //change play/pause by clicking the play/pause-button
 function changePlay() {
-    console.log("test")
+   
     if (playbackitem.isPlaying()) {
         playbackitem.stop();
 

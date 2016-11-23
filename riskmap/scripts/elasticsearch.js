@@ -3,6 +3,7 @@
 //get all Vessels in elasticsearch for later use
 var dt;
 $(document).ready(function (e) {
+    
     dt = dynamicTable.config('vesselsearch',
         ['field4', 'field1', 'field6', 'field5', 'field2', 'field3'],
         ['Nr.', 'MMSI', 'IMO', 'Name', 'LAT', 'LON'], //set to null for field names instead of custom header names
@@ -41,10 +42,9 @@ var lasttimefound = []
 
 var allMMSI = {}
 function countVesselsBasedOnHash(callback, latlong) {
-    
-    var today = new Date();
-    var todayToEpoch = today.getTime();
-    var priorDate = new Date().setDate(today.getDate() - 30)
+
+    var currentPlaybackTime = playbackitem.getTime()
+    var priorDate = currentPlaybackTime - 24*60*60*1000
 
     var topleftlat = 89.00;
     var topleftlon = -180.00;
@@ -64,26 +64,31 @@ function countVesselsBasedOnHash(callback, latlong) {
         size: '10000',
         scroll: '30s',
         body: {
-            "sort": { "@timestamp": { "order": "asc" } },
+            "sort": { "@timestamp": { "order": "desc" } },
             "query": {
                 "bool": {
                     "must": [
                         {
-                            "range": {
-                                "@timestamp": {
-                                    "gte": priorDate,
-                                    "lte": todayToEpoch,
-                                    "format": "epoch_millis"
+                            "filters": {
+                                "terms": {
+                                    "field": "MMSI"
                                 }
-                            }
-                        },
+                                },
+                            "range": {
+                                    "@timestamp": {
+                                        "gte": priorDate,
+                                        "lte": currentPlaybackTime,
+                                        "format": "epoch_millis"
+                                    }
+                                }
+                            },
                         {
-                          "range":{
-                            "TYPE": {
+                            "range": {
+                                "TYPE": {
                                     "gte": 70,
                                     "lte": 70
                                 }
-                          }
+                            }
                         },
                         {
                             "geo_bounding_box": {
@@ -107,13 +112,14 @@ function countVesselsBasedOnHash(callback, latlong) {
         }
 
     }, function getMoreUntilDone(error, response) {
-        
+        var index = []
         response.hits.hits.forEach(function (hit) {
-            pushorupdate(hit)
-            
+            index.push(hit._source.MMSI);
+
+
         });
 
-        if (response.hits.total > allMMSI.length) {
+        if (response.hits.total > index.length) {
             // ask elasticsearch for the next set of hits from this search
             client.scroll({
                 scrollId: response._scroll_id,
@@ -128,29 +134,7 @@ function countVesselsBasedOnHash(callback, latlong) {
     });
 
 }
-function pushorupdate(hit)
-{
-    listedtime = Date.parse(hit._source["@timestamp"])
-    for(var i = 0; i<lasttimefound;i++)
-    {
-        
-        if(listedtime <= playbackitem.getDate()){
-        if(hit._source.MMSI == lasttimefound[i].mmsi)
-        {
-            lasttimefound[i].time = 
-        }
-        else{
-            var newtimefound 
-            = {
-                "MMSI":  hit._source.MMSI,
-                "time":  Date.parse(hit._source["@timestamp"])
-            }
-        }
-        }
-    }
-    
 
-}
 
 
 
@@ -169,13 +153,12 @@ function pushorupdate(hit)
 
 var allMMSI = {}
 function countVesselsBasedOnHash(callback, latlong, currentdate) {
-    
+
     var today = new Date();
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
-    if(typeof(currentdate != "undefinded"))
-    {
-        todayToEpoch = currentdate +3600000
+    if (typeof (currentdate != "undefinded")) {
+        todayToEpoch = currentdate + 3600000
         priorDate = todayToEpoch - 100000
     }
 
@@ -211,12 +194,12 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
                             }
                         },
                         {
-                          "range":{
-                            "TYPE": {
+                            "range": {
+                                "TYPE": {
                                     "gte": 70,
                                     "lte": 70
                                 }
-                          }
+                            }
                         },
                         {
                             "geo_bounding_box": {
@@ -246,14 +229,13 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
         data1 = [];
         // collect the title from each response
         response.hits.hits.forEach(function (hit) {
-            for(var i = 0; i<shipCollection.length; i++)
-            {
-            if (hit._source.MMSI == shipCollection[i].properties.MMSI && !(hit._source.MMSI in allMMSI)) {
-                callback(hit)
-                allMMSI[hit._source.MMSI] = {
-                    MMSI: hit._source.MMSI
+            for (var i = 0; i < shipCollection.length; i++) {
+                if (hit._source.MMSI == shipCollection[i].properties.MMSI && !(hit._source.MMSI in allMMSI)) {
+                    callback(hit)
+                    allMMSI[hit._source.MMSI] = {
+                        MMSI: hit._source.MMSI
+                    }
                 }
-            }
             }
         });
 
