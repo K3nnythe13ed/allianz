@@ -23,8 +23,7 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
 
     editableLayers.clearLayers();
     latlong = undefined
-
-    countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
+    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
 
 })
 var layer_leaflet_id;
@@ -35,7 +34,7 @@ map.on(L.Draw.Event.CREATED, function (e) {
     //on create do elasticsearch function countVessels input(function replaceTableValue as callback, layer latlongs)
 
     latlong = layer.getLatLngs()
-    AmountofVesselsInArea(addAnotherVesseltoTable, latlong)
+    AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse)
 
     editableLayers.addLayer(layer);
     layer_leaflet_id = layer._leaflet_id
@@ -45,13 +44,13 @@ map.on(L.Draw.Event.CREATED, function (e) {
 map.on(L.Draw.Event.DELETESTART, function (e) {
     editableLayers.clearLayers();
     latlong = undefined
-    countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
+    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
 });
 
 map.on(L.Draw.Event.EDITED, function (e) {
 
     latlong = e.layers._layers[layer_leaflet_id]._latlngs;
-    AmountofVesselsInArea(addAnotherVesseltoTable, latlong)
+    AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse)
 
 
 });

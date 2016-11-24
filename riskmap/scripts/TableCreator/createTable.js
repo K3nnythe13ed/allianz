@@ -84,3 +84,40 @@ var dynamicTable = (function () {
     };
 } ());
 
+function VesselTableCounter() {
+
+    var kibanatable = document.getElementById("vesselcount");
+    var tbdy = document.createElement('tbody');
+    var tr = document.createElement('tr');
+    var tdp = document.createElement('td');
+    var tdc = document.createElement('td');
+    tdp.appendChild(document.createTextNode('Vessels counted:'));
+    tdc.appendChild(document.createTextNode(''));
+
+    tr.appendChild(tdp);
+    tr.appendChild(tdc);
+    tbdy.appendChild(tr);
+
+    var tr = document.createElement('tr');
+    var tdp = document.createElement('td');
+    var tdc = document.createElement('td');
+    tdp.appendChild(document.createTextNode('Exposure counted:'));
+    tdc.appendChild(document.createTextNode(''));
+    tr.appendChild(tdp);
+    tr.appendChild(tdc);
+    tbdy.appendChild(tr);
+    kibanatable.appendChild(tbdy);
+}
+// replace value of table on new draw
+function replaceTableValue(response, exposure) {
+    exp = formatThousand(String(exposure))
+    var kibanatable = document.getElementById("vesselcount");
+    kibanatable.rows[0].cells[1].innerHTML = response;
+    kibanatable.rows[1].cells[1].innerHTML = exp;
+
+}
+function replaceTableValueOfPlayback(speed) {
+    var kibanatable = document.getElementById("playbackspeedtable");
+    kibanatable.rows[1].cells[1].innerHTML = speed;
+
+}

@@ -2,6 +2,19 @@
 
 var checkLayerIsActive = false;
 var markerLayer = L.layerGroup();
+function formatThousand(nStr) {
+            var sep = '.';
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + sep + '$2');
+            }
+            return x1 + x2;
+        }
+
 function CreateMapLayerMarker() {
 
     //foreach location in demoLocations call onEachFeature
@@ -64,18 +77,7 @@ function CreateMapLayerMarker() {
             }
         }
         //format Exp_TIV 
-        function formatThousand(nStr) {
-            var sep = '.';
-            nStr += '';
-            x = nStr.split('.');
-            x1 = x[0];
-            x2 = x.length > 1 ? '.' + x[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + sep + '$2');
-            }
-            return x1 + x2;
-        }
+        
 
 
         mark.bindPopup

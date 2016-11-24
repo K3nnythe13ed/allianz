@@ -1,6 +1,3 @@
-
-
-//get all Vessels in elasticsearch for later use
 var dt;
 $(document).ready(function (e) {
 
@@ -9,23 +6,6 @@ $(document).ready(function (e) {
         ['MMSI', 'IMO', 'Name', 'LAT', 'LON'], //set to null for field names instead of custom header names
         'There are no items to list...');
 })
-function getAllVessels(resp) {
-    if (dt != undefined) {
-        dt.clear();
-    }
-    var data1 = []
-    for (let i = 0; i < resp.hits.hits.length; i++) {
-        var pushdata = {
-            field1: resp.hits.hits[i]._source.MMSI, field2: resp.hits.hits[i]._source.LOCATION.lat, field3: resp.hits.hits[i]._source.LOCATION.lon, field4: i + 1, field5: resp.hits.hits[i]._source.NAME, field6: resp.hits.hits[i]._source.IMO
-        }
-        data1.push(pushdata);
-    }
-    dt.load(data1);
-}
-
-
-
-
 
 var data1 = []
 function addAnotherVesseltoTable(hit) {
@@ -37,11 +17,9 @@ function addAnotherVesseltoTable(hit) {
 }
 
 
-var lasttimefound = []
 
 
-var allMMSI = {}
-function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
+function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse) {
 
     var currentPlaybackTime = playbackitem.getTime()
     var priorDate = currentPlaybackTime - (24 * 60 * 60 * 1000)
@@ -126,13 +104,13 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
                                         }
                                     },
                                     "aggs": {
-                                        "detime_docs": {
+                                        "group_by_geo_docs": {
                                             "top_hits": {
-                                                "size": 1000,
+                                                "size": 1,
                                                 "sort": [
                                                     {
                                                         "@timestamp": {
-                                                            "order": "desc"
+                                                            "order": "asc"
                                                         }
                                                     }
                                                 ]
@@ -154,30 +132,34 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
     }, function getMoreUntilDone(error, response) {
         var index = []
         var counter = 0;
+        var exposure = 0;
         if (dt != undefined) {
             dt.clear();
         }
         data1 = [];
 
         response.aggregations.dedup.buckets.forEach(function (hit) {
-
-            mmsihit = hit.detime.buckets[0].group_by_geo.buckets.vessel.detime_docs.hits.hits[0]
+            mmsihit = hit.detime.buckets[0].group_by_geo.buckets.vessel.group_by_geo_docs.hits.hits[0]
             if (mmsihit != undefined) {
                 counter += 1
 
                 addAnotherVesseltoTable(mmsihit)
-
+                exposure += mmsihit._source.exposure
             }
 
         });
 
-
-        replaceTableValue(counter)
+        // getTotalExposureOfWarehouse(latlong)
+        replaceTableValue(counter, percentageCalc(exposure, 15))
 
         dt.load(data1);
 
     });
 
+}
+
+function percentageCalc(value, per) {
+    return value / 100 * per
 }
 
 
@@ -195,9 +177,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
 
 
 
-
-var allMMSI = {}
-function countVesselsBasedOnHash(callback, latlong) {
+function showAllVesselsOfPastDayInTable(callback, latlong) {
 
     var today = new Date();
     var todayToEpoch = today.getTime();
@@ -268,7 +248,7 @@ function countVesselsBasedOnHash(callback, latlong) {
         if (dt != undefined) {
             dt.clear();
         }
-        data1 = [];
+        var allMMSI = {};
         // collect the title from each response
         response.hits.hits.forEach(function (hit) {
             for (var i = 0; i < shipCollection.length; i++) {
@@ -292,30 +272,8 @@ function countVesselsBasedOnHash(callback, latlong) {
             replaceTableValue(Object.keys(allMMSI).length)
 
             dt.load(data1);
+
         }
     });
-
-}
-
-//create table content for html index 
-function VesselTableCounter() {
-
-    var kibanatable = document.getElementById("vesselcount");
-    var tbdy = document.createElement('tbody');
-    var tr = document.createElement('tr');
-    var tdp = document.createElement('td');
-    var tdc = document.createElement('td');
-    tdp.appendChild(document.createTextNode('Vessels counted:'));
-    tdc.appendChild(document.createTextNode(''));
-    tr.appendChild(tdp);
-    tr.appendChild(tdc);
-    tbdy.appendChild(tr);
-    kibanatable.appendChild(tbdy);
-}
-// replace value of table on new draw
-function replaceTableValue(response) {
-
-    var kibanatable = document.getElementById("vesselcount");
-    kibanatable.rows[0].cells[1].innerHTML = response;
 
 }

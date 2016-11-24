@@ -1,4 +1,8 @@
 //call function on start
+function getTickLen()
+{
+    return Math.ceil(shipCollection.length/100)*1000
+}
 function createPlayback() {
     // var shipCollection = demoAis;
     var newdate = shipCollection[0].properties.time[0]
@@ -49,12 +53,14 @@ function createPlayback() {
     // Playback options
     var playbackOptions = {
 
+        
+
 
         dateControl: true,
         orientIcons: true,
         popups: true,
         tracksLayer: false,
-        tickLen: 5000,
+        tickLen: getTickLen(),
         fadeMarkersWhenStale: true,
         staleTime: 3 * 60 * 1000,
         maxInterpolationTime: 2 * 60 * 1000,
@@ -105,18 +111,26 @@ function createPlayback() {
 
     // Set timeline time change event, so cursor is set after moving custom time (blue)
     timeline.on('timechange', onCustomTimeChange);
-
+    timeline.on('timechanged', onChange);
     // A callback so timeline is set after changing playback time
     function onPlaybackTimeChange(ms) {
         timeline.setCustomTime(new Date(ms));
-        //countVesselsBasedOnHash(addAnotherVesseltoTable, latlong, playbackitem.getTime())
+        
     };
-
+    function onChange(properties)
+    {
+         if(latlong != undefined){
+            AmountofVesselsInArea(addAnotherVesseltoTable, latlong)
+            }
+    }
     function onCustomTimeChange(properties) {
+        
         if (!playback.isPlaying()) {
-            playback.setCursor(properties.time.getTime());
-            //countVesselsBasedOnHash(addAnotherVesseltoTable, latlong, playbackitem.getTime())
+            
+            playback.setCursor(properties.time.getTime());  
+      
         }
+       
     }
 
 }
@@ -157,6 +171,7 @@ function changeFaster() {
             }
         }
     }
+replaceTableValueOfPlayback(speed)
 }
 //change speed of playback by clicking the slower button
 function changeSlower() {
@@ -178,18 +193,19 @@ function changeSlower() {
             }
         }
     }
+    replaceTableValueOfPlayback(speed)
 }
 //change play/pause by clicking the play/pause-button
 function changePlay() {
 
     if (playbackitem.isPlaying()) {
         playbackitem.stop();
-
+         replaceTableValueOfPlayback("")
     }
     else {
 
         playbackitem.start();
         playbackitem.setSpeed(10);
-
+        replaceTableValueOfPlayback(10)
     }
 }

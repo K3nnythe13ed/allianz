@@ -55,10 +55,12 @@
 	<script src="data/ais-demo.js"></script>
 	<script src="data/es-data.js"></script>
 	<!--Executable scripts -->
-	
-	<script src="scripts/elasticsearch.js"></script>
-	<script src="scripts/leaflet-playback-marker.js"></script>
 	<script src="scripts/show-location.js"></script>
+	<script src="scripts/elasticsearchofwarehouse.js"></script>
+	<script src="scripts/elasticsearchofvessel.js"></script>
+	
+	<script src="scripts/leaflet-playback-marker.js"></script>
+	
 	<script src="scripts/draw.js"></script>
 	<script src="scripts/layer-style.js"></script>
 	<!--ID Kibana aligning all objects taken from elasticsearch -->
@@ -115,12 +117,13 @@
 				</td>
 			</tr>
 		</table>
-		<table>
+		<table id="playbackspeedtable">
 			<tr>
 				<td><input type="button" value="slower" onclick="changeSlower()"></td>
 				<td><input type="button" value="Play/Pause" onclick="changePlay()"></td>
 				<td><input type="button" value="faster" onclick="changeFaster()"></td>
 			</tr>
+			<tr><td></td><td></td><td></td></tr>
 		</table>
 	</div>
 

@@ -10,16 +10,7 @@ function createLocationCollection(CreateMapLayerMarker) {
     type: 'warehouse',
     size: '1000',
     body: {
-      "sort": { "@timestamp": { "order": "desc" } },
-      "query": {
-        "bool": {
-          "must": [
-            {}
-
-          ]
-        }
-      }
-
+      "sort": { "@timestamp": { "order": "desc" } }
     }
 
   }, function run(error, response) {

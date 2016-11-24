@@ -60,7 +60,7 @@ function scrollAllforView(callback) {
         } else {
             var latlong = undefined
             createPlayback()
-            countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
+            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
 
 
         }
