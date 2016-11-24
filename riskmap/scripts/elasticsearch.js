@@ -2,7 +2,7 @@
 
 //get all Vessels in elasticsearch for later use
 var dt;
-$(document).ready(function(e) {
+$(document).ready(function (e) {
 
     dt = dynamicTable.config('vesselsearch',
         ['field1', 'field5', 'field4', 'field2', 'field3'],
@@ -44,21 +44,28 @@ var allMMSI = {}
 function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
 
     var currentPlaybackTime = playbackitem.getTime()
-    var priorDate = currentPlaybackTime - (5 * 60 * 1000)
-    console.log(currentPlaybackTime)
+    var priorDate = currentPlaybackTime - (24 * 60 * 60 * 1000)
 
-    topleftlat = latlong[1].lat;
-    topleftlon = latlong[1].lng;
-    bottomrightlat = latlong[3].lat;
-    bottomrightlon = latlong[3].lng;
+    var topleftlat = 89.00;
+    var topleftlon = -180.00;
+    var bottomrightlat = -90.00;
+    var bottomrightlon = 180.00;
+    if (typeof latlong != "undefined") {
+
+        topleftlat = latlong[1].lat;
+        topleftlon = latlong[1].lng;
+        bottomrightlat = latlong[3].lat;
+        bottomrightlon = latlong[3].lng;
+    }
 
     client.search({
         index: 'logstash-*',
         type: 'vessel',
-        size: '10000',
-        scroll: '30s',
+        size: '0',
         body: {
-            "sort": { "@timestamp": { "order": "desc" } },
+            "sort": {
+                "@timestamp": { "order": "desc" }
+            },
             "query": {
                 "bool": {
                     "must": [
@@ -78,37 +85,64 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
                                     "lte": 70
                                 }
                             }
-                        },
-                        {
-                            "geo_bounding_box": {
-                                "LOCATION": {
-                                    "top_left": {
-                                        "lat": topleftlat,
-                                        "lon": topleftlon
-                                    },
-                                    "bottom_right": {
-                                        "lat": bottomrightlat,
-                                        "lon": bottomrightlon
-                                    }
-                                }
-                            }
-
-                        },
-
-
-
+                        }
                     ]
                 }
             },
             "aggs": {
                 "dedup": {
                     "terms": {
-                        "field": "MMSI"
+                        "field": "MMSI",
+                        "size": 50000,
                     },
                     "aggs": {
-                        "dedup_docs": {
-                            "top_hits": {
-                                "size": 1
+                        "detime": {
+                            "date_histogram": {
+                                "field": "@timestamp",
+                                "interval": "1m",
+                                "order": { "_key": "desc" }
+                            },
+                            "aggs": {
+                                "group_by_geo": {
+                                    "filters": {
+                                        "filters":
+                                        {
+                                            "vessel": {
+                                                "geo_bounding_box": {
+                                                    "LOCATION": {
+                                                        "top_left": {
+                                                            "lat": topleftlat,
+                                                            "lon": topleftlon
+                                                        },
+                                                        "bottom_right": {
+                                                            "lat": bottomrightlat,
+                                                            "lon": bottomrightlon
+                                                        }
+                                                    }
+
+
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "aggs": {
+                                        "detime_docs": {
+                                            "top_hits": {
+                                                "size": 1000,
+                                                "sort": [
+                                                    {
+                                                        "@timestamp": {
+                                                            "order": "desc"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+
+
+
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -116,40 +150,32 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
             }
         }
 
+
     }, function getMoreUntilDone(error, response) {
         var index = []
         var counter = 0;
-        console.log(response)
-        response.hits.hits.forEach(function(hit) {
-             index.push(hit._source.MMSI);
-        })
-        response.aggregations.dedup.buckets.forEach(function(hit) {
-            
-            mmsihit = hit.dedup_docs.hits.hits[0]
-            counter += 1
-            for (var i = 0; i < index.lengths; i++) {
-                console.log(index.length)
-                if (mmsihit._source.MMSI == shipCollection[i].properties.MMSI) {
-                    addAnotherVesseltoTable(mmsihit)
-                }
+        if (dt != undefined) {
+            dt.clear();
+        }
+        data1 = [];
+
+        response.aggregations.dedup.buckets.forEach(function (hit) {
+
+            mmsihit = hit.detime.buckets[0].group_by_geo.buckets.vessel.detime_docs.hits.hits[0]
+            if (mmsihit != undefined) {
+                counter += 1
+
+                addAnotherVesseltoTable(mmsihit)
+
             }
 
         });
 
-        if (response.hits.total > index.length) {
-            console.log(response.hits.total)
-            console.log(index.length)
-            // ask elasticsearch for the next set of hits from this search
-            client.scroll({
-                scrollId: response._scroll_id,
-                scroll: '30s'
-            }, getMoreUntilDone);
-        } else {
 
-            replaceTableValue(counter)
+        replaceTableValue(counter)
 
-            dt.load(data1);
-        }
+        dt.load(data1);
+
     });
 
 }
@@ -171,15 +197,12 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong) {
 
 
 var allMMSI = {}
-function countVesselsBasedOnHash(callback, latlong, currentdate) {
+function countVesselsBasedOnHash(callback, latlong) {
 
     var today = new Date();
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
-    if (typeof (currentdate != "undefinded")) {
-        todayToEpoch = currentdate + 3600000
-        priorDate = todayToEpoch - 100000
-    }
+
 
     var topleftlat = 89.00;
     var topleftlon = -180.00;
@@ -247,7 +270,7 @@ function countVesselsBasedOnHash(callback, latlong, currentdate) {
         }
         data1 = [];
         // collect the title from each response
-        response.hits.hits.forEach(function(hit) {
+        response.hits.hits.forEach(function (hit) {
             for (var i = 0; i < shipCollection.length; i++) {
                 if (hit._source.MMSI == shipCollection[i].properties.MMSI && !(hit._source.MMSI in allMMSI)) {
                     callback(hit)

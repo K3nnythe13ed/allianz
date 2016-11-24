@@ -32,12 +32,12 @@ function scrollAllforView(callback) {
                             }
                         },
                         {
-                          "range":{
-                            "TYPE": {
+                            "range": {
+                                "TYPE": {
                                     "gte": 70,
                                     "lt": 71
                                 }
-                          }
+                            }
                         }
                     ]
                 }
@@ -61,60 +61,57 @@ function scrollAllforView(callback) {
             var latlong = undefined
             createPlayback()
             countVesselsBasedOnHash(addAnotherVesseltoTable, latlong)
-           
-            
+
+
         }
     });
 }
 
 
-function searchShipCollectionForMMSI(mmsi)
-{
-     var update;
-for(var i = 0; i<shipCollection.length; i++)
-    {
-        if(shipCollection[i].properties.MMSI == mmsi){
+function searchShipCollectionForMMSI(mmsi) {
+    var update;
+    for (var i = 0; i < shipCollection.length; i++) {
+        if (shipCollection[i].properties.MMSI == mmsi) {
             update = i;
         }
-       
+
     }
     return update
 }
 function pushASingleVesselFromEStoHash(hit) {
     var update = searchShipCollectionForMMSI(hit._source.MMSI);
-    
-    if(update != undefined)
-    {
+
+    if (update != undefined) {
         shipCollection[update].geometry.coordinates.push(
             [
-                 hit._source.LOCATION.lon,
-                 hit._source.LOCATION.lat
+                hit._source.LOCATION.lon,
+                hit._source.LOCATION.lat
             ]
         )
         shipCollection[update].properties.time.push(Date.parse(hit._source["@timestamp"]))
     }
-    else{
-        
+    else {
+
         var ship = {
             "type": "Feature",
             "geometry": {
                 "type": "LineString",
-                    "coordinates": [
-                        [
-                    hit._source.LOCATION.lon,
-                    hit._source.LOCATION.lat
+                "coordinates": [
+                    [
+                        hit._source.LOCATION.lon,
+                        hit._source.LOCATION.lat
                     ]
-                    ]
+                ]
             },
             "properties": {
-                "MMSI":  hit._source.MMSI,
-                "time":  [
+                "MMSI": hit._source.MMSI,
+                "time": [
                     Date.parse(hit._source["@timestamp"])
-                    ]
+                ]
+            }
         }
-    }
-    
-    shipCollection.push(ship)
+
+        shipCollection.push(ship)
     }
 
 }

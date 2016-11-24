@@ -1,6 +1,6 @@
 //call function on start
 function createPlayback() {
-   // var shipCollection = demoAis;
+    // var shipCollection = demoAis;
     var newdate = shipCollection[0].properties.time[0]
 
     var newendTime = shipCollection[0].properties.time[shipCollection[0].properties.time.length - 1]
@@ -44,7 +44,7 @@ function createPlayback() {
 
 
     timeline.setCustomTime(startTime);
-    
+
 
     // Playback options
     var playbackOptions = {
@@ -55,6 +55,8 @@ function createPlayback() {
         popups: true,
         tracksLayer: false,
         tickLen: 5000,
+        fadeMarkersWhenStale: true,
+        staleTime: 3 * 60 * 1000,
         maxInterpolationTime: 2 * 60 * 1000,
 
         // layer and marker options
@@ -96,7 +98,7 @@ function createPlayback() {
     var playback = new L.Playback(map, null, onPlaybackTimeChange, playbackOptions);
     SaveMyPlayback(playback);
     playback.setData(shipCollection);
-    
+
 
 
 
@@ -179,7 +181,7 @@ function changeSlower() {
 }
 //change play/pause by clicking the play/pause-button
 function changePlay() {
-   
+
     if (playbackitem.isPlaying()) {
         playbackitem.stop();
 
@@ -188,6 +190,6 @@ function changePlay() {
 
         playbackitem.start();
         playbackitem.setSpeed(10);
-        
+
     }
 }
