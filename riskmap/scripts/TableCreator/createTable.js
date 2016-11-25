@@ -101,7 +101,16 @@ function VesselTableCounter() {
     var tr = document.createElement('tr');
     var tdp = document.createElement('td');
     var tdc = document.createElement('td');
-    tdp.appendChild(document.createTextNode('Exposure counted:'));
+    tdp.appendChild(document.createTextNode('Exposure Vessel counted:'));
+    tdc.appendChild(document.createTextNode(''));
+    tr.appendChild(tdp);
+    tr.appendChild(tdc);
+    tbdy.appendChild(tr);
+
+    var tr = document.createElement('tr');
+    var tdp = document.createElement('td');
+    var tdc = document.createElement('td');
+    tdp.appendChild(document.createTextNode('Exposure Warehouse counted:'));
     tdc.appendChild(document.createTextNode(''));
     tr.appendChild(tdp);
     tr.appendChild(tdc);
@@ -109,13 +118,23 @@ function VesselTableCounter() {
     kibanatable.appendChild(tbdy);
 }
 // replace value of table on new draw
-function replaceTableValue(response, exposure) {
-    exp = formatThousand(String(exposure))
+function replaceTableValue(response, exposurevessel, exposurewarehouse) {
+    expvess = formatThousand(String(exposurevessel))
+    expware = formatThousand(String(exposurewarehouse))
     var kibanatable = document.getElementById("vesselcount");
     kibanatable.rows[0].cells[1].innerHTML = response;
-    kibanatable.rows[1].cells[1].innerHTML = exp;
+    kibanatable.rows[1].cells[1].innerHTML = expvess;
 
 }
+    function replaceTableWarehouseValue(exposurewarehouse)
+    {
+        var kibanatable = document.getElementById("vesselcount");
+        expware = formatThousand(String(exposurewarehouse))
+        kibanatable.rows[2].cells[1].innerHTML = expware;
+
+    }
+    
+
 function replaceTableValueOfPlayback(speed) {
     var kibanatable = document.getElementById("playbackspeedtable");
     kibanatable.rows[1].cells[1].innerHTML = speed;

@@ -120,7 +120,7 @@ function createPlayback() {
     function onChange(properties)
     {
          if(latlong != undefined){
-            AmountofVesselsInArea(addAnotherVesseltoTable, latlong)
+            AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
             }
     }
     function onCustomTimeChange(properties) {

@@ -1,17 +1,24 @@
 
-function getTotalExposureOfWarehouse(latlong) {
-    var currentPlaybackTime = playbackitem.getEndTime()
-    var priorDate = currentPlaybackTime - (30 * 24 * 60 * 60 * 1000)
+function getTotalExposureOfWarehouse(latlong, giveback, getList) {
+  
+    var countingList = {
+        "type": "FeatureCollection",
+        "features": [
+        ]
+    }
+    var locationexposure;
+    var currentPlaybackTime = new Date();
+    var todayToEpoch = currentPlaybackTime.getTime();
+    var priorDate = new Date().setDate(currentPlaybackTime.getDate() - 30)
     topleftlat = latlong[1].lat;
     topleftlon = latlong[1].lng;
     bottomrightlat = latlong[3].lat;
     bottomrightlon = latlong[3].lng;
-    console.log(latlong)
     client.search({
         index: 'logstash-*',
         type: 'warehouse',
         body: {
-            "size": 5,
+            "size": demoLocations.length,
             "query": {
                 "bool": {
                     "must": [
@@ -19,40 +26,68 @@ function getTotalExposureOfWarehouse(latlong) {
                             "range": {
                                 "@timestamp": {
                                     "gte": priorDate,
-                                    "lte": currentPlaybackTime,
-                                    "format": "epoch_millis"
+                                    "lte": currentPlaybackTime
                                 }
-                            }
+                            },
                         },
+
                         {
                             "geo_shape": {
                                 "geometry": {
                                     "shape": {
                                         "type": "envelope",
                                         "coordinates": [
-                                            [topleftlat, topleftlon], [bottomrightlat, bottomrightlon]
+                                            [topleftlon, topleftlat], [bottomrightlon, bottomrightlat]
                                         ]
                                     },
-                                    "relation": "intersects"
+                                    "relation": "within"
                                 }
                             }
                         }
                     ]
-                    
+
                 }
             },
-
-            "aggs": {
-                "1": {
-                    "sum": {
-                        "field": "exposure"
-                    }
-                }
-
+            "sort": {
+                "@timestamp":
+                { "order": "desc" }
             }
+
+
         }
     }, function getMoreUntilDone(error, response) {
-        console.log(response)
+        response.hits.hits.forEach(function (hit) {
+
+            giveback(hit, insertintoCounting, countingList)
+        })
+        
+     replaceTableWarehouseValue(getList(countingList))
     }
+
+
     )
+}
+
+function getLocationListExposure(countingList) {
+    console.log(countingList)
+      var warehousecount = 0;
+    countingList.features.forEach(function (hit) {
+        console.log(hit)
+        warehousecount += hit.properties.Exp_TIV
+    })
+    return warehousecount
+}
+
+function insertintoCounting(insert, hit, countingList) {
+
+    if (insert) {
+        var location =
+            {
+                "type": "Feature",
+                "properties": hit._source.properties
+            }
+        countingList.features.push(location)
+    }
+
+
 }

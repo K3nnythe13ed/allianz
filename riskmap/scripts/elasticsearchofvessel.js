@@ -19,7 +19,7 @@ function addAnotherVesseltoTable(hit) {
 
 
 
-function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse) {
+function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue) {
 
     var currentPlaybackTime = playbackitem.getTime()
     var priorDate = currentPlaybackTime - (24 * 60 * 60 * 1000)
@@ -148,8 +148,8 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
             }
 
         });
-
-        // getTotalExposureOfWarehouse(latlong)
+        var warehouseexposure = getTotalExposureOfWarehouse(latlong, addLocationToList, getLocationListExposure)
+        console.log(warehouseexposure)
         replaceTableValue(counter, percentageCalc(exposure, 15))
 
         dt.load(data1);
