@@ -52,7 +52,6 @@
 
 	<!--Data scripts -->
 	<script src="data/locations.js"></script>
-	<script src="data/ais-demo.js"></script>
 	<script src="data/es-data.js"></script>
 	<!--Executable scripts -->
 	<script src="scripts/show-location.js"></script>
@@ -97,23 +96,13 @@
 					</select>
 				</td>
 			</tr>
-
-			<tr>
-				<td>
-
-					<label>Fade Out Vessels</label>
-				</td>
-				<td>
-					<input type='checkbox' onclick="handleFadeout(this)">
-				</td>
-			</tr>
 			<tr>
 				<td>
 
 					<label>Show Locations</label>
 				</td>
 				<td>
-					<input type='checkbox' onclick="handleLocationLayer(this)" id="CheckWarehouse">
+					<input type='checkbox' onclick="handleLocationLayer()" id="CheckWarehouse">
 				</td>
 			</tr>
 		</table>

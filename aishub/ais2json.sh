@@ -3,7 +3,7 @@
 trap "exit" SIGHUP SIGINT SIGTERM
 
 if [[ ! ${ais_user:+1} ]]; then echo "variable 'ais_user' not set"; exit 1; fi
-ais_url="http://data.aishub.net/ws.php?username=${ais_user}&format=1&output=json&latmin=51.385495&latmax=58.378679&lonmin=-1.081055&lonmax=7.066406"
+ais_url="http://data.aishub.net/ws.php?username=${ais_user}&format=1&output=json&latmin=51.361492&latmax=55.584555&lonmin=2.337891&lonmax=10.430420"
 
 
 jsonoutput=/data/aishub

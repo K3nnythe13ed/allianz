@@ -71,7 +71,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
                 "dedup": {
                     "terms": {
                         "field": "MMSI",
-                        "size": 50000,
+                        "size": Object.keys(shipCollection).length,
                     },
                     "aggs": {
                         "detime": {
@@ -148,8 +148,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
             }
 
         });
-        var warehouseexposure = getTotalExposureOfWarehouse(latlong, addLocationToList, getLocationListExposure)
-        console.log(warehouseexposure)
+        getTotalExposureOfWarehouse(latlong, addLocationToList, getLocationListExposure)
         replaceTableValue(counter, percentageCalc(exposure, 15))
 
         dt.load(data1);
@@ -269,7 +268,8 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
             }, getMoreUntilDone);
         } else {
 
-            replaceTableValue(Object.keys(allMMSI).length)
+            replaceTableValue(Object.keys(allMMSI).length, undefined)
+            replaceTableWarehouseValue(undefined)
 
             dt.load(data1);
 

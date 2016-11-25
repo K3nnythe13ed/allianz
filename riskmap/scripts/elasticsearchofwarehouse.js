@@ -1,6 +1,6 @@
 
 function getTotalExposureOfWarehouse(latlong, giveback, getList) {
-  
+
     var countingList = {
         "type": "FeatureCollection",
         "features": [
@@ -18,7 +18,7 @@ function getTotalExposureOfWarehouse(latlong, giveback, getList) {
         index: 'logstash-*',
         type: 'warehouse',
         body: {
-            "size": demoLocations.length,
+            "size": 1000,
             "query": {
                 "bool": {
                     "must": [
@@ -60,8 +60,8 @@ function getTotalExposureOfWarehouse(latlong, giveback, getList) {
 
             giveback(hit, insertintoCounting, countingList)
         })
-        
-     replaceTableWarehouseValue(getList(countingList))
+
+        replaceTableWarehouseValue(getList(countingList))
     }
 
 
@@ -69,10 +69,8 @@ function getTotalExposureOfWarehouse(latlong, giveback, getList) {
 }
 
 function getLocationListExposure(countingList) {
-    console.log(countingList)
-      var warehousecount = 0;
+    var warehousecount = 0;
     countingList.features.forEach(function (hit) {
-        console.log(hit)
         warehousecount += hit.properties.Exp_TIV
     })
     return warehousecount

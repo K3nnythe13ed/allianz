@@ -153,47 +153,25 @@ function handleFadeout(cb) {
 
 //change speed of playback by clicking the faster button
 function changeFaster() {
+    
     var speed = playbackitem.getSpeed();
-    if (speed <= 10) {
-        playbackitem.setSpeed(speed + 15);
-    }
-    else {
-        if (speed <= 25) {
-            playbackitem.setSpeed(speed + 25);
-        } else {
-            if (speed <= 50) {
-                playbackitem.setSpeed(speed + 50);
-            }
-            else {
-                if (speed <= 100) {
-                    playbackitem.setSpeed(speed + 900);
-                }
-            }
-        }
-    }
-replaceTableValueOfPlayback(speed)
+    if(speed < (getTickLen()/(getTickLen()/1000)))
+    {
+        playbackitem.setSpeed(speed*2);
+        replaceTableValueOfPlayback(speed*2 +" x")
+    } 
+
 }
 //change speed of playback by clicking the slower button
 function changeSlower() {
-    var speed = playbackitem.getSpeed();
-    if (speed >= 1000) {
-        playbackitem.setSpeed(speed - 900);
+var speed = playbackitem.getSpeed();
+    if(speed>getTickLen()/1000)
+    {
+        playbackitem.setSpeed(speed/2)
+         replaceTableValueOfPlayback(speed/2 +" x")
     }
-    else {
-        if (speed >= 100) {
-            playbackitem.setSpeed(speed - 50);
-        } else {
-            if (speed >= 50) {
-                playbackitem.setSpeed(speed - 25);
-            }
-            else {
-                if (speed >= 25) {
-                    playbackitem.setSpeed(speed - 15);
-                }
-            }
-        }
-    }
-    replaceTableValueOfPlayback(speed)
+    
+   
 }
 //change play/pause by clicking the play/pause-button
 function changePlay() {
@@ -205,7 +183,7 @@ function changePlay() {
     else {
 
         playbackitem.start();
-        playbackitem.setSpeed(10);
-        replaceTableValueOfPlayback(10)
+        playbackitem.setSpeed(getTickLen()/1000);
+        replaceTableValueOfPlayback(getTickLen()/1000 +" x")
     }
 }
