@@ -60,13 +60,13 @@ function createPlayback() {
     // Playback options
     var playbackOptions = {
 
-        orientIcons:true,
+        orientIcons: true,
         dateControl: true,
         popups: true,
         tracksLayer: false,
         tickLen: getTickLen(),
         fadeMarkersWhenStale: true,
-        staleTime: 3 * 60 * 1000,
+        staleTime: 30 * 60 * 1000,
         maxInterpolationTime: 2 * 60 * 1000,
 
         // layer and marker options
@@ -97,7 +97,13 @@ function createPlayback() {
                 }
 
                 return result;
-            }
+            },
+
+            setIconAngle: function (iconAngle) {
+                this.options.iconAngle = iconAngle;
+                if (this._map)
+                    this.update();
+            },
         }
 
     };
@@ -129,7 +135,7 @@ function createPlayback() {
         if (!playback.isPlaying()) {
 
             playback.setCursor(properties.time.getTime());
-           
+
         }
 
     }
@@ -137,9 +143,8 @@ function createPlayback() {
 }
 
 
-function changeAngleOfVessel()
-{
-    
+function changeAngleOfVessel() {
+
 }
 
 var playbackitem;
@@ -148,7 +153,7 @@ function SaveMyPlayback(playback) {
     playbackitem = playback;
     console.log(playbackitem)
     changeAngleOfVessel()
-    
+
 }
 
 //change speed of playback by clicking the faster button
