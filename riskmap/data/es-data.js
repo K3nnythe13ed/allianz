@@ -91,6 +91,9 @@ function pushASingleVesselFromEStoHash(hit) {
             ]
         )
         shipCollection[update].properties.time.push(Date.parse(hit._source["@timestamp"]))
+        
+        shipCollection[update].properties.speed.push(hit._source.SOG*0.1*1.852)
+        shipCollection[update].properties.destination.push(hit._source.DEST)
     }
     else {
 
@@ -107,12 +110,19 @@ function pushASingleVesselFromEStoHash(hit) {
             },
             "properties": {
                 "MMSI": hit._source.MMSI,
+                "name": hit._source.NAME,
                 "time": [
                     Date.parse(hit._source["@timestamp"])
+                ],
+                "speed": 
+                [
+                    hit._source.SOG*0.1*1.852
+                ],
+                "destination":[
+                    hit._source.DEST
                 ]
             }
         }
-
         shipCollection.push(ship)
     }
 

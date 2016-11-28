@@ -92,8 +92,10 @@ function createPlayback() {
             getPopup: function (featureData) {
                 var result = '';
 
-                if (featureData && featureData.properties && featureData.properties.title) {
-                    result = featureData.properties.title;
+                if (featureData && featureData.properties) {
+                    result = "MMSI "+featureData.properties.MMSI +"<br />";
+                    result = result + "Name "+featureData.properties.name;
+                    
                 }
 
                 return result;
@@ -103,42 +105,43 @@ function createPlayback() {
                 this.options.iconAngle = iconAngle;
                 if (this._map)
                     this.update();
-            },
+            }
+            
+
         }
+    }
 
-    };
-
-    // Initialize playback
-    var playback = new L.Playback(map, null, onPlaybackTimeChange, playbackOptions);
-    SaveMyPlayback(playback);
+        // Initialize playback
+        var playback = new L.Playback(map, null, onPlaybackTimeChange, playbackOptions);
+        SaveMyPlayback(playback);
     playback.setData(shipCollection);
 
 
 
 
 
-    // Set timeline time change event, so cursor is set after moving custom time (blue)
-    timeline.on('timechange', onCustomTimeChange);
-    timeline.on('timechanged', onChange);
-    // A callback so timeline is set after changing playback time
-    function onPlaybackTimeChange(ms) {
-        timeline.setCustomTime(new Date(ms));
+        // Set timeline time change event, so cursor is set after moving custom time (blue)
+        timeline.on('timechange', onCustomTimeChange);
+        timeline.on('timechanged', onChange);
+        // A callback so timeline is set after changing playback time
+        function onPlaybackTimeChange(ms) {
+            timeline.setCustomTime(new Date(ms));
 
-    };
-    function onChange(properties) {
-        if (latlong != undefined) {
-            AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
-        }
+};
+function onChange(properties) {
+    if (latlong != undefined) {
+        AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
     }
-    function onCustomTimeChange(properties) {
+}
+function onCustomTimeChange(properties) {
 
-        if (!playback.isPlaying()) {
+    if (!playback.isPlaying()) {
 
-            playback.setCursor(properties.time.getTime());
-
-        }
+        playback.setCursor(properties.time.getTime());
 
     }
+
+}
 
 }
 
