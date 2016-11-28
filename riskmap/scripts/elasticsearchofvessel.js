@@ -178,7 +178,7 @@ function percentageCalc(value, per) {
 
 function showAllVesselsOfPastDayInTable(callback, latlong) {
 
-    var today = new Date();
+    var today = new Date(playbackitem.getTime());
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
 
@@ -247,6 +247,7 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
         if (dt != undefined) {
             dt.clear();
         }
+        data1 = [];
         var allMMSI = {};
         // collect the title from each response
         response.hits.hits.forEach(function (hit) {

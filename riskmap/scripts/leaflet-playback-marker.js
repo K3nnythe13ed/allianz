@@ -132,6 +132,9 @@ function onChange(properties) {
     if (latlong != undefined) {
         AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
     }
+    else{
+        showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
+    }
 }
 function onCustomTimeChange(properties) {
 
