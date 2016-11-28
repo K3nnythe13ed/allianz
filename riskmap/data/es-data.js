@@ -59,7 +59,9 @@ function scrollAllforView(callback) {
             }, getMoreUntilDone);
         } else {
             var latlong = undefined
+            setPlayBackTickLen(allTitles.length)
             createPlayback()
+            
             showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
 
 

@@ -148,7 +148,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
             }
 
         });
-        getTotalExposureOfWarehouse(latlong, addLocationToList, getLocationListExposure)
+        getTotalExposureOfWarehouse(latlong)
         replaceTableValue(counter, percentageCalc(exposure, 15))
 
         dt.load(data1);

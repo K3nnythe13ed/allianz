@@ -1,5 +1,5 @@
 
-function getTotalExposureOfWarehouse(latlong, giveback, getList) {
+function getTotalExposureOfWarehouse(latlong) {
 
     var countingList = {
         "type": "FeatureCollection",
@@ -48,44 +48,20 @@ function getTotalExposureOfWarehouse(latlong, giveback, getList) {
 
                 }
             },
-            "sort": {
-                "@timestamp":
-                { "order": "desc" }
+            "aggs": {
+                "1": {
+                    "sum": {
+                        "field": "exposure"
+                    }
+                }
             }
-
-
         }
     }, function getMoreUntilDone(error, response) {
-        response.hits.hits.forEach(function (hit) {
-
-            giveback(hit, insertintoCounting, countingList)
-        })
-
-        replaceTableWarehouseValue(getList(countingList))
+        console.log(response)
+      
+        replaceTableWarehouseValue(response.aggregations[1].value)
     }
 
 
     )
-}
-
-function getLocationListExposure(countingList) {
-    var warehousecount = 0;
-    countingList.features.forEach(function (hit) {
-        warehousecount += hit.properties.Exp_TIV
-    })
-    return warehousecount
-}
-
-function insertintoCounting(insert, hit, countingList) {
-
-    if (insert) {
-        var location =
-            {
-                "type": "Feature",
-                "properties": hit._source.properties
-            }
-        countingList.features.push(location)
-    }
-
-
 }

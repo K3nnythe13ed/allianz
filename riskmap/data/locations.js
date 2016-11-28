@@ -1,5 +1,5 @@
 $(function () {
-  createLocationCollection(CreateMapLayerMarker, addLocationToList)
+  createLocationCollection(CreateMapLayerMarker, insertintoCollection)
 })
 var demoLocations
 function createLocationCollection(CreateMapLayerMarker, giveback) {
@@ -28,7 +28,7 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
 
 
     response.hits.hits.forEach(function (hit) {
-     giveback(hit, insertintoCollection, demoLocations)
+     giveback(hit, demoLocations)
     }
     )
     CreateMapLayerMarker()
@@ -49,9 +49,8 @@ function addLocationToList(hit, doActionOnSingleLocation, list)
   doActionOnSingleLocation(insert, hit, list)
       
 }
-function insertintoCollection(insert, hit, list)
+function insertintoCollection(hit, list)
 {
-  if (insert) {
         var location =
           {
             "timestamp": hit._source["@timestamp"],
@@ -64,6 +63,6 @@ function insertintoCollection(insert, hit, list)
             "properties": hit._source.properties
           }
         list.features.push(location)
-      }
+      
 
 }

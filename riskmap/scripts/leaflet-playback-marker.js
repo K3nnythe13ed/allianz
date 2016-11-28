@@ -1,9 +1,16 @@
 //call function on start
-function getTickLen()
-{
-    return Math.ceil(shipCollection.length/100)*1000
+var ticklen
+function setPlayBackTickLen(amountofhits) {
+
+    ticklen = Math.ceil(amountofhits / shipCollection.length)
+
+}
+function getTickLen() {
+    return Math.ceil(ticklen / 10) * 1000
+
 }
 function createPlayback() {
+
     // var shipCollection = demoAis;
     var newdate = shipCollection[0].properties.time[0]
 
@@ -53,11 +60,8 @@ function createPlayback() {
     // Playback options
     var playbackOptions = {
 
-        
-
-
+        orientIcons:true,
         dateControl: true,
-        orientIcons: true,
         popups: true,
         tracksLayer: false,
         tickLen: getTickLen(),
@@ -93,9 +97,7 @@ function createPlayback() {
                 }
 
                 return result;
-            },
-            smoothFactor: 1
-
+            }
         }
 
     };
@@ -115,75 +117,71 @@ function createPlayback() {
     // A callback so timeline is set after changing playback time
     function onPlaybackTimeChange(ms) {
         timeline.setCustomTime(new Date(ms));
-        
+
     };
-    function onChange(properties)
-    {
-         if(latlong != undefined){
+    function onChange(properties) {
+        if (latlong != undefined) {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
-            }
+        }
     }
     function onCustomTimeChange(properties) {
-        
+
         if (!playback.isPlaying()) {
-            
-            playback.setCursor(properties.time.getTime());  
-      
+
+            playback.setCursor(properties.time.getTime());
+           
         }
-       
+
     }
 
+}
+
+
+function changeAngleOfVessel()
+{
+    
 }
 
 var playbackitem;
-//change Speed of playback
-function changeSpeed(value) {
-    playbackitem.setSpeed(parseFloat(value));
-}
 //use to save playback for later use
 function SaveMyPlayback(playback) {
     playbackitem = playback;
+    console.log(playbackitem)
+    changeAngleOfVessel()
+    
 }
-//not used yet
-function handleFadeout(cb) {
-
-
-}
-
 
 //change speed of playback by clicking the faster button
 function changeFaster() {
-    
+
     var speed = playbackitem.getSpeed();
-    if(speed < (getTickLen()/(getTickLen()/1000)))
-    {
-        playbackitem.setSpeed(speed*2);
-        replaceTableValueOfPlayback(speed*2 +" x")
-    } 
+    if (speed < (getTickLen() / (getTickLen() / 1000))) {
+        playbackitem.setSpeed(speed * 2);
+        replaceTableValueOfPlayback(speed * 2 + " x")
+    }
 
 }
 //change speed of playback by clicking the slower button
 function changeSlower() {
-var speed = playbackitem.getSpeed();
-    if(speed>getTickLen()/1000)
-    {
-        playbackitem.setSpeed(speed/2)
-         replaceTableValueOfPlayback(speed/2 +" x")
+    var speed = playbackitem.getSpeed();
+    if (speed > getTickLen() / 1000) {
+        playbackitem.setSpeed(speed / 2)
+        replaceTableValueOfPlayback(speed / 2 + " x")
     }
-    
-   
+
+
 }
 //change play/pause by clicking the play/pause-button
 function changePlay() {
 
     if (playbackitem.isPlaying()) {
         playbackitem.stop();
-         replaceTableValueOfPlayback("")
+        replaceTableValueOfPlayback("")
     }
     else {
 
         playbackitem.start();
-        playbackitem.setSpeed(getTickLen()/1000);
-        replaceTableValueOfPlayback(getTickLen()/1000 +" x")
+        playbackitem.setSpeed(getTickLen() / 1000);
+        replaceTableValueOfPlayback(getTickLen() / 1000 + " x")
     }
 }
