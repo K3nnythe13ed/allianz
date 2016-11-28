@@ -3,14 +3,14 @@
 trap "exit" SIGHUP SIGINT SIGTERM
 
 if [[ ! ${ais_user:+1} ]]; then echo "variable 'ais_user' not set"; exit 1; fi
-ais_url="http://data.aishub.net/ws.php?username=${ais_user}&format=1&output=json&latmin=51.361492&latmax=55.584555&lonmin=2.337891&lonmax=10.430420"
+ais_url="http://data.aishub.net/ws.php?username=${ais_user}&format=1&output=json&latmin=51.04139389812637&latmax=54.648412502316695&lonmin=2.548828125&lonmax=10.52490234375"
 
 
 jsonoutput=/data/aishub
 if [[ ${ais_json:+1} ]]; then jsonoutput=${ais_json}; fi
 
-# default get 2h of AIS data
-timewindow=7200
+# default get 3h of AIS data
+timewindow=10800
 if [[ ${ais_window:+1} ]]; then timewindow=${ais_window}; fi
 
 # AISHub limits to 1 call per minute 
