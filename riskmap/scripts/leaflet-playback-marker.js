@@ -2,7 +2,7 @@
 var ticklen
 function setPlayBackTickLen(amountofhits) {
 
-    ticklen = Math.ceil(amountofhits / shipCollection.length)
+    ticklen = Math.ceil(amountofhits / 600)
 
 }
 function getTickLen() {

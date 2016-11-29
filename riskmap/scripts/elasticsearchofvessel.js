@@ -110,7 +110,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
                                                 "sort": [
                                                     {
                                                         "@timestamp": {
-                                                            "order": "asc"
+                                                            "order": "desc"
                                                         }
                                                     }
                                                 ]
@@ -130,6 +130,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
 
 
     }, function getMoreUntilDone(error, response) {
+        
         var index = []
         var counter = 0;
         var exposure = 0;
@@ -140,9 +141,10 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
 
         response.aggregations.dedup.buckets.forEach(function (hit) {
             mmsihit = hit.detime.buckets[0].group_by_geo.buckets.vessel.group_by_geo_docs.hits.hits[0]
+            
             if (mmsihit != undefined) {
                 counter += 1
-
+                    console.log(mmsihit)
                 addAnotherVesseltoTable(mmsihit)
                 exposure += mmsihit._source.exposure
             }
