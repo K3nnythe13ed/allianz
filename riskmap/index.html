@@ -2,7 +2,7 @@
 
 <head>
 	<title>Weather and Risk-Map</title>
-	
+
 	<link href="bower_components/vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
 	<script src="bower_components/vis/dist/vis.min.js"></script>
 
@@ -11,9 +11,12 @@
 
 
 	<script src="bower_components/jquery/dist/jquery.js"></script>
-	
 
-	<script src="bower_components/leaflet-playback/dist/LeafletPlayback.js"></script> 
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+
+	<script src="bower_components/leaflet-playback/dist/LeafletPlayback.js"></script>
 
 	<script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
 	<link href="bower_components/leaflet-draw/dist/leaflet.draw.css" rel="stylesheet" type="text/css" />
@@ -25,56 +28,13 @@
 </head>
 
 <body>
-	
 
-	<div id="map"></div>
+	<div id="container">
 
-
-	<div id="timeline"></div>
-
-	<!--Map script -->
-	<script>
-		map = L.map('map').setView([50.7343800, 7.0954900], 7);
-		
-		 </script>
-
-	<!--Required scripts -->
-	<script src="scripts/TableCreator/createTable.js"></script>
-	<script>
-		var client = elasticsearch.Client({
-			host: 'localhost:9200',
-			//log: 'trace'
-		});
-		
-	</script>
-	
-
-	<!--Data scripts -->
-	<script src="data/locations.js"></script>
-	<script src="data/es-data.js"></script>
-	<!--Executable scripts -->
-	<script src="scripts/show-location.js"></script>
-	<script src="scripts/elasticsearchofwarehouse.js"></script>
-	<script src="scripts/elasticsearchofvessel.js"></script>
-	
-	<script src="scripts/leaflet-playback-marker.js"></script>
-	
-	<script src="scripts/draw.js"></script>
-	<script src="scripts/layer-style.js"></script>
-	<!--ID Kibana aligning all objects taken from elasticsearch -->
-	<div id="kibana">
-
-		<!-- Amount of Vessels counted in Area -->
-		<table id="vesselcount">
-		</table>
-		<!-- List of all Vessels in Area -->
-		<div class="searchtable">
-			<table id="vesselsearch">
-			</table>
-		</div>
-	</div>
-	<!-- option menu for leaflet Map -->
-	<div id="basemaps-wrapper" class="leaflet-bar">
+		<div class="row">
+			<div class="col-xs-10 col-sm-10 col-md-12 main">
+				<div id="map" </div>
+				<div id="basemaps-wrapper" class="leaflet-bar">
 		<table>
 			<tr>
 				<td>
@@ -108,17 +68,84 @@
 		<table id="playbackspeedtable">
 			<tr>
 				<td><input type="button" value="slower" onclick="changeSlower()"></td>
-				<td><input type="button" value="Play/Pause" onclick="changePlay()"></td>
+				<td><input type="button" value="Play/Stop" onclick="changePlay()"></td>
 				<td><input type="button" value="faster" onclick="changeFaster()"></td>
 			</tr>
-			<tr><td></td><td></td><td></td></tr>
+			<tr>
+				<td></td>
+				<td align="center"></td>
+				<td></td>
+			</tr>
 		</table>
 	</div>
+				</div>
 
 
-	<div id="heat">
-		<iframe src="http://localhost:5601/app/kibana#/visualize/edit/ais-tilemap?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow%2FM%2Cinterval%3A'1d'%2Cmode%3Aquick%2Ctimezone%3AAfrica%2FLagos%2Cto%3Anow%2FM))" height="600" width="800"></iframe>
+
+
+
+				<!--Required scripts -->
+
+				<!--ID Kibana aligning all objects taken from elasticsearch -->
+				<div id="kibana" class="col-xs-2 col-sm-4 col-md-3">
+
+					<!-- Amount of Vessels counted in Area -->
+					<table class="table table-bordered" id="vesselcount">
+					</table>
+					<!-- List of all Vessels in Area -->
+					<div class="searchtable">
+						<table class="table table-bordered" id="vesselsearch">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-8 col-md-9">
+				<div id="timeline"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-8 col-md-9">
+				<div id="heat">
+					<iframe src="http://localhost:5601/app/kibana#/visualize/edit/ais-tilemap?embed=true&_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow%2FM%2Cinterval%3A'1d'%2Cmode%3Aquick%2Ctimezone%3AAfrica%2FLagos%2Cto%3Anow%2FM))"
+						height="600" width="800"></iframe>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<!--Map script -->
+	<script>
+		map = L.map('map').setView([50.7343800, 7.0954900], 7);
+		
+		 </script>
+	<script src="scripts/TableCreator/createTable.js"></script>
+	<script>
+		var client = elasticsearch.Client({
+			host: 'localhost:9200',
+			//log: 'trace'
+		});
+		
+	</script>
+	<script src="data/locations.js"></script>
+	<script src="data/es-data.js"></script>
+	<!--Executable scripts -->
+	<script src="scripts/show-location.js"></script>
+	<script src="scripts/elasticsearchofwarehouse.js"></script>
+	<script src="scripts/elasticsearchofvessel.js"></script>
+
+	<script src="scripts/leaflet-playback-marker.js"></script>
+
+	<script src="scripts/draw.js"></script>
+	<script src="scripts/layer-style.js"></script>
+
+
+	<!-- option menu for leaflet Map -->
+	
+
+
+
 
 </body>
 

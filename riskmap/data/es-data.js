@@ -35,7 +35,7 @@ function scrollAllforView(callback) {
                             "range": {
                                 "TYPE": {
                                     "gte": 70,
-                                    "lt": 71
+                                    "lte": 70
                                 }
                             }
                         }

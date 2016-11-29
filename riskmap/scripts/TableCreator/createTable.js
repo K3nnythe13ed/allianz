@@ -118,9 +118,8 @@ function VesselTableCounter() {
     kibanatable.appendChild(tbdy);
 }
 // replace value of table on new draw
-function replaceTableValue(response, exposurevessel, exposurewarehouse) {
+function replaceTableValue(response, exposurevessel) {
     expvess = formatThousand(String(exposurevessel))
-    expware = formatThousand(String(exposurewarehouse))
     var kibanatable = document.getElementById("vesselcount");
     kibanatable.rows[0].cells[1].innerHTML = response;
     kibanatable.rows[1].cells[1].innerHTML = expvess;

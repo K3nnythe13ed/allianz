@@ -2,8 +2,8 @@ var dt;
 $(document).ready(function (e) {
 
     dt = dynamicTable.config('vesselsearch',
-        ['field1', 'field5', 'field4', 'field2', 'field3'],
-        ['MMSI', 'IMO', 'Name', 'LAT', 'LON'], //set to null for field names instead of custom header names
+        ['field1', 'field2', 'field4', 'field5'],
+        ['MMSI', 'Exposure', 'Name', 'IMO'], //set to null for field names instead of custom header names
         'There are no items to list...');
 })
 
@@ -11,7 +11,7 @@ var data1 = []
 function addAnotherVesseltoTable(hit) {
 
     var pushdata = {
-        field1: hit._source.MMSI, field2: hit._source.LOCATION.lat, field3: hit._source.LOCATION.lon, field4: hit._source.NAME, field5: hit._source.IMO
+        field1: hit._source.MMSI, field2: percentageCalc(hit._source.exposure, 15), field4: hit._source.NAME, field5: hit._source.IMO
     }
     data1.push(pushdata);
 }

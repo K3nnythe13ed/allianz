@@ -149,16 +149,11 @@ function createPlayback() {
 }
 
 
-function changeAngleOfVessel() {
-
-}
 
 var playbackitem;
 //use to save playback for later use
 function SaveMyPlayback(playback) {
     playbackitem = playback;
-    console.log(playbackitem)
-    changeAngleOfVessel()
 
 }
 
@@ -186,8 +181,9 @@ function changeSlower() {
 function changePlay() {
 
     if (playbackitem.isPlaying()) {
+        speed = playbackitem.getSpeed()
         playbackitem.stop();
-        replaceTableValueOfPlayback("")
+       replaceTableValueOfPlayback("stopped")
 
         if (latlong != undefined) {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
@@ -199,8 +195,13 @@ function changePlay() {
     }
     else {
 
-        playbackitem.start();
+        
+            playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
         replaceTableValueOfPlayback(getTickLen() / 1000 + " x")
+        
+        
+        
+        
     }
 }
