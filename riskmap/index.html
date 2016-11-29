@@ -32,17 +32,17 @@
 	<div id="container">
 
 		<div class="row">
-			<div class="col-xs-10 col-sm-10 col-md-12 main">
-				<div id="map" </div>
+			<div class="col-xs-6 col-sm-9 col-md-9">
+				<div id="map"> </div>
 				<div id="basemaps-wrapper" class="leaflet-bar">
-		<table>
-			<tr>
-				<td>
-					<label>Map Layer</label>
-				</td>
-				<td>
+					<table>
+						<tr>
+							<td>
+								<label>Map Layer</label>
+							</td>
+							<td>
 
-					<select name="basemaps" id="basemaps" onChange="changeLayer(this.value)">
+								<select name="basemaps" id="basemaps" onChange="changeLayer(this.value)">
 						<option value="1">Main</option>
 						<option value="2">Rain</option>
 						<option value="3">Clouds</option>
@@ -53,41 +53,41 @@
 						<option value="8">Windspeed</option>
 
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
 
-					<label>Show Locations</label>
-				</td>
-				<td>
-					<input type='checkbox' onclick="handleLocationLayer()" id="CheckWarehouse">
-				</td>
-			</tr>
-		</table>
-		<table id="playbackspeedtable">
-			<tr>
-				<td><input type="button" value="slower" onclick="changeSlower()"></td>
-				<td><input type="button" value="Play/Stop" onclick="changePlay()"></td>
-				<td><input type="button" value="faster" onclick="changeFaster()"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td align="center"></td>
-				<td></td>
-			</tr>
-		</table>
-	</div>
+								<label>Show Locations</label>
+							</td>
+							<td>
+								<input type='checkbox' onclick="handleLocationLayer()" id="CheckWarehouse">
+							</td>
+						</tr>
+					</table>
+					<table id="playbackspeedtable">
+						<tr>
+							<td><input type="button" value="Slower" onclick="changeSlower()"></td>
+							<td><input type="button" value="Play/Stop" onclick="changePlay()"></td>
+							<td><input type="button" value="Faster" onclick="changeFaster()"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td align="center"></td>
+							<td></td>
+						</tr>
+					</table>
 				</div>
+			</div>
 
 
 
 
 
-				<!--Required scripts -->
-
+			<!--Required scripts -->
+			<div class="col-xs-6 col-sm-3 col-md-3">
 				<!--ID Kibana aligning all objects taken from elasticsearch -->
-				<div id="kibana" class="col-xs-2 col-sm-4 col-md-3">
+				<div id="kibana">
 
 					<!-- Amount of Vessels counted in Area -->
 					<table class="table table-bordered" id="vesselcount">
@@ -142,7 +142,7 @@
 
 
 	<!-- option menu for leaflet Map -->
-	
+
 
 
 

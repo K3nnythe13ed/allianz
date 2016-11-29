@@ -67,7 +67,7 @@ function createPlayback() {
         tickLen: getTickLen(),
         fadeMarkersWhenStale: true,
         staleTime: 30 * 60 * 1000,
-        maxInterpolationTime: 2 * 60 * 1000,
+        maxInterpolationTime: 10 * 60 * 1000,
 
         // layer and marker options
         layer: {
@@ -161,18 +161,19 @@ function SaveMyPlayback(playback) {
 function changeFaster() {
 
     var speed = playbackitem.getSpeed();
-    if (speed < (getTickLen() / (getTickLen() / 1000))) {
+    console.log(speed)
+    if (speed/10 < 16) {
         playbackitem.setSpeed(speed * 2);
-        replaceTableValueOfPlayback(speed * 2 + " x")
+        replaceTableValueOfPlayback(speed * 2/10 + " x")
     }
 
 }
 //change speed of playback by clicking the slower button
 function changeSlower() {
     var speed = playbackitem.getSpeed();
-    if (speed > getTickLen() / 1000) {
+    if (speed/10 > 1) {
         playbackitem.setSpeed(speed / 2)
-        replaceTableValueOfPlayback(speed / 2 + " x")
+        replaceTableValueOfPlayback(speed / 20 + " x")
     }
 
 
@@ -198,7 +199,7 @@ function changePlay() {
         
             playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
-        replaceTableValueOfPlayback(getTickLen() / 1000 + " x")
+        replaceTableValueOfPlayback(getTickLen() / 10000 + " x")
         
         
         
