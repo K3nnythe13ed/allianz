@@ -26,7 +26,9 @@
 			top: 0;
 			border:2px solid black;
 		}
-		
+		.leaflet-draw-tooltip {
+    		display: none;
+		}
 		#vesselcount {
 			font-weight: bold;
 			font-size: 16px;
