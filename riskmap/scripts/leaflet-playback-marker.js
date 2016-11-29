@@ -18,8 +18,8 @@ function createPlayback() {
 
     var bigship = L.icon({
         iconUrl: '../images/marker.png',
-        iconSize: [8, 13], // size of the icon
-        iconAnchor: [4, 13], // point of the icon which will correspond to marker's location
+        iconSize: [10, 15], // size of the icon
+        iconAnchor: [5, 15], // point of the icon which will correspond to marker's location
         popupAnchor: [0, -20] // point from which the popup should open relative to the iconAnchor
     });
 
@@ -138,11 +138,10 @@ function createPlayback() {
     }
     function onCustomTimeChange(properties) {
 
-        if (!playback.isPlaying()) {
 
             playback.setCursor(properties.time.getTime());
 
-        }
+        
 
     }
 
@@ -197,7 +196,7 @@ function changePlay() {
     else {
 
         
-            playbackitem.start();
+        playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
         replaceTableValueOfPlayback(getTickLen() / 10000 + " x")
         

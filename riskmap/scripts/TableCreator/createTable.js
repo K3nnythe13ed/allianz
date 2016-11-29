@@ -135,7 +135,7 @@ function replaceTableValue(response, exposurevessel) {
     
 
 function replaceTableValueOfPlayback(speed) {
-    var kibanatable = document.getElementById("playbackspeedtable");
-    kibanatable.rows[1].cells[1].innerHTML = speed;
+    var kibanatable = document.getElementById("playbackvisuell");
+    kibanatable.rows[0].cells[1].innerHTML = speed;
 
 }

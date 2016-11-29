@@ -1,4 +1,24 @@
 //call changeLayer(1) to set up Main Layer
+
+var viewModel = function(){
+    var self = this;
+
+    self.dropdownOptions = ko.observableArray([
+        { id: 1, label: "Click 1" },
+        { id: 2, label: "Click 2" },
+        { id: 3, label: "Click 3" }
+    ])
+
+    self.clickTest = function(item){
+        alert("Item with id:" + item.id + " was clicked!");
+    }  
+};
+
+
+
+
+
+
 changeLayer("1");
 var layers;
 // removeLayer 
@@ -24,6 +44,7 @@ var sea = new L.tileLayer('http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
         {
             attribution: 'Map data &copy; <a href="http://openseamap.org">OpenSeaMap</a>',
             maxZoom: 21,
+            opacity: 0.7,
 
             continuousWorld: false,
         noWrap: true

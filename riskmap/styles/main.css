@@ -11,16 +11,34 @@
 			}
 		
 		#basemaps-wrapper {
+			width:auto;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 			position: absolute;
 			top: 2%;
 			right: 2%;
 			z-index: 400;
 			background: white;
-			padding: 5px;
+			padding: 10px;
 			
 		}
-		
+		#playbackspeedtable{
+			
+			width:200px;
+			height:50px;
+			padding-top:2px;
+		}
+		#layer{
+			font-size:14px;
+			
+		}
+		#playbackvisuell{
+			width:200px;
+			
+		}
+		#playbackvisuell td{
+			width:80px;
+			
+		}
 		#timeline {
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 			padding-top: 2px
@@ -38,6 +56,7 @@
 			font-weight: bold;
 			font-size: 16px;
 		}
+		
 		.searchtable{
 			width:auto;
 			max-height: 400px;
