@@ -101,7 +101,7 @@ function VesselTableCounter() {
     var tr = document.createElement('tr');
     var tdp = document.createElement('td');
     var tdc = document.createElement('td');
-    tdp.appendChild(document.createTextNode('Exposure Vessel counted:'));
+    tdp.appendChild(document.createTextNode('Exposure Vessel:'));
     tdc.appendChild(document.createTextNode(''));
     tr.appendChild(tdp);
     tr.appendChild(tdc);
@@ -110,7 +110,7 @@ function VesselTableCounter() {
     var tr = document.createElement('tr');
     var tdp = document.createElement('td');
     var tdc = document.createElement('td');
-    tdp.appendChild(document.createTextNode('Exposure Warehouse counted:'));
+    tdp.appendChild(document.createTextNode('Exposure Warehouse:'));
     tdc.appendChild(document.createTextNode(''));
     tr.appendChild(tdp);
     tr.appendChild(tdc);
