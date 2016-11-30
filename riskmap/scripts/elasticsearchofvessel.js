@@ -127,13 +127,9 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
     }, function getMoreUntilDone(error, response) {
         
         var index = []
-        
+        var counter = 0;
         var exposure = 0;
-        if (dt != undefined) {
-            
-            var counter = 0;
-            dt.clear();
-        }
+        
         data1 = [];
 
         response.aggregations.dedup.buckets.forEach(function (hit) {
@@ -148,6 +144,11 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
         });
         getTotalExposureOfWarehouse(latlong)
         replaceTableValue(counter, percentageCalc(exposure, 15))
+        if (dt != undefined) {
+            
+            
+            dt.clear();
+        }
         dt.load(data1);
         
     });
@@ -219,9 +220,7 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
         }
 
     }, function getMoreUntilDone(error, response) {
-        if (dt != undefined) {
-            dt.clear();
-        }
+        
         
         counter = 0;
         // collect the title from each response
@@ -249,7 +248,9 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
 
             replaceTableValue(Object.keys(allMMSI).length, undefined)
             replaceTableWarehouseValue(undefined)
-
+            if (dt != undefined) {
+            dt.clear();
+        }
             dt.load(data1);
         }
     });

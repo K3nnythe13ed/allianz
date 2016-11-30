@@ -18,7 +18,7 @@ function formatThousand(nStr) {
         return x1 + x2 + " €";
     }
     else {
-        return undefined;
+        return "empty";
     }
 }
 
