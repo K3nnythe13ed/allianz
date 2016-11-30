@@ -184,7 +184,7 @@ function changePlay() {
     if (playbackitem.isPlaying()) {
         speed = playbackitem.getSpeed()
         playbackitem.stop();
-        replaceTableValueOfPlayback("stopped")
+        replaceTableValueOfPlayback("0")
 
         if (latlong != undefined) {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)

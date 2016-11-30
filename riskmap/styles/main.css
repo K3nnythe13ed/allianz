@@ -39,6 +39,13 @@
 			font-size: 12px;
 			
 		}
+		#popupware{
+			font-size: 12px;	
+			width:200px;
+		}
+		#popupware td{
+			width:auto;	
+		}
 		#playbackvisuell td{
 			width:80px;
 			
