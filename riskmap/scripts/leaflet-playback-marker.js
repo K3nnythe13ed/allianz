@@ -95,7 +95,7 @@ function createPlayback() {
                 if (featureData && featureData.properties) {
                     result = "<table id='popup'><tr><td> MMSI: </td><td align='right'>" + featureData.properties.MMSI + "</td></tr>" +
                         "<tr><td> Name: </td><td align='right'>" + featureData.properties.name + "</td></tr>" +
-                        "<tr><td>Exposure: </td><td align='right'>" + featureData.properties.exposure + "  </td></tr>"+
+                        "<tr><td>Exposure: </td><td align='right'>" + featureData.properties.exposure + "  </td></tr>" +
                         "</table>";
                 }
 
@@ -159,21 +159,24 @@ function SaveMyPlayback(playback) {
 
 //change speed of playback by clicking the faster button
 function changeFaster() {
-
-    var speed = playbackitem.getSpeed();
-    console.log(speed)
-    if (speed / 10 < 16) {
-        playbackitem.setSpeed(speed * 2);
-        replaceTableValueOfPlayback(speed * 2 / 10 + " x")
+    if (playbackitem.isPlaying()) {
+        var speed = playbackitem.getSpeed();
+        console.log(speed)
+        if (speed / 10 < 16) {
+            playbackitem.setSpeed(speed * 2);
+            replaceTableValueOfPlayback(speed * 2 / 10 + " x")
+        }
     }
 
 }
 //change speed of playback by clicking the slower button
 function changeSlower() {
-    var speed = playbackitem.getSpeed();
-    if (speed / 10 > 1) {
-        playbackitem.setSpeed(speed / 2)
-        replaceTableValueOfPlayback(speed / 20 + " x")
+    if (playbackitem.isPlaying()) {
+        var speed = playbackitem.getSpeed();
+        if (speed / 10 > 1) {
+            playbackitem.setSpeed(speed / 2)
+            replaceTableValueOfPlayback(speed / 20 + " x")
+        }
     }
 
 
