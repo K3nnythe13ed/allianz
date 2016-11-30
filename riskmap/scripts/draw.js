@@ -22,8 +22,7 @@ var latlong = undefined
 map.on(L.Draw.Event.DRAWSTART, function (e) {
 
     editableLayers.clearLayers();
-    latlong = undefined
-    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
+    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
 
 })
 var layer_leaflet_id;
@@ -43,8 +42,7 @@ map.on(L.Draw.Event.CREATED, function (e) {
 
 map.on(L.Draw.Event.DELETESTART, function (e) {
     editableLayers.clearLayers();
-    latlong = undefined
-    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
+    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
 });
 
 map.on(L.Draw.Event.EDITED, function (e) {

@@ -128,7 +128,7 @@ function createPlayback() {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
         }
         else {
-            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
+            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
         }
     }
     function onCustomTimeChange(properties) {
@@ -188,7 +188,7 @@ function changePlay() {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
         }
         else {
-            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
+            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
         }
 
     }

@@ -60,11 +60,10 @@ function scrollAllforView(callback) {
                 scroll: '30s'
             }, getMoreUntilDone);
         } else {
-            var latlong = undefined
             setPlayBackTickLen(allTitles.length)
             createPlayback()
             
-            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable, latlong)
+            showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
 
 
         }

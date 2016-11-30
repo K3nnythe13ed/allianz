@@ -130,7 +130,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
     });
 
 }
-function showAllVesselsOfPastDayInTable(callback, latlong) {
+function showAllVesselsOfPastDayInTable(callback) {
 
     var today = new Date(playbackitem.getTime());
     var todayToEpoch = today.getTime();
