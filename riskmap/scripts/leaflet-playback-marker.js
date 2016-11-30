@@ -156,15 +156,15 @@ function SaveMyPlayback(playback) {
     playbackitem = playback;
 
 }
-
+var showplayspeed = 1
 //change speed of playback by clicking the faster button
 function changeFaster() {
     if (playbackitem.isPlaying()) {
         var speed = playbackitem.getSpeed();
-        console.log(speed)
-        if (speed / 10 < 16) {
+        if (showplayspeed < 16) {
             playbackitem.setSpeed(speed * 2);
-            replaceTableValueOfPlayback(speed * 2 / 10 + " x")
+            showplayspeed = showplayspeed * 2
+            replaceTableValueOfPlayback(showplayspeed + " x")
         }
     }
 
@@ -173,9 +173,10 @@ function changeFaster() {
 function changeSlower() {
     if (playbackitem.isPlaying()) {
         var speed = playbackitem.getSpeed();
-        if (speed / 10 > 1) {
+        if (showplayspeed > 1) {
             playbackitem.setSpeed(speed / 2)
-            replaceTableValueOfPlayback(speed / 20 + " x")
+            showplayspeed = showplayspeed / 2
+            replaceTableValueOfPlayback(showplayspeed + " x")
         }
     }
 
@@ -202,7 +203,7 @@ function changePlay() {
 
         playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
-        replaceTableValueOfPlayback(getTickLen() / 10000 + " x")
+        replaceTableValueOfPlayback(showplayspeed+" x")
 
 
 

@@ -57,7 +57,6 @@ function getTotalExposureOfWarehouse(latlong) {
             }
         }
     }, function getMoreUntilDone(error, response) {
-        console.log(response)
       
         replaceTableWarehouseValue(response.aggregations[1].value)
     }

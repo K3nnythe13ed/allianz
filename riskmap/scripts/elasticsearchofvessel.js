@@ -24,17 +24,12 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
     var currentPlaybackTime = playbackitem.getTime()
     var priorDate = currentPlaybackTime - (24 * 60 * 60 * 1000)
 
-    var topleftlat = 89.00;
-    var topleftlon = -180.00;
-    var bottomrightlat = -90.00;
-    var bottomrightlon = 180.00;
-    if (typeof latlong != "undefined") {
 
         topleftlat = latlong[1].lat;
         topleftlon = latlong[1].lng;
         bottomrightlat = latlong[3].lat;
         bottomrightlon = latlong[3].lng;
-    }
+    
 
     client.search({
         index: 'logstash-*',
@@ -132,29 +127,29 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
     }, function getMoreUntilDone(error, response) {
         
         var index = []
-        var counter = 0;
+        
         var exposure = 0;
         if (dt != undefined) {
+            
+            var counter = 0;
             dt.clear();
         }
         data1 = [];
 
         response.aggregations.dedup.buckets.forEach(function (hit) {
             mmsihit = hit.detime.buckets[0].group_by_geo.buckets.vessel.group_by_geo_docs.hits.hits[0]
-            
             if (mmsihit != undefined) {
                 counter += 1
-                    console.log(mmsihit)
                 addAnotherVesseltoTable(mmsihit)
                 exposure += mmsihit._source.exposure
             }
+           
 
         });
         getTotalExposureOfWarehouse(latlong)
         replaceTableValue(counter, percentageCalc(exposure, 15))
-
         dt.load(data1);
-
+        
     });
 
 }
@@ -177,25 +172,17 @@ function percentageCalc(value, per) {
 
 
 
-
+var allMMSI
 function showAllVesselsOfPastDayInTable(callback, latlong) {
 
     var today = new Date(playbackitem.getTime());
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
+        data1 = [];
+        pusharray =[]
+        allMMSI = {};
 
 
-    var topleftlat = 89.00;
-    var topleftlon = -180.00;
-    var bottomrightlat = -90.00;
-    var bottomrightlon = 180.00;
-    if (typeof latlong != "undefined") {
-
-        topleftlat = latlong[1].lat;
-        topleftlon = latlong[1].lng;
-        bottomrightlat = latlong[3].lat;
-        bottomrightlon = latlong[3].lng;
-    }
 
     client.search({
         index: 'logstash-*',
@@ -223,22 +210,8 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
                                     "lte": 70
                                 }
                             }
-                        },
-                        {
-                            "geo_bounding_box": {
-                                "LOCATION": {
-                                    "top_left": {
-                                        "lat": topleftlat,
-                                        "lon": topleftlon
-                                    },
-                                    "bottom_right": {
-                                        "lat": bottomrightlat,
-                                        "lon": bottomrightlon
-                                    }
-                                }
-                            }
-
                         }
+                        
 
                     ]
                 }
@@ -249,21 +222,24 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
         if (dt != undefined) {
             dt.clear();
         }
-        data1 = [];
-        var allMMSI = {};
+        
+        counter = 0;
         // collect the title from each response
         response.hits.hits.forEach(function (hit) {
+            pusharray.push(hit._id)
             for (var i = 0; i < shipCollection.length; i++) {
                 if (hit._source.MMSI == shipCollection[i].properties.MMSI && !(hit._source.MMSI in allMMSI)) {
-                    callback(hit)
                     allMMSI[hit._source.MMSI] = {
                         MMSI: hit._source.MMSI
                     }
+
+                    
+                    callback(hit)
+                    
                 }
             }
         });
-
-        if (response.hits.total > allMMSI.length) {
+        if (response.hits.total > pusharray.length) {
             // ask elasticsearch for the next set of hits from this search
             client.scroll({
                 scrollId: response._scroll_id,
@@ -275,7 +251,6 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
             replaceTableWarehouseValue(undefined)
 
             dt.load(data1);
-
         }
     });
 
