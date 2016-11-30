@@ -71,7 +71,7 @@ function createPlayback() {
 
         // layer and marker options
         layer: {
-            pointToLayer: function (featureData, latlng) {
+            pointToLayer: function(featureData, latlng) {
                 var result = {};
 
                 if (featureData && featureData.properties && featureData.properties.path_options) {
@@ -89,19 +89,20 @@ function createPlayback() {
         marker: {
             icon: bigship,
             riseOnHover: true,
-            getPopup: function (featureData) {
+            getPopup: function(featureData) {
                 var result = '';
 
                 if (featureData && featureData.properties) {
-                    result = "MMSI " + featureData.properties.MMSI + "<br />";
-                    result = result + "Name " + featureData.properties.name;
-
+                    result = "<table id='popup'><tr><td> MMSI: </td><td align='right'>" + featureData.properties.MMSI + "</td></tr>" +
+                        "<tr><td> Name: </td><td align='right'>" + featureData.properties.name + "</td></tr>" +
+                        "<tr><td>Exposure: </td><td align='right'>" + featureData.properties.exposure + "  </td></tr>"+
+                        "</table>";
                 }
 
                 return result;
             },
 
-            setIconAngle: function (iconAngle) {
+            setIconAngle: function(iconAngle) {
                 this.options.iconAngle = iconAngle;
                 if (this._map)
                     this.update();

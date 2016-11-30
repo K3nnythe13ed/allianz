@@ -111,6 +111,8 @@ function pushASingleVesselFromEStoHash(hit) {
             "properties": {
                 "MMSI": hit._source.MMSI,
                 "name": hit._source.NAME,
+                "callsign": hit._source.CALLSIGN,
+                "exposure": percentageCalc(hit._source.exposure, 15),
                 "time": [
                     Date.parse(hit._source["@timestamp"])
                 ],
@@ -121,6 +123,7 @@ function pushASingleVesselFromEStoHash(hit) {
                 "destination":[
                     hit._source.DEST
                 ]
+                
             }
         }
         shipCollection.push(ship)
