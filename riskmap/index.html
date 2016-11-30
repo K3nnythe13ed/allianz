@@ -74,13 +74,13 @@
 					<table id="playbackspeedtable">
 						<tr>
 							<td align="center">
-								<div class="btn-group" role="group" aria-label="...">
-									<button type="button" class="btn btn-default btn-lg" onclick="changeSlower()">
+								<div class="btn-group" role="group" aria-label="..." id="bttn-group">
+									<button type="button" class="btn btn-default btn-lg" onclick="changeSlower()" id="slowerbutton">
  								 <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></button>
-
-							<button type="button" class="btn btn-default btn-lg" onclick="changePlay()" >
-  								<span class="glyphicon glyphicon-play" aria-hidden="true"></span> </button>
-							<button type="button" class="btn btn-default btn-lg" onclick="changeFaster()" >
+								
+							<button type="button" class="btn btn-default btn-lg" onclick="changePlay()" id="playbutton">
+  								<span class="glyphicon glyphicon-play" aria-hidden="true" id="span"></span> </button>
+							<button type="button" class="btn btn-default btn-lg" onclick="changeFaster()" id="fasterbutton">
 								<span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span> </button>
 							
 						</div>

@@ -125,17 +125,27 @@ function replaceTableValue(response, exposurevessel) {
     kibanatable.rows[1].cells[1].innerHTML = expvess;
 
 }
-    function replaceTableWarehouseValue(exposurewarehouse)
-    {
-        var kibanatable = document.getElementById("vesselcount");
-        expware = formatThousand(String(exposurewarehouse))
-        kibanatable.rows[2].cells[1].innerHTML = expware;
+function replaceTableWarehouseValue(exposurewarehouse) {
+    var kibanatable = document.getElementById("vesselcount");
+    expware = formatThousand(String(exposurewarehouse))
+    kibanatable.rows[2].cells[1].innerHTML = expware;
 
-    }
-    
+}
+
 
 function replaceTableValueOfPlayback(speed) {
     var kibanatable = document.getElementById("playbackvisuell");
     kibanatable.rows[0].cells[1].innerHTML = speed;
 
+}
+
+function replacePlayButton() {
+    ctrl = document.getElementById('span');
+    if (playbackitem.isPlaying()) {
+
+        ctrl.className = "glyphicon glyphicon-pause";
+    }
+    else {
+        ctrl.className = "glyphicon glyphicon-play";
+    }
 }

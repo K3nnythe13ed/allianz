@@ -139,9 +139,9 @@ function createPlayback() {
     function onCustomTimeChange(properties) {
 
 
-            playback.setCursor(properties.time.getTime());
+        playback.setCursor(properties.time.getTime());
 
-        
+
 
     }
 
@@ -161,16 +161,16 @@ function changeFaster() {
 
     var speed = playbackitem.getSpeed();
     console.log(speed)
-    if (speed/10 < 16) {
+    if (speed / 10 < 16) {
         playbackitem.setSpeed(speed * 2);
-        replaceTableValueOfPlayback(speed * 2/10 + " x")
+        replaceTableValueOfPlayback(speed * 2 / 10 + " x")
     }
 
 }
 //change speed of playback by clicking the slower button
 function changeSlower() {
     var speed = playbackitem.getSpeed();
-    if (speed/10 > 1) {
+    if (speed / 10 > 1) {
         playbackitem.setSpeed(speed / 2)
         replaceTableValueOfPlayback(speed / 20 + " x")
     }
@@ -183,7 +183,7 @@ function changePlay() {
     if (playbackitem.isPlaying()) {
         speed = playbackitem.getSpeed()
         playbackitem.stop();
-       replaceTableValueOfPlayback("stopped")
+        replaceTableValueOfPlayback("stopped")
 
         if (latlong != undefined) {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
@@ -195,13 +195,14 @@ function changePlay() {
     }
     else {
 
-        
+
         playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
         replaceTableValueOfPlayback(getTickLen() / 10000 + " x")
-        
-        
-        
-        
+
+
+
+
     }
+    replacePlayButton();
 }
