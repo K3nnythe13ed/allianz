@@ -35,7 +35,6 @@ function createLayer(key) {
         {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://openweathermap.org">OpenWeatherMap</a>, <a href="http://openseamap.org">OpenSeaMap</a>',
             maxZoom: 21,
-
             continuousWorld: false,
             noWrap: true
         })
@@ -44,7 +43,6 @@ function createLayer(key) {
         {
             maxZoom: 21,
             opacity: 0.7,
-
             continuousWorld: false,
             noWrap: true
         })
@@ -52,7 +50,6 @@ function createLayer(key) {
         var weather = new L.tileLayer('http://{s}.maps.owm.io/current/' + String(key) + '/{z}/{x}/{y}?appid=b1b15e88fa797225412429c1c50c122a1',
             {
                 maxZoom: 9,
-
                 opacity: 0.9,
                 continuousWorld: false,
                 noWrap: true

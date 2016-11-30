@@ -93,9 +93,9 @@ function createPlayback() {
                 var result = '';
 
                 if (featureData && featureData.properties) {
-                    result = "<table id='popup'><tr><td> MMSI: </td><td align='right'>" + featureData.properties.MMSI + "</td></tr>" +
-                        "<tr><td> Name: </td><td align='right'>" + featureData.properties.name + "</td></tr>" +
-                        "<tr><td>Exposure: </td><td align='right'>" + featureData.properties.exposure + "  </td></tr>" +
+                    result = "<table id='popup'><tr><td> <label>MMSI:</label> </td><td align='right'>" + featureData.properties.MMSI + "</td></tr>" +
+                        "<tr><td> <label>Name:</label> </td><td align='right'>" + featureData.properties.name + "</td></tr>" +
+                        "<tr><td><label>Exposure: </label></td><td align='right'>" + featureData.properties.exposure + "  </td></tr>" +
                         "</table>";
                 }
 

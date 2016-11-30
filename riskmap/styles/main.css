@@ -37,12 +37,13 @@
 		}
 		#popup{
 			font-size: 12px;
-			
+			width:auto;
 		}
 		#popupware{
 			font-size: 12px;	
 			width:200px;
 		}
+		
 		#popupware td{
 			width:auto;	
 		}
