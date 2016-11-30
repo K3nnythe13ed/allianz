@@ -74,6 +74,7 @@
 			max-height: 400px;
     		overflow: auto;
 			font-size: 12px;
+			background-color:lightgray;
 		}
 		div.searchtable table {
 			width: auto;
@@ -103,3 +104,5 @@
 		#heat{
 			margin-top: 6%;
 		}
+
+		

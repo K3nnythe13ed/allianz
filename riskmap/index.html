@@ -33,14 +33,14 @@
 	<div id="container">
 
 		<div class="row">
-			
-			<div class="col-xs-6 col-sm-9 col-md-9" >
-				
-				<div id="map"> 
+
+			<div class="col-xs-6 col-sm-9 col-md-9">
+
+				<div id="map">
 					<div id="legend"></div>
 				</div>
-				
-				
+
+
 				<div id="basemaps-wrapper">
 					<table id="layer">
 						<tr>
@@ -49,7 +49,7 @@
 							</td>
 							<td>
 
-								
+
 
 								<select name="basemaps" id="basemaps" onChange="changeLayer(this.value)">
 						<option value="1">Main</option>
@@ -83,23 +83,23 @@
 								<div class="btn-group" role="group" aria-label="..." id="bttn-group">
 									<button type="button" class="btn btn-default btn-lg" onclick="changeSlower()" id="slowerbutton">
  								 <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></button>
-								
-							<button type="button" class="btn btn-default btn-lg" onclick="changePlay()" id="playbutton">
+
+									<button type="button" class="btn btn-default btn-lg" onclick="changePlay()" id="playbutton">
   								<span class="glyphicon glyphicon-play" aria-hidden="true" id="span"></span> </button>
-							<button type="button" class="btn btn-default btn-lg" onclick="changeFaster()" id="fasterbutton">
+									<button type="button" class="btn btn-default btn-lg" onclick="changeFaster()" id="fasterbutton">
 								<span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span> </button>
-							
-						</div>
+
+								</div>
 							</td>
-							
+
 						</tr>
-						</table>
-						<table id="playbackvisuell">
+					</table>
+					<table id="playbackvisuell">
 						<tr>
 							<td>Speed:</td>
 							<td align="center">0</td>
 							<td></td>
-							
+
 						</tr>
 					</table>
 				</div>
@@ -119,7 +119,7 @@
 					</table>
 					<!-- List of all Vessels in Area -->
 					<div class="searchtable">
-						<table class="table table-bordered table-hover" id="vesselsearch">
+						<table class="table table-striped table-hover" id="vesselsearch">
 						</table>
 					</div>
 				</div>
