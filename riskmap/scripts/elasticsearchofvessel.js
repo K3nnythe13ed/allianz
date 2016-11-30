@@ -1,35 +1,14 @@
-var dt;
-$(document).ready(function (e) {
-
-    dt = dynamicTable.config('vesselsearch',
-        ['field1', 'field2', 'field4', 'field5'],
-        ['MMSI', 'Exposure', 'Name', 'IMO'], //set to null for field names instead of custom header names
-        'There are no items to list...');
-})
-
-var data1 = []
-function addAnotherVesseltoTable(hit) {
-
-    var pushdata = {
-        field1: hit._source.MMSI, field2: percentageCalc(hit._source.exposure, 15), field4: hit._source.NAME, field5: hit._source.IMO
-    }
-    data1.push(pushdata);
-}
-
-
-
-
 function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue) {
 
     var currentPlaybackTime = playbackitem.getTime()
     var priorDate = currentPlaybackTime - (24 * 60 * 60 * 1000)
 
 
-        topleftlat = latlong[1].lat;
-        topleftlon = latlong[1].lng;
-        bottomrightlat = latlong[3].lat;
-        bottomrightlon = latlong[3].lng;
-    
+    topleftlat = latlong[1].lat;
+    topleftlon = latlong[1].lng;
+    bottomrightlat = latlong[3].lat;
+    bottomrightlon = latlong[3].lng;
+
 
     client.search({
         index: 'logstash-*',
@@ -125,11 +104,14 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
 
 
     }, function getMoreUntilDone(error, response) {
-        
+        if (loading) {
+            sleepFor(10000);
+        }
+        loading = true;
         var index = []
         var counter = 0;
         var exposure = 0;
-        
+
         data1 = [];
 
         response.aggregations.dedup.buckets.forEach(function (hit) {
@@ -139,49 +121,23 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
                 addAnotherVesseltoTable(mmsihit)
                 exposure += mmsihit._source.exposure
             }
-           
+
 
         });
         getTotalExposureOfWarehouse(latlong)
         replaceTableValue(counter, percentageCalc(exposure, 15))
-        if (dt != undefined) {
-            
-            
-            dt.clear();
-        }
-        dt.load(data1);
-        
+        loaddata()
     });
 
 }
-
-function percentageCalc(value, per) {
-    return value / 100 * per
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var allMMSI
 function showAllVesselsOfPastDayInTable(callback, latlong) {
 
     var today = new Date(playbackitem.getTime());
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
-        data1 = [];
-        pusharray =[]
-        allMMSI = {};
+    data1 = [];
+    pusharray = []
+    allMMSI = {};
 
 
 
@@ -212,7 +168,7 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
                                 }
                             }
                         }
-                        
+
 
                     ]
                 }
@@ -220,8 +176,8 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
         }
 
     }, function getMoreUntilDone(error, response) {
-        
-        
+
+
         counter = 0;
         // collect the title from each response
         response.hits.hits.forEach(function (hit) {
@@ -232,9 +188,9 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
                         MMSI: hit._source.MMSI
                     }
 
-                    
+
                     callback(hit)
-                    
+
                 }
             }
         });
@@ -245,14 +201,47 @@ function showAllVesselsOfPastDayInTable(callback, latlong) {
                 scroll: '30s'
             }, getMoreUntilDone);
         } else {
-
+            if (loading) {
+                sleepFor(10000);
+            }
+            loading = true;
             replaceTableValue(Object.keys(allMMSI).length, undefined)
             replaceTableWarehouseValue(undefined)
-            if (dt != undefined) {
-            dt.clear();
-        }
-            dt.load(data1);
+            loaddata()
         }
     });
 
+}
+var allMMSI
+var loading = false;
+var dt;
+$(document).ready(function (e) {
+
+    dt = dynamicTable.config('vesselsearch',
+        ['field1', 'field2', 'field4', 'field5'],
+        ['MMSI', 'Exposure', 'Name', 'IMO'], //set to null for field names instead of custom header names
+        'There are no items to list...');
+})
+
+var data1 = []
+function addAnotherVesseltoTable(hit) {
+
+    var pushdata = {
+        field1: hit._source.MMSI, field2: percentageCalc(hit._source.exposure, 15), field4: hit._source.NAME, field5: hit._source.IMO
+    }
+    data1.push(pushdata);
+}
+function sleepFor(sleepDuration) {
+    var now = new Date().getTime();
+    while (new Date().getTime() < now + sleepDuration) { /* do nothing */ }
+}
+function loaddata() {
+    if (dt != undefined) {
+        dt.clear();
+    }
+    dt.load(data1);
+    loading = false;
+}
+function percentageCalc(value, per) {
+    return value / 100 * per
 }

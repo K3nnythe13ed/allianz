@@ -66,7 +66,7 @@ function createPlayback() {
         tracksLayer: false,
         tickLen: getTickLen(),
         fadeMarkersWhenStale: true,
-        staleTime: 30 * 60 * 1000,
+        staleTime: 10 * 60 * 1000,
         maxInterpolationTime: 10 * 60 * 1000,
 
         // layer and marker options
@@ -92,7 +92,7 @@ function createPlayback() {
             getPopup: function(featureData) {
                 var result = '';
 
-                if (featureData && featureData.properties) {
+                if (featureData && featureData.properties && featureData.properties.MMSI) {
                     result = "<table id='popup'><tr><td> <label>MMSI:</label> </td><td align='right'>" + featureData.properties.MMSI + "</td></tr>" +
                         "<tr><td> <label>Name:</label> </td><td align='right'>" + featureData.properties.name + "</td></tr>" +
                         "<tr><td><label>Exposure: </label></td><td align='right'>" + featureData.properties.exposure + "  </td></tr>" +
@@ -100,12 +100,6 @@ function createPlayback() {
                 }
 
                 return result;
-            },
-
-            setIconAngle: function(iconAngle) {
-                this.options.iconAngle = iconAngle;
-                if (this._map)
-                    this.update();
             }
 
 
@@ -203,6 +197,7 @@ function changePlay() {
 
         playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
+        showplayspeed = 1;
         replaceTableValueOfPlayback(showplayspeed+" x")
 
 

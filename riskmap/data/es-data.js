@@ -1,13 +1,15 @@
 $(function () {
     scrollAllforView(pushASingleVesselFromEStoHash)
     VesselTableCounter();
+    shipCollection = [];
 })
 
-var shipCollection = [];
+var shipCollection;
+var allTitles; 
 
 
 function scrollAllforView(callback) {
-    var allTitles = [];
+    allTitles = [];
     var today = new Date();
     var todayToEpoch = today.getTime();
     var priorDate = new Date().setDate(today.getDate() - 30)
