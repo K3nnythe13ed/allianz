@@ -1,0 +1,48 @@
+
+.leaflet-control-color-scale {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 10px;
+  background: #FFFFFF;
+  color: #777;
+  box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.50);
+  border-radius: 5px;
+  padding: 0;
+  height: 26px;
+}
+
+.leaflet-control-color-scale-line {  
+  margin: 15px 5px 5px 5px;
+  position: inherit;
+  height: 5px;
+  border-top: 1px solid #777;
+  border-bottom: 1px solid #777;
+}
+
+.scale-value  {
+  position: absolute;
+  display: inline;
+  bottom: 0px;  
+  height: 16px;
+  vertical-align: top;
+}
+
+.scale-value span {
+  line-height: 100%;
+  vertical-align: top;
+}
+
+.scale-value:not(:last-of-type) {
+  border-left: 1px solid #777;
+}
+
+.scale-value:last-of-type {
+  border-right: 1px solid #777;
+}
+
+.scale-min-value {
+  left: 0%;  
+}
+
+.scale-max-value {
+  right: 0%;  
+}

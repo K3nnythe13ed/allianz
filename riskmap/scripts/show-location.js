@@ -94,7 +94,7 @@ function CreateMapLayerMarker() {
             "<tr><td><b>Location ID: </b></td><td>" + feature.properties.LocID + "<td></tr>" +
             
             "<tr><td><b>Nathan Risk Score: </b></td><td>" + feature.properties.MR_RISK_SCORE + "<td></tr>" +
-            "<tr><td><b>Expected Exposure: </b></td><td>" + formatThousand(feature.properties.Exp_TIV) +"<td></tr>"+
+            "<tr><td><b>Exposure: </b></td><td>" + formatThousand(feature.properties.Exp_TIV) +"<td></tr>"+
             "<tr><td><b>Lat: </b></td><td><b> Lon: </b> <td></tr>" +
             "<tr><td>" + lat + "</td><td>" + lon + " <td></tr>" +
             "</table>"
