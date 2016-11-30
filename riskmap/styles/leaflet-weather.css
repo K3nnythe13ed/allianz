@@ -46,3 +46,8 @@
 .scale-max-value {
   right: 0%;  
 }
+#legend{
+    position:absolute;
+    bottom: 3%;
+			right: 1%;
+}

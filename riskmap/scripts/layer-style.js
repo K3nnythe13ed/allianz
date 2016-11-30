@@ -33,7 +33,7 @@ function createLayer(key) {
     undoLayer();
     var main = new L.tileLayer('https://api.tiles.mapbox.com/v4/k3nnythe13ed.1oe7h7kd/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoiazNubnl0aGUxM2VkIiwiYSI6ImNpdXBramh1MjAwMWUyb3BrZGZpaHRhNmUifQ.SVIjk10IlrzAkWopvYzMtg',
         {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://openseamap.org">OpenSeaMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://openweathermap.org">OpenWeatherMap</a>, <a href="http://openseamap.org">OpenSeaMap</a>',
             maxZoom: 21,
 
             continuousWorld: false,
@@ -42,7 +42,6 @@ function createLayer(key) {
 
     var sea = new L.tileLayer('http://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',
         {
-            attribution: 'Map data &copy; <a href="http://openseamap.org">OpenSeaMap</a>',
             maxZoom: 21,
             opacity: 0.7,
 
@@ -52,7 +51,6 @@ function createLayer(key) {
     if (key !== null) {
         var weather = new L.tileLayer('http://{s}.maps.owm.io/current/' + String(key) + '/{z}/{x}/{y}?appid=b1b15e88fa797225412429c1c50c122a1',
             {
-                attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
                 maxZoom: 9,
 
                 opacity: 0.9,
@@ -125,9 +123,9 @@ function changeLayer(value) {
     createLegend(legend);
     createLayer(layer);
 }
+
 function createLegend(legend) {
     var leg = document.getElementById("legend");
-    console.log(leg)
     leg.innerHTML = legend
 }
 
