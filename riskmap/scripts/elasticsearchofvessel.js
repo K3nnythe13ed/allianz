@@ -104,9 +104,7 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
 
 
     }, function getMoreUntilDone(error, response) {
-        if (loading) {
-            sleepFor(10000);
-        }
+     
         loading = true;
         var index = []
         var counter = 0;
@@ -201,9 +199,7 @@ function showAllVesselsOfPastDayInTable(callback) {
                 scroll: '30s'
             }, getMoreUntilDone);
         } else {
-            if (loading) {
-                sleepFor(10000);
-            }
+            
             loading = true;
             replaceTableValue(Object.keys(allMMSI).length, undefined)
             replaceTableWarehouseValue(undefined)

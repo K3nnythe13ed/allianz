@@ -1,0 +1,19 @@
+{
+  "name": "riskmap",
+  "version": "0.1.0",
+  "description": "using Elastic Stack to assess the insurance risk of cargo vessels and warehouses",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/K3nnythe13ed/docker-elk-Riskmap.git"
+  },
+  "author": "K3nnythe13ed <stvdiab@aol.com> mkoertgen <marcel.koertgen@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/K3nnythe13ed/docker-elk-Riskmap/issues"
+  },
+  "homepage": "https://github.com/K3nnythe13ed/docker-elk-Riskmap#readme"
+}

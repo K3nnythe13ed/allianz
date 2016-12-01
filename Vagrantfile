@@ -11,6 +11,9 @@ Vagrant.configure(2) do |config|
   config.vm.network :forwarded_port, guest: 5601, host: 5601
   config.vm.network :forwarded_port, guest: 9200, host: 9200
   config.vm.network :forwarded_port, guest: 5000, host: 5000
+
+  # http-server for riskmap
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
   
   # just in case there is a HTTP_PROXY configured for the host 
   # system, the virtual machine is going to use it

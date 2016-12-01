@@ -72,3 +72,11 @@ services:
       ais_window: ${ais_window}
       #ais_interval: ${ais_interval}
       ais_json: "/log/aishub"
+  riskmap:
+    build:
+      context: riskmap/
+      args:
+        http_proxy: ${http_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+       - "8080:8080"

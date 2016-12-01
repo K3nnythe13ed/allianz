@@ -6,7 +6,7 @@ This is a use case of the ELK stack to assess the insurance risk of cargo vessel
 
 Technically, this comprises the [Elastic Stack](https://www.elastic.co/products) and a [Leaflet](http://leafletjs.com/) web application to visualize [OpenWeatherMap](https://openweathermap.org/) and playback of online [AIS](https://en.wikipedia.org/wiki/Automatic_identification_system) data.
 
-![Screenshot](http://placehold.it/350x150)
+![Screenshot](riskmap.jpg)
 
 ## Setup
 
@@ -24,7 +24,7 @@ Alternatively, use [Vagrant](https://www.vagrantup.com/)
 
     vagrant up
 
-And then access the web application hitting [http://localhost:9000](http://localhost:9000) with a web browser.
+And then access the web application hitting [http://localhost:8080](http://localhost:8080) with a web browser.
 
 You will see some test data. Optionally, for online import of AIS data, set your [AISHub username](http://www.aishub.net/xml-description-20.php) before starting the stack, i.e.
 
