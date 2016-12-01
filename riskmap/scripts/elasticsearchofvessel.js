@@ -131,10 +131,10 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
 
 }
 function showAllVesselsOfPastDayInTable(callback) {
-
-    var today = new Date(playbackitem.getTime());
-    var todayToEpoch = today.getTime();
-    var priorDate = new Date().setDate(today.getDate() - 30)
+    console.log(playbackitem.getTime())
+    var today = playbackitem.getTime()
+    
+    var priorDate = today - (24 * 60 * 60 * 1000)
     data1 = [];
     pusharray = []
     allMMSI = {};
@@ -155,7 +155,7 @@ function showAllVesselsOfPastDayInTable(callback) {
                             "range": {
                                 "@timestamp": {
                                     "gte": priorDate,
-                                    "lte": todayToEpoch,
+                                    "lte": today,
                                     "format": "epoch_millis"
                                 }
                             }
@@ -176,6 +176,7 @@ function showAllVesselsOfPastDayInTable(callback) {
         }
 
     }, function getMoreUntilDone(error, response) {
+        
 
 
         counter = 0;
