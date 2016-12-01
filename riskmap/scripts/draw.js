@@ -20,7 +20,7 @@ var drawControl = new L.Control.Draw(options);
 map.addControl(drawControl);
 var latlong = undefined
 map.on(L.Draw.Event.DRAWSTART, function (e) {
-
+    var latlong = undefined
     editableLayers.clearLayers();
     showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
 
@@ -41,6 +41,7 @@ map.on(L.Draw.Event.CREATED, function (e) {
 });
 
 map.on(L.Draw.Event.DELETESTART, function (e) {
+    var latlong = undefined
     editableLayers.clearLayers();
     showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
 });
