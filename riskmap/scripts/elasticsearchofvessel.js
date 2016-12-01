@@ -131,7 +131,6 @@ function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposur
 
 }
 function showAllVesselsOfPastDayInTable(callback) {
-    console.log(playbackitem.getTime())
     var today = playbackitem.getTime()
     
     var priorDate = today - (24 * 60 * 60 * 1000)
