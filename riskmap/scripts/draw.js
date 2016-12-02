@@ -11,7 +11,6 @@ var options = {
     {
         polyline: false,
         polygon: false,
-        marker: false,
         circle: false
     }
 };
@@ -20,10 +19,21 @@ var drawControl = new L.Control.Draw(options);
 map.addControl(drawControl);
 var latlong = undefined
 map.on(L.Draw.Event.DRAWSTART, function (e) {
-    latlong = undefined
-    editableLayers.clearLayers();
-    showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
+    var type = e.layerType
+    if (type === 'marker') {
 
+        $("#myModal").modal();
+
+        
+    }
+
+
+
+    if (type === 'rectangle') {
+        latlong = undefined
+        editableLayers.clearLayers();
+        showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
+    }
 })
 var layer_leaflet_id;
 
@@ -31,12 +41,17 @@ map.on(L.Draw.Event.CREATED, function (e) {
     var type = e.layerType,
         layer = e.layer;
     //on create do elasticsearch function countVessels input(function replaceTableValue as callback, layer latlongs)
+    if (type === 'rectangle') {
+        latlong = layer.getLatLngs()
+        AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
 
-    latlong = layer.getLatLngs()
-    AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
-
-    editableLayers.addLayer(layer);
-    layer_leaflet_id = layer._leaflet_id
+        editableLayers.addLayer(layer);
+        layer_leaflet_id = layer._leaflet_id
+    }
+    if (type === 'marker') {
+        layer.bindPopup('A popup!');
+        markerLayer.addLayer(layer);
+    }
     // Do whatever else you need to. (save to db, add to map etc)
 });
 

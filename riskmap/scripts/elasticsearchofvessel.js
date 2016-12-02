@@ -211,13 +211,6 @@ function showAllVesselsOfPastDayInTable(callback) {
 var allMMSI
 var loading = false;
 var dt;
-$(document).ready(function (e) {
-
-    dt = dynamicTable.config('vesselsearch',
-        ['field1', 'field2', 'field4', 'field5'],
-        ['MMSI', 'Exposure', 'Name', 'IMO'], //set to null for field names instead of custom header names
-        'There are no items to list...');
-})
 
 var data1 = []
 function addAnotherVesseltoTable(hit) {
@@ -227,10 +220,7 @@ function addAnotherVesseltoTable(hit) {
     }
     data1.push(pushdata);
 }
-function sleepFor(sleepDuration) {
-    var now = new Date().getTime();
-    while (new Date().getTime() < now + sleepDuration) { /* do nothing */ }
-}
+
 function loaddata() {
     if (dt != undefined) {
         dt.clear();

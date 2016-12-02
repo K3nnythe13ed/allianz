@@ -10,7 +10,7 @@ jsonoutput=/data/aishub
 if [[ ${ais_json:+1} ]]; then jsonoutput=${ais_json}; fi
 
 # default get 3h of AIS data
-timewindow=10800
+timewindow=21600
 if [[ ${ais_window:+1} ]]; then timewindow=${ais_window}; fi
 
 # AISHub limits to 1 call per minute 
