@@ -35,25 +35,25 @@ function CreateMapLayerMarker() {
     // create new Marker
     function onEachFeature(feature, layer) {
         var WhS = L.icon({
-            iconUrl: 'images/warehousemarker.png',
+            iconUrl: 'images/office-building.png',
             iconSize: [38, 38],
             iconAnchor: [19, 38],
             popupAnchor: [0, -50]
         });
         var WhM = L.icon({
-            iconUrl: 'images/warehousemarker.png',
+            iconUrl: 'images/office-building.png',
             iconSize: [58, 58],
             iconAnchor: [29, 58],
             popupAnchor: [0, -50]
         });
         var WhB = L.icon({
-            iconUrl: 'images/warehousemarker.png',
+            iconUrl: 'images/office-building.png',
             iconSize: [78, 78],
             iconAnchor: [39, 78],
             popupAnchor: [0, -50]
         });
         var WhSS = L.icon({
-            iconUrl: 'images/warehousemarker.png',
+            iconUrl: 'images/office-building.png',
             iconSize: [18, 18],
             iconAnchor: [9, 18],
             popupAnchor: [0, -50]

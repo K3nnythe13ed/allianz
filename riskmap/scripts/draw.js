@@ -1,34 +1,43 @@
 
+var LeafIcon = L.Icon.extend({
+    options: {
+
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -50]
+    }
+});
+
+var LeafletDrawMarker = new LeafIcon({
+    iconUrl: 'images/office-building.png'
+});
+
+
 
 var editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 var layer;
 var options = {
+
     edit: {
         featureGroup: editableLayers //REQUIRED!!
     },
+
     draw:
     {
+        marker: {
+            icon: LeafletDrawMarker
+        },
         polyline: false,
         polygon: false,
         circle: false
     }
 };
-
 var drawControl = new L.Control.Draw(options);
 map.addControl(drawControl);
 var latlong = undefined
 map.on(L.Draw.Event.DRAWSTART, function (e) {
     var type = e.layerType
-    if (type === 'marker') {
-
-        $("#myModal").modal();
-
-        
-    }
-
-
-
     if (type === 'rectangle') {
         latlong = undefined
         editableLayers.clearLayers();
@@ -49,6 +58,9 @@ map.on(L.Draw.Event.CREATED, function (e) {
         layer_leaflet_id = layer._leaflet_id
     }
     if (type === 'marker') {
+        MarkersetLatLng(e);
+
+
         layer.bindPopup('A popup!');
         markerLayer.addLayer(layer);
     }
