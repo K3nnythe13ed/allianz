@@ -28,8 +28,7 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
 
 
     response.hits.hits.forEach(function (hit) {
-      console.log(hit)
-     giveback(hit, demoLocations)
+      giveback(hit, demoLocations)
     }
     )
     CreateMapLayerMarker()
@@ -37,20 +36,19 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
   )
 }
 
-function insertintoCollection(hit, list)
-{
-        var location =
-          {
-            "timestamp": hit._source["@timestamp"],
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": hit._source.geometry.coordinates,
-            },
+function insertintoCollection(hit, list) {
+  var location =
+    {
+      "timestamp": hit._source["@timestamp"],
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": hit._source.geometry.coordinates,
+      },
 
-            "properties": hit._source.properties
-          }
-        list.features.push(location)
-      
+      "properties": hit._source.properties
+    }
+  list.features.push(location)
+
 
 }

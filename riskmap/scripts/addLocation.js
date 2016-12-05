@@ -106,20 +106,20 @@ $(function () {
             var locid = document.getElementById("locid").value;
             var locexp = document.getElementById("locexp").value;
             var locrisk = document.getElementById("locrisc").value;
-            var loclat = document.getElementById("loclat").value;
-            var loclon = document.getElementById("loclon").value;
+            var loclat = parseFloat(document.getElementById("loclat").value);
+            var loclon = parseFloat(document.getElementById("loclon").value);
             var locoe = document.getElementById("locoe").value;
-            createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, locoe, createLocationCollection)
+            createANewLocation(locname, locid, locexp, locrisk, loclat.toPrecision(12), loclon.toPrecision(12), locoe, createLocationCollection)
             $('#myModal').modal('hide');
-
+            $('#locationform').formValidation('resetForm', true);
 
         }
     });
 });
 
-$('#loginModal').on('hidden.bs.modal', function () {
+$('#myModal').on('hidden.bs.modal', function () {
 
-    $('#loginForm').formValidation('resetForm', true);
+    $('#locationform').formValidation('resetForm', true);
 });
 
 
