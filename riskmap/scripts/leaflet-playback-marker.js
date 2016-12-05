@@ -2,7 +2,7 @@
 var ticklen
 function setPlayBackTickLen(amountofhits) {
 
-    ticklen = Math.ceil(amountofhits / 600)
+    ticklen = Math.ceil(amountofhits / 400)
 
 }
 function getTickLen() {

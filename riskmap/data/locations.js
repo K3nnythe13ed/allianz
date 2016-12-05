@@ -28,6 +28,7 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
 
 
     response.hits.hits.forEach(function (hit) {
+      console.log(hit)
      giveback(hit, demoLocations)
     }
     )
@@ -35,20 +36,7 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
   }
   )
 }
-function addLocationToList(hit, doActionOnSingleLocation, list)
-{
-  
-   var insert = true;
-      list.features.forEach(function (feature) {
-        if (hit._source.properties.LocID == feature.properties.LocID) {
-          insert = false
-          
-        }
-        
-      })
-  doActionOnSingleLocation(insert, hit, list)
-      
-}
+
 function insertintoCollection(hit, list)
 {
         var location =

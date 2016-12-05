@@ -65,6 +65,13 @@ $(function () {
                         }
                     }
                 },
+                loe: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Location OE is required'
+                        }
+                    }
+                },
                 llat: {
                     validators: {
                         notEmpty: {
@@ -101,8 +108,10 @@ $(function () {
             var locrisk = document.getElementById("locrisc").value;
             var loclat = document.getElementById("loclat").value;
             var loclon = document.getElementById("loclon").value;
-
+            var locoe = document.getElementById("locoe").value;
+            createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, locoe, createLocationCollection)
             $('#myModal').modal('hide');
+
 
         }
     });
@@ -113,9 +122,11 @@ $('#loginModal').on('hidden.bs.modal', function () {
     $('#loginForm').formValidation('resetForm', true);
 });
 
-function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon) {
+
+
+function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, locoe, createLocationCollection) {
     var today = new Date();
-    client.update({
+    client.index({
         index: 'logstash-constant',
         type: 'warehouse',
         id: locid,
@@ -134,22 +145,36 @@ function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon) {
                 "AAL_PreCat_EQ": "",
                 "AAL_PreCat_WS": "",
                 "ML_AGCS_Share": "",
-                "Entire": ", US,  0,  0,  0",
-                "Exp_TIV": 5000000,
-                "OE": "US",
-                "MR_RISK_SCORE": 3,
-                "LocID": 2,
+                "Entire": ", " + locoe + ",  0,  0,  0",
+                "Exp_TIV": locexp,
+                "OE": locoe,
+                "MR_RISK_SCORE": locrisk,
+                "LocID": locid,
                 "AAL_PreCat_FL": "",
                 "AddrMatch": "",
-                "AccountName": "Test 2"
+                "AccountName": locname
             }
         }
 
 
 
-    })
-}
+    }, function (err, results) {
+        client.indices.refresh({
+            index: 'logstash-constant'
+        }, function (err, results) {
 
+            markerLayer.clearLayers();
+            demoLocations = null;
+            createLocationCollection(CreateMapLayerMarker, insertintoCollection)
+
+        }
+
+        )
+
+    })
+
+
+}
 
 
 

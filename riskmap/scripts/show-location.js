@@ -23,7 +23,6 @@ function formatThousand(nStr) {
 }
 
 function CreateMapLayerMarker() {
-
     //foreach location in demoLocations call onEachFeature
     var datalocations = L.geoJson(demoLocations, {
         onEachFeature: onEachFeature

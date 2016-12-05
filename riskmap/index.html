@@ -179,6 +179,12 @@
 								</div>
 							</div>
 							<div class="form-group row">
+								<label for="locoe" class="col-xs-4 col-form-label">Location OE</label>
+								<div class="col-xs-8">
+									<input class="form-control" type="search" value="" id="locoe" name="loe">
+								</div>
+							</div>
+							<div class="form-group row">
 								<label for="locrisc" class="col-xs-4 col-form-label">Location Risk Score</label>
 								<div class="col-xs-8">
 									<input class="form-control" type="search" value="" id="locrisc" name="lrisc">
@@ -225,7 +231,7 @@
 	<script>
 		var client = elasticsearch.Client({
 			host: 'localhost:9200',
-			//log: 'trace'
+			// log: 'trace'
 		});
 		
 	</script>
