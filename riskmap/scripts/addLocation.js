@@ -95,16 +95,60 @@ $(function () {
         $('#locationform').data('formValidation').validate();
 
         if ($('#locationform').data('formValidation').isValid()) {
+            var locname = document.getElementById("locname").value;
+            var locid = document.getElementById("locid").value;
+            var locexp = document.getElementById("locexp").value;
+            var locrisk = document.getElementById("locrisc").value;
+            var loclat = document.getElementById("loclat").value;
+            var loclon = document.getElementById("loclon").value;
 
             $('#myModal').modal('hide');
+
         }
     });
 });
 
 $('#loginModal').on('hidden.bs.modal', function () {
+
     $('#loginForm').formValidation('resetForm', true);
 });
 
+function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon) {
+    var today = new Date();
+    client.update({
+        index: 'logstash-constant',
+        type: 'warehouse',
+        id: locid,
+        body: {
+            "@timestamp": today,
+            "exposure": locexp,
+            "geometry": {
+                "coordinates": [
+                    loclon,
+                    loclat
+                ],
+                "type": "Point"
+            },
+            "id": locid,
+            "properties": {
+                "AAL_PreCat_EQ": "",
+                "AAL_PreCat_WS": "",
+                "ML_AGCS_Share": "",
+                "Entire": ", US,  0,  0,  0",
+                "Exp_TIV": 5000000,
+                "OE": "US",
+                "MR_RISK_SCORE": 3,
+                "LocID": 2,
+                "AAL_PreCat_FL": "",
+                "AddrMatch": "",
+                "AccountName": "Test 2"
+            }
+        }
+
+
+
+    })
+}
 
 
 

@@ -59,9 +59,6 @@ map.on(L.Draw.Event.CREATED, function (e) {
     }
     if (type === 'marker') {
         MarkersetLatLng(e);
-
-
-        layer.bindPopup('A popup!');
         markerLayer.addLayer(layer);
     }
     // Do whatever else you need to. (save to db, add to map etc)

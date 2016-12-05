@@ -24,7 +24,7 @@
     "leaflet-playback": "https://github.com/hallahan/LeafletPlayback.git#master",
     "vis": "~3.12.0",
     "bootstrap": "~3.3.7",
-    "form.validation": "~a6001290fe"
+    "form.validation": "https://github.com/formvalidation/formvalidation.git#a6001290fea95a3a38a6b1f32431dca962182c3a"
   },
   "resolutions": {
     "leaflet": "~0.7.0"

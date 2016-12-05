@@ -159,7 +159,7 @@
 					</div>
 
 					<div class="modal-body">
-						<form id="locationform">
+						<form id="locationform" onsubmit="return false">
 							<div class="form-group row">
 								<label for="locname" class="col-xs-4 col-form-label">Location Name</label>
 								<div class="col-xs-8">
@@ -215,7 +215,9 @@
 	</div>
 
 	<!--Map script -->
+
 	<script>
+	
 		map = L.map('map').setView([50.7343800, 7.0954900], 7);
 		
 		 </script>
@@ -229,6 +231,7 @@
 	</script>
 	<script src="data/locations.js"></script>
 	<script src="data/es-data.js"></script>
+	
 	<!--Executable scripts -->
 	<script src="scripts/show-location.js"></script>
 	<script src="scripts/addLocation.js"></script>
