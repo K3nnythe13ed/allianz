@@ -52,6 +52,7 @@ map.on(L.Draw.Event.CREATED, function (e) {
         layer_leaflet_id = layer._leaflet_id
     }
     if (type === 'marker') {
+        
         MarkersetLatLng(e);
             }
 });

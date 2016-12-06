@@ -1,94 +1,121 @@
 // validation options for the form locationform off bootstrap modal
-$('#locationform').formValidation({
-    framework: 'bootstrap',
-    excluded: ':disabled',
-    icon: {
-        valid: 'glyphicon glyphicon-ok',
-        invalid: 'glyphicon glyphicon-remove',
-        validating: 'glyphicon glyphicon-refresh'
-    },
-    fields: {
-        lname: {
-            validators: {
-                notEmpty: {
-                    message: 'The Location Name is required'
-                }
-            }
-        },
-        lid: {
-            validators: {
-                notEmpty: {
-                    message: 'The Location ID is required'
+ $('#locationform').formValidation({
+            framework: 'bootstrap',
+            excluded: ':disabled',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                lname: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Location Name is required'
+                        }
+                    }
+                },
+                lid: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Location ID is required'
+                        },
+                        callback: {
+                            message: 'The ID is invalid',
+                            callback: function (value, validator, $field) {
+                                
+                                var test = true;
+                                if (document.getElementById("lochidden").value == "new") {
+                                    for (i = 0; i < demoLocations.features.length; i++) {
+                                        if (demoLocations.features[i].properties.LocID == value) {
+                                            test = false;
+                                        }
+                                    }
+
+                                    return {
+                                        valid: test,       // or true
+                                        message: 'Location ID already exists. To update an existing Location use the edit function'
+                                    }
+
+                                }
+                                else {
+                                    return {
+                                        valid: true,       // or true
+                                        message: 'Other error message'
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                },
+                lexp: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Location Exposure is required'
+                        },
+                        digits: {
+                            message: 'The value is not a valid number. Required: f.e. 40000000',
+
+                        },
+                        stringLength: {
+                            min: 3
+                        }
+                    }
+                },
+                lrisc: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Location Risk is required'
+                        },
+                        stringLength: {
+                            max: 1,
+                            message: 'Please enter a valid Nathan Risk Score'
+                        }
+                    }
+                },
+                loe: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Location OE is required'
+                        }
+                    }
+                },
+                llat: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Latitude is required'
+                        },
+                        between: {
+                            min: -90,
+                            max: 90,
+                            message: 'The latitude must be between -90.0 and 90.0'
+                        }
+                    }
+                },
+                llon: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Longitude is required'
+                        },
+                        between: {
+                            min: -180,
+                            max: 180,
+                            message: 'The longitude must be between -180.0 and 180.0'
+                        }
+                    }
                 }
 
-
             }
-        },
-        lexp: {
-            validators: {
-                notEmpty: {
-                    message: 'The Location Exposure is required'
-                },
-                digits: {
-                    message: 'The value is not a valid number. Required: f.e. 40000000',
-
-                },
-                stringLength: {
-                    min: 3
-                }
-            }
-        },
-        lrisc: {
-            validators: {
-                notEmpty: {
-                    message: 'The Location Risk is required'
-                },
-                stringLength: {
-                    max: 1,
-                    message: 'Please enter a valid Nathan Risk Score'
-                }
-            }
-        },
-        loe: {
-            validators: {
-                notEmpty: {
-                    message: 'The Location OE is required'
-                }
-            }
-        },
-        llat: {
-            validators: {
-                notEmpty: {
-                    message: 'The Latitude is required'
-                },
-                between: {
-                    min: -90,
-                    max: 90,
-                    message: 'The latitude must be between -90.0 and 90.0'
-                }
-            }
-        },
-        llon: {
-            validators: {
-                notEmpty: {
-                    message: 'The Longitude is required'
-                },
-                between: {
-                    min: -180,
-                    max: 180,
-                    message: 'The longitude must be between -180.0 and 180.0'
-                }
-            }
-        }
-
-    }
-});
+        });
 //calling a function to listen to the save buttton
 $(function () {
+
     $('#saveloc').click(function () {
+       
         //validate locationform
         $('#locationform').data('formValidation').validate();
-            //isValid returns true if validate was successful
+        //isValid returns true if validate was successful
         if ($('#locationform').data('formValidation').isValid()) {
             var locname = document.getElementById("locname").value;
             var locid = document.getElementById("locid").value;
@@ -166,6 +193,8 @@ function MarkersetLatLng(e) {
     var $modal = $('#myModal'),
         $latitude = $modal.find('#loclat');
     $longitude = $modal.find('#loclon');
+    $lonhidden = $modal.find('#lochidden');
+    $lonhidden.val("new");
     $latitude.val(e.layer._latlng.lat);
     $longitude.val(e.layer._latlng.lng);
     $modal.modal("show");
@@ -211,3 +240,5 @@ function onDelete(id) {
         )
     });
 }
+
+

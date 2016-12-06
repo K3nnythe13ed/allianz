@@ -93,25 +93,28 @@ function CreateMapLayerMarker() {
             "<tr><td><b>Exposure: </b></td><td>" + formatThousand(feature.properties.Exp_TIV) + "<td></tr>" +
             "<tr><td><b>Lat: </b></td><td><b> Lon: </b> <td></tr>" +
             "<tr><td>" + lat + "</td><td>" + lon + " <td></tr>" +
-            "<tr><td><a id='edit' class='editButton' onclick = 'return false; '>Edit</a></td><td><a id='edit' class='deleteButton' onclick = 'return false; '>Delete</a></td></tr>" +
+            "<tr><td><a href='#' id='edit' class='editButton' onclick = 'return false; '>Edit</a></td><td><a href='#' id='edit' class='deleteButton' onclick = 'return false; '>Delete</a></td></tr>" +
             "</table>");
 
 
         mark.bindPopup(container[0]);
         markerLayer.addLayer(mark);
         // on clicking edit open Bootstrap Modal 
-        container.on('click', '.editButton', function() {
+        container.on('click', '.editButton', function () {
+            var $modal = $('#myModal'),
+                $lonhidden = $modal.find('#lochidden');
+            $lonhidden.val("");
             EditLocation(feature.properties.AccountName, feature.properties.LocID, feature.properties.MR_RISK_SCORE, feature.properties.OE, feature.properties.Exp_TIV, lat, lon)
         })
         //on clicking delete remove location from es and map
-        container.on('click', '.deleteButton', function() {
+        container.on('click', '.deleteButton', function () {
             onDelete(feature.properties.LocID)
         })
     }
 
     // on zoom removeLayer markerLayer. 
     // exception: Checkbox CheckWarehouse has been checked
-    map.on('zoomend', function() {
+    map.on('zoomend', function () {
         if (map.getZoom() <= 5 && !(document.getElementById("CheckWarehouse").checked)) {
             if (typeof (markerLayer) != "undefined") {
 
