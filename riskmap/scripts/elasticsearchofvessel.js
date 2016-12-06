@@ -1,3 +1,15 @@
+$(document).ready(function () {
+
+    dt = dynamicTable.config('vesselsearch',
+        ['field1', 'field2', 'field4', 'field5'],
+        ['MMSI', 'Exposure', 'Name', 'IMO'], //set to null for field names instead of custom header names
+        'There are no items to list...');
+
+
+
+
+});
+
 function AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue) {
 
     var currentPlaybackTime = playbackitem.getTime()

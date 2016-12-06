@@ -84,27 +84,32 @@ function CreateMapLayerMarker() {
         }
         //format Exp_TIV 
 
-
-
-        mark.bindPopup
-            (
-                "<table id='popupware'>"+
+        var container = $('<div />');
+        container.html("<table id='popupware'>" +
             "<tr><td><b>Location Name: </b></td><td>" + feature.properties.AccountName + "<td></tr>" +
             "<tr><td><b>Location ID: </b></td><td>" + feature.properties.LocID + "<td></tr>" +
-            
+
             "<tr><td><b>Nathan Risk Score: </b></td><td>" + feature.properties.MR_RISK_SCORE + "<td></tr>" +
-            "<tr><td><b>Exposure: </b></td><td>" + formatThousand(feature.properties.Exp_TIV) +"<td></tr>"+
+            "<tr><td><b>Exposure: </b></td><td>" + formatThousand(feature.properties.Exp_TIV) + "<td></tr>" +
             "<tr><td><b>Lat: </b></td><td><b> Lon: </b> <td></tr>" +
             "<tr><td>" + lat + "</td><td>" + lon + " <td></tr>" +
-            "</table>"
-            )
-        markerLayer.addLayer(mark);
+            "<tr><td><a id='edit' class='editButton' onclick = 'return false; '>Edit</a></td><td><a id='edit' class='deleteButton' onclick = 'return false; '>Delete</a></td></tr>" +
+            "</table>");
 
+
+        mark.bindPopup(container[0]);
+        markerLayer.addLayer(mark);
+        container.on('click', '.editButton', function() {
+            EditLocation(feature.properties.AccountName, feature.properties.LocID, feature.properties.MR_RISK_SCORE, feature.properties.OE, feature.properties.Exp_TIV, lat, lon)
+        })
+        container.on('click', '.deleteButton', function() {
+            onDelete(feature.properties.LocID)
+        })
     }
 
     // on zoom removeLayer markerLayer. 
     // exception: Checkbox CheckWarehouse has been checked
-    map.on('zoomend', function () {
+    map.on('zoomend', function() {
         if (map.getZoom() <= 5 && !(document.getElementById("CheckWarehouse").checked)) {
             if (typeof (markerLayer) != "undefined") {
 
