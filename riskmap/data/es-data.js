@@ -64,8 +64,6 @@ function scrollAllforView(callback) {
             createPlayback()
             
             showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
-
-
         }
     });
 }
@@ -77,7 +75,6 @@ function searchShipCollectionForMMSI(mmsi) {
         if (shipCollection[i].properties.MMSI == mmsi) {
             update = i;
         }
-
     }
     return update
 }

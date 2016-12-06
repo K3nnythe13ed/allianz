@@ -2,6 +2,7 @@
 
 var checkLayerIsActive = false;
 var markerLayer = L.layerGroup();
+// formats an input value to add Thousands Seperator
 function formatThousand(nStr) {
     if (nStr != "undefined") {
 
@@ -21,7 +22,7 @@ function formatThousand(nStr) {
         return "empty";
     }
 }
-
+//create Layer for all Markers on Map
 function CreateMapLayerMarker() {
     //foreach location in demoLocations call onEachFeature
     var datalocations = L.geoJson(demoLocations, {
@@ -82,8 +83,7 @@ function CreateMapLayerMarker() {
                 }
             }
         }
-        //format Exp_TIV 
-
+        //bind popup to marker
         var container = $('<div />');
         container.html("<table id='popupware'>" +
             "<tr><td><b>Location Name: </b></td><td>" + feature.properties.AccountName + "<td></tr>" +
@@ -99,9 +99,11 @@ function CreateMapLayerMarker() {
 
         mark.bindPopup(container[0]);
         markerLayer.addLayer(mark);
+        // on clicking edit open Bootstrap Modal 
         container.on('click', '.editButton', function() {
             EditLocation(feature.properties.AccountName, feature.properties.LocID, feature.properties.MR_RISK_SCORE, feature.properties.OE, feature.properties.Exp_TIV, lat, lon)
         })
+        //on clicking delete remove location from es and map
         container.on('click', '.deleteButton', function() {
             onDelete(feature.properties.LocID)
         })

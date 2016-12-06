@@ -2,7 +2,7 @@
 
 <head>
 	<title>Weather and Risk-Map</title>
-
+<!--importing required bower_components (use bower install) -->
 	<link href="bower_components/vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
 	<script src="bower_components/vis/dist/vis.min.js"></script>
 
@@ -18,37 +18,32 @@
 	<link href="bower_components/form.validation/dist/css/formValidation.css" rel="stylesheet" type="text/css" />
 	<script src="bower_components/form.validation/dist/js/formValidation.js"></script>
 	<script src="bower_components/form.validation/dist/js/framework/bootstrap.min.js"></script>
-	
-
-
-
-
 
 	<script src="bower_components/leaflet-playback/dist/LeafletPlayback.js"></script>
 
 	<script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
 	<link href="bower_components/leaflet-draw/dist/leaflet.draw.css" rel="stylesheet" type="text/css" />
 
-
 	<script src="bower_components/elasticsearch/elasticsearch.js"></script>
 
+	<!-- import css files -->
 	<link rel="stylesheet" href="styles/main.css" />
 	<link rel="stylesheet" href="styles/leaflet-weather.css" />
 </head>
 
 <body>
-
+<!-- Bootstrap Container -->
 	<div id="container">
 
 		<div class="row">
 
 			<div class="col-xs-6 col-sm-9 col-md-9">
-
+				<!-- map placeholder -->
 				<div id="map">
 					<div id="legend"></div>
 				</div>
 
-
+				<!-- Basic options for input -->
 				<div id="basemaps-wrapper">
 					<table id="layer">
 						<tr>
@@ -84,7 +79,7 @@
 					</table>
 
 
-
+					<!-- Play/Stop/Faster/Slower -->
 					<table id="playbackspeedtable">
 						<tr>
 							<td align="center">
@@ -117,7 +112,6 @@
 
 
 
-			<!--Required scripts -->
 			<div class="col-xs-6 col-sm-3 col-md-3">
 				<!--ID Kibana aligning all objects taken from elasticsearch -->
 				<div id="kibana">
@@ -151,7 +145,7 @@
 		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
 
-				<!-- Modal content-->
+				<!-- Modal content / used after drawing a new marker on the map-->
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -227,7 +221,9 @@
 		map = L.map('map').setView([50.7343800, 7.0954900], 7);
 		
 		 </script>
+		 <!-- Script updating values in any table -->
 	<script src="scripts/TableCreator/createTable.js"></script>
+	<!-- connect to es Client -->
 	<script>
 		var client = elasticsearch.Client({
 			host: 'localhost:9200',
@@ -235,6 +231,7 @@
 		});
 		
 	</script>
+	<!-- importing Data Creation scripts -->
 	<script src="data/locations.js"></script>
 	<script src="data/es-data.js"></script>
 	
@@ -250,7 +247,6 @@
 	<script src="scripts/layer-style.js"></script>
 
 
-	<!-- option menu for leaflet Map -->
 
 
 

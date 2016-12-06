@@ -1,4 +1,4 @@
-
+// validation options for the form locationform off bootstrap modal
 $('#locationform').formValidation({
     framework: 'bootstrap',
     excluded: ':disabled',
@@ -83,12 +83,12 @@ $('#locationform').formValidation({
 
     }
 });
-
+//calling a function to listen to the save buttton
 $(function () {
     $('#saveloc').click(function () {
-
+        //validate locationform
         $('#locationform').data('formValidation').validate();
-
+            //isValid returns true if validate was successful
         if ($('#locationform').data('formValidation').isValid()) {
             var locname = document.getElementById("locname").value;
             var locid = document.getElementById("locid").value;
@@ -97,13 +97,14 @@ $(function () {
             var loclat = parseFloat(document.getElementById("loclat").value);
             var loclon = parseFloat(document.getElementById("loclon").value);
             var locoe = document.getElementById("locoe").value;
+            //call functon to create a new Location
             createANewLocation(locname, locid, locexp, locrisk, loclat.toPrecision(12), loclon.toPrecision(12), locoe, createLocationCollection)
             $('#myModal').modal('hide');
 
         }
     });
 });
-
+// remove all input values from Modal after Modal has been hidden
 $('#myModal').on('hidden.bs.modal', function () {
 
     $(this).find('form')[0].reset();
@@ -111,7 +112,7 @@ $('#myModal').on('hidden.bs.modal', function () {
 });
 
 
-
+//create new location using the es client
 function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, locoe, createLocationCollection) {
     var today = new Date();
     client.index({
@@ -147,23 +148,20 @@ function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, loc
 
 
     }, function (err, results) {
+        //refresh index. Required based on the asynchronous input of es client
         client.indices.refresh({
             index: 'logstash-constant'
         }, function (err, results) {
-
+            //clear marker Layer to add a new Layer using the updated index
             markerLayer.clearLayers();
             demoLocations = null;
             createLocationCollection(CreateMapLayerMarker, insertintoCollection)
-
-        }
-
-        )
-
+        })
     })
 
 
 }
-
+//used by leaflet draw on marker create parse lat lon to bootstrap modal
 function MarkersetLatLng(e) {
     var $modal = $('#myModal'),
         $latitude = $modal.find('#loclat');
@@ -172,7 +170,7 @@ function MarkersetLatLng(e) {
     $longitude.val(e.layer._latlng.lng);
     $modal.modal("show");
 }
-
+//edit Location used by marker popup binding.
 function EditLocation(name, id, risk, oe, exp, lat, lon) {
     var $modal = $('#myModal'),
 
@@ -193,7 +191,7 @@ function EditLocation(name, id, risk, oe, exp, lat, lon) {
     $modal.modal("show");
 
 }
-
+//delete location using es client
 function onDelete(id) {
     client.delete({
         index: 'logstash-constant',

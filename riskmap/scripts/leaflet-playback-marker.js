@@ -1,5 +1,6 @@
 //call function on start
 var ticklen
+
 function setPlayBackTickLen(amountofhits) {
 
     ticklen = Math.ceil(amountofhits / 400)
@@ -10,10 +11,7 @@ function getTickLen() {
 
 }
 function createPlayback() {
-
-    // var shipCollection = demoAis;
     var newdate = shipCollection[0].properties.time[0]
-
     var newendTime = shipCollection[0].properties.time[shipCollection[0].properties.time.length - 1]
 
     var bigship = L.icon({
@@ -117,12 +115,14 @@ function createPlayback() {
 
     // Set timeline time change event, so cursor is set after moving custom time (blue)
     timeline.on('timechange', onCustomTimeChange);
+    // Set Table Value after time has changed
     timeline.on('timechanged', onChange);
     // A callback so timeline is set after changing playback time
     function onPlaybackTimeChange(ms) {
         timeline.setCustomTime(new Date(ms));
 
     };
+    //update Table based on geobox
     function onChange(properties) {
         if (latlong != undefined) {
             AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
@@ -193,16 +193,10 @@ function changePlay() {
 
     }
     else {
-
-
         playbackitem.start();
         playbackitem.setSpeed(getTickLen() / 1000);
         showplayspeed = 1;
         replaceTableValueOfPlayback(showplayspeed+" x")
-
-
-
-
     }
     replacePlayButton();
 }

@@ -1,4 +1,3 @@
-
 var LeafIcon = L.Icon.extend({
     options: {
 
@@ -12,17 +11,13 @@ var LeafletDrawMarker = new LeafIcon({
     iconUrl: 'images/office-building.png'
 });
 
-
-
 var editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 var layer;
 var options = {
-
     edit: {
         featureGroup: editableLayers //REQUIRED!!
     },
-
     draw:
     {
         marker: {
@@ -53,15 +48,12 @@ map.on(L.Draw.Event.CREATED, function (e) {
     if (type === 'rectangle') {
         latlong = layer.getLatLngs()
         AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
-
         editableLayers.addLayer(layer);
         layer_leaflet_id = layer._leaflet_id
     }
     if (type === 'marker') {
         MarkersetLatLng(e);
-        
-    }
-    // Do whatever else you need to. (save to db, add to map etc)
+            }
 });
 
 map.on(L.Draw.Event.DELETESTART, function (e) {
@@ -71,10 +63,7 @@ map.on(L.Draw.Event.DELETESTART, function (e) {
 });
 
 map.on(L.Draw.Event.EDITED, function (e) {
-
     latlong = e.layers._layers[layer_leaflet_id]._latlngs;
     AmountofVesselsInArea(addAnotherVesseltoTable, latlong, getTotalExposureOfWarehouse, replaceTableValue)
-
-
 });
 // Initialise the draw control and pass it the FeatureGroup of editable layers

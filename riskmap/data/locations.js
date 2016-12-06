@@ -29,11 +29,9 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
 
     response.hits.hits.forEach(function (hit) {
       giveback(hit, demoLocations)
-    }
-    )
+    })
     CreateMapLayerMarker()
-  }
-  )
+  })
 }
 
 function insertintoCollection(hit, list) {
@@ -49,6 +47,4 @@ function insertintoCollection(hit, list) {
       "properties": hit._source.properties
     }
   list.features.push(location)
-
-
 }
