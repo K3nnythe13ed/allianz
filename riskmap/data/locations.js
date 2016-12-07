@@ -11,7 +11,7 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
     size: '1000',
     body: {
       "sort": {
-        "@timestamp":
+        "properties.LocID":
         { "order": "desc" }
       }
     }
@@ -30,6 +30,7 @@ function createLocationCollection(CreateMapLayerMarker, giveback) {
     response.hits.hits.forEach(function (hit) {
       giveback(hit, demoLocations)
     })
+
     CreateMapLayerMarker()
   })
 }

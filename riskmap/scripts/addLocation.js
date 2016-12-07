@@ -1,118 +1,122 @@
 // validation options for the form locationform off bootstrap modal
- $('#locationform').formValidation({
-            framework: 'bootstrap',
-            excluded: ':disabled',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                lname: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Location Name is required'
-                        }
-                    }
+$('#locationform').formValidation({
+    framework: 'bootstrap',
+    excluded: ':disabled',
+    icon: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+        lname: {
+            validators: {
+                notEmpty: {
+                    message: 'The Location Name is required'
+                }
+            }
+        },
+        lid: {
+            validators: {
+                notEmpty: {
+                    message: 'The Location ID is required'
                 },
-                lid: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Location ID is required'
-                        },
-                        callback: {
-                            message: 'The ID is invalid',
-                            callback: function (value, validator, $field) {
-                                
-                                var test = true;
-                                if (document.getElementById("lochidden").value == "new") {
-                                    for (i = 0; i < demoLocations.features.length; i++) {
-                                        if (demoLocations.features[i].properties.LocID == value) {
-                                            test = false;
-                                        }
-                                    }
+                digits: {
+                    message: 'The Location ID does allow digits only',
 
-                                    return {
-                                        valid: test,       // or true
-                                        message: 'Location ID already exists. To update an existing Location use the edit function'
-                                    }
+                },
+                callback: {
+                    message: 'The ID is invalid',
+                    callback: function (value, validator, $field) {
 
-                                }
-                                else {
-                                    return {
-                                        valid: true,       // or true
-                                        message: 'Other error message'
-                                    }
-
+                        var test = true;
+                        if (document.getElementById("lochidden").value == "new") {
+                            for (i = 0; i < demoLocations.features.length; i++) {
+                                if (demoLocations.features[i].properties.LocID == value) {
+                                    test = false;
                                 }
                             }
-                        }
-                    }
-                },
-                lexp: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Location Exposure is required'
-                        },
-                        digits: {
-                            message: 'The value is not a valid number. Required: f.e. 40000000',
 
-                        },
-                        stringLength: {
-                            min: 3
+                            return {
+                                valid: test,       // or true
+                                message: 'Location ID already exists. To update an existing Location use the edit function. Recommended to use LocID: ' + (parseFloat(demoLocations.features[0].properties.LocID) + 1)
+                            }
+
                         }
-                    }
-                },
-                lrisc: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Location Risk is required'
-                        },
-                        stringLength: {
-                            max: 1,
-                            message: 'Please enter a valid Nathan Risk Score'
-                        }
-                    }
-                },
-                loe: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Location OE is required'
-                        }
-                    }
-                },
-                llat: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Latitude is required'
-                        },
-                        between: {
-                            min: -90,
-                            max: 90,
-                            message: 'The latitude must be between -90.0 and 90.0'
-                        }
-                    }
-                },
-                llon: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The Longitude is required'
-                        },
-                        between: {
-                            min: -180,
-                            max: 180,
-                            message: 'The longitude must be between -180.0 and 180.0'
+                        else {
+                            return {
+                                valid: true,       // or true
+                                message: 'Other error message'
+                            }
+
                         }
                     }
                 }
-
             }
-        });
+        },
+        lexp: {
+            validators: {
+                notEmpty: {
+                    message: 'The Location Exposure is required'
+                },
+                digits: {
+                    message: 'The value is not a valid number. Required: f.e. 40000000',
+
+                },
+                stringLength: {
+                    min: 3
+                }
+            }
+        },
+        lrisc: {
+            validators: {
+                notEmpty: {
+                    message: 'The Location Risk is required'
+                },
+                stringLength: {
+                    max: 1,
+                    message: 'Please enter a valid Nathan Risk Score'
+                }
+            }
+        },
+        loe: {
+            validators: {
+                notEmpty: {
+                    message: 'The Location OE is required'
+                }
+            }
+        },
+        llat: {
+            validators: {
+                notEmpty: {
+                    message: 'The Latitude is required'
+                },
+                between: {
+                    min: -90,
+                    max: 90,
+                    message: 'The latitude must be between -90.0 and 90.0'
+                }
+            }
+        },
+        llon: {
+            validators: {
+                notEmpty: {
+                    message: 'The Longitude is required'
+                },
+                between: {
+                    min: -180,
+                    max: 180,
+                    message: 'The longitude must be between -180.0 and 180.0'
+                }
+            }
+        }
+
+    }
+});
 //calling a function to listen to the save buttton
 $(function () {
 
     $('#saveloc').click(function () {
-       
+
         //validate locationform
         $('#locationform').data('formValidation').validate();
         //isValid returns true if validate was successful
@@ -191,12 +195,24 @@ function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, loc
 //used by leaflet draw on marker create parse lat lon to bootstrap modal
 function MarkersetLatLng(e) {
     var $modal = $('#myModal'),
-        $latitude = $modal.find('#loclat');
-    $longitude = $modal.find('#loclon');
+        $locid = $modal.find('#locid');
+    $loclat = $modal.find('#loclat');
+    $loclon = $modal.find('#loclon');
     $lonhidden = $modal.find('#lochidden');
+    $locoe = $modal.find('#locoe');
+
+    $locoe.removeAttr('readonly');
+    $locid.removeAttr('readonly');
+    $loclon.removeAttr('readonly');
+    $loclat.removeAttr('readonly');
+
+    var newlocid = parseFloat(demoLocations.features[0].properties.LocID) + 1;
+    $locid.val(newlocid);
+
     $lonhidden.val("new");
-    $latitude.val(e.layer._latlng.lat);
-    $longitude.val(e.layer._latlng.lng);
+    $loclat.val(e.layer._latlng.lat);
+    $loclon.val(e.layer._latlng.lng);
+
     $modal.modal("show");
 }
 //edit Location used by marker popup binding.
@@ -204,19 +220,25 @@ function EditLocation(name, id, risk, oe, exp, lat, lon) {
     var $modal = $('#myModal'),
 
         $locname = $modal.find('#locname');
+        $locid = $modal.find('#locid');
+        $locrisc = $modal.find('#locrisc');
+        $locoe = $modal.find('#locoe');
+        $locexp = $modal.find('#locexp');
+        $loclon = $modal.find('#loclon');
+        $loclat = $modal.find('#loclat');
     $locname.val(name);
-    $locid = $modal.find('#locid');
-    $locid.val(id);
-    $locrisc = $modal.find('#locrisc');
+    $locid.val(id);   
     $locrisc.val(risk);
-    $locoe = $modal.find('#locoe');
     $locoe.val(oe);
-    $locexp = $modal.find('#locexp');
     $locexp.val(exp);
-    $loclon = $modal.find('#loclon');
     $loclon.val(lon);
-    $loclat = $modal.find('#loclat');
     $loclat.val(lat);
+
+
+    $locoe.attr('readonly', 'readonly');
+    $locid.attr('readonly', 'readonly');
+    $loclon.attr('readonly', 'readonly');
+    $loclat.attr('readonly', 'readonly');
     $modal.modal("show");
 
 }
