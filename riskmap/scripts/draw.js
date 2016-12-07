@@ -36,10 +36,12 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
     if (type === 'rectangle') {
         latlong = undefined
         editableLayers.clearLayers();
-        showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
+       // showAllVesselsOfPastDayInTable(addAnotherVesseltoTable)
     }
 })
 var layer_leaflet_id;
+
+
 
 map.on(L.Draw.Event.CREATED, function (e) {
     var type = e.layerType,

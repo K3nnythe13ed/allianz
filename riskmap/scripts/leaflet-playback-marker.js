@@ -94,6 +94,7 @@ function createPlayback() {
                     result = "<table id='popup'><tr><td> <label>MMSI:</label> </td><td align='right'>" + featureData.properties.MMSI + "</td></tr>" +
                         "<tr><td> <label>Name:</label> </td><td align='right'>" + featureData.properties.name + "</td></tr>" +
                         "<tr><td><label>Exposure: </label></td><td align='right'>" + featureData.properties.exposure + "  </td></tr>" +
+                        "<tr><td><label>Vesselinformation: </label></td><td><a href='http://www.marinetraffic.com/en/ais/details/ships/mmsi:"+featureData.properties.MMSI+"' target='_blank'>info</a></td></tr>"+
                         "</table>";
                 }
 

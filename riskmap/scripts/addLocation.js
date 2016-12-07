@@ -195,6 +195,7 @@ function createANewLocation(locname, locid, locexp, locrisk, loclat, loclon, loc
 //used by leaflet draw on marker create parse lat lon to bootstrap modal
 function MarkersetLatLng(e) {
     var $modal = $('#myModal'),
+    $loct = $modal.find('#loctitle');
         $locid = $modal.find('#locid');
     $loclat = $modal.find('#loclat');
     $loclon = $modal.find('#loclon');
@@ -208,7 +209,7 @@ function MarkersetLatLng(e) {
 
     var newlocid = parseFloat(demoLocations.features[0].properties.LocID) + 1;
     $locid.val(newlocid);
-
+    $loct.innerHTML = ("Create a new Location");
     $lonhidden.val("new");
     $loclat.val(e.layer._latlng.lat);
     $loclon.val(e.layer._latlng.lng);
@@ -218,7 +219,7 @@ function MarkersetLatLng(e) {
 //edit Location used by marker popup binding.
 function EditLocation(name, id, risk, oe, exp, lat, lon) {
     var $modal = $('#myModal'),
-
+        $loct = $modal.find('#loctitle');
         $locname = $modal.find('#locname');
         $locid = $modal.find('#locid');
         $locrisc = $modal.find('#locrisc');
@@ -226,6 +227,7 @@ function EditLocation(name, id, risk, oe, exp, lat, lon) {
         $locexp = $modal.find('#locexp');
         $loclon = $modal.find('#loclon');
         $loclat = $modal.find('#loclat');
+    $loct.innerHTML = ("Edit a Location");
     $locname.val(name);
     $locid.val(id);   
     $locrisc.val(risk);
